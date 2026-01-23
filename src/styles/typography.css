@@ -1,0 +1,157 @@
+/* 공통 규칙
+  - 행간 100%  => line-height: 1
+  - 자간 -2.5% => letter-spacing: -0.025em
+*/
+/* 11px */
+@utility typo-11-m {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-11-b {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 12px */
+@utility typo-12-m {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-12-b {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 13px */
+@utility typo-13-m {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-13-b {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 14px */
+@utility typo-14-m {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-14-b {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 16px */
+@utility typo-16-m {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-16-b {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 18px */
+@utility typo-18-m {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-18-b {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 20px */
+@utility typo-20-m {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-20-b {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 24px */
+@utility typo-24-m {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-24-b {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 32px */
+@utility typo-32-m {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility typo-32-b {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* 공통 규칙
+  - 자간 -2.5% => letter-spacing: -0.025em
+*/
+@utility typo-14-body-m {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: -0.025em;
+}
+@utility typo-16-body-m {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: -0.025em;
+}
+@utility typo-18-body-b {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+@utility typo-20-body-b {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: -0.025em;
+}

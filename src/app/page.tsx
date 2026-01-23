@@ -7,6 +7,11 @@ const Home = () => {
           아래는 <b>font-sans</b> 기준으로 렌더링돼. 굵기별로 Pretendard 파일이 잘 매칭되면 글자
           굵기가 자연스럽게 바뀌어야 해.
         </p>
+
+        <button className="bg-primary-500 rounded-lg px-4 py-2">Primary 버튼</button>
+        <p className="text-gray-600">서브 텍스트</p>
+
+        <p className="text-red-500">에러 텍스트</p>
         <div className="space-y-2 rounded-xl border p-4">
           <p className="font-sans text-xl font-thin">
             100 Thin — 다람쥐 헌 쳇바퀴에 타고파 123 ABC abc

@@ -107,11 +107,14 @@ export default defineConfig([
        */
       "check-file/filename-naming-convention": ["error", { "**/*.{js,ts,jsx,tsx}": "CAMEL_CASE" }],
 
+      /**
+       * Prettier 설정 파일(.prettierrc) 로드
+       */
       "prettier/prettier": [
         "error",
+        {},
         {
-          singleQuote: false,
-          parser: "flow",
+          usePrettierrc: true,
         },
       ],
     },

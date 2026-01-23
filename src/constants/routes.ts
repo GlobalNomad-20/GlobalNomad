@@ -1,9 +1,4 @@
-// src/constants/routes.ts
-
 export const ROUTES = {
-  /**
-   * 인증
-   */
   AUTH: {
     LOGIN: "/login",
     SIGNUP: "/signup",

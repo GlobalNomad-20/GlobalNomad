@@ -97,6 +97,12 @@ export default defineConfig([
        * 함수 스타일: 화살표 함수
        */
       "prefer-arrow-functions/prefer-arrow-functions": "error",
+      "arrow-body-style": ["error", "always"],
+
+      /**
+       * if, else, for 전부 중괄호 강제
+       */
+      curly: ["error", "all"],
 
       /**
        * 이벤트 핸들러 네이밍

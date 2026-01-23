@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import QueryProviders from "./_providers/QueryProviders";
 import { pretendard } from "./fonts";
 import "./globals.css";
 
@@ -15,7 +16,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body className={`${pretendard.className} antialiased`}>{children}</body>
+      <body className={`${pretendard.className} antialiased`}>
+        <QueryProviders>{children}</QueryProviders>
+      </body>
     </html>
   );
 };

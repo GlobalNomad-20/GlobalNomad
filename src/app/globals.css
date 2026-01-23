@@ -2,18 +2,6 @@
 @import "../styles/typography.css";
 @import "../styles/colors.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--color-white);
-  --color-foreground: var(--color-gray-950);
-
-  --font-sans: var(--font-pretendard);
-}
-
 body {
   background: var(--color-white);
   color: var(--color-gray-950);

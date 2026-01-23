@@ -1,0 +1,35 @@
+// src/constants/routes.ts
+
+export const ROUTES = {
+  /**
+   * 인증
+   */
+  AUTH: {
+    LOGIN: "/login",
+    SIGNUP: "/signup",
+  },
+
+  ACTIVITIES: {
+    ROOT: "/activities",
+    DETAIL: (id: string | number) => {
+      return `/activities/${id}`;
+    },
+  },
+
+  PROFILE: {
+    ROOT: "/profile",
+    RESERVATIONS: "/profile/reservations",
+
+    MY_ACTIVITIES: {
+      ROOT: "/profile/myActivities",
+      ADD: (id: string | number) => {
+        return `/profile/myActivities/add/${id}`;
+      },
+      EDIT: (id: string | number) => {
+        return `/profile/myActivities/edit/${id}`;
+      },
+    },
+
+    RESERVATIONS_STATUS: "/profile/reservationsStatus",
+  },
+} as const;

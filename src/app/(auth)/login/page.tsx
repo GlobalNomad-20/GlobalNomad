@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Image from "next/image";
 
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";

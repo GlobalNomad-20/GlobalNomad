@@ -96,6 +96,11 @@ export default defineConfig([
       "react-refresh/only-export-components": "off",
 
       /**
+       * 컴포넌트 규칙
+       */
+      "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
+
+      /**
        * Import 규칙
        */
       "import/order": ["error", { "newlines-between": "always" }],

@@ -13,6 +13,7 @@ export const ROUTES = {
 
   PROFILE: {
     ROOT: "/profile",
+    EDIT: "/profile/edit",
     RESERVATIONS: "/profile/reservations",
 
     MY_ACTIVITIES: {

@@ -40,7 +40,7 @@ const BASE_NAMING_CONVENTION = [
   // 2. 일반 변수/파라미터: camelCase
   {
     selector: "variableLike",
-    format: ["camelCase"],
+    format: ["camelCase", "PascalCase"],
     leadingUnderscore: "allow",
   },
   // 3. 타입(class, interface, type, enum): PascalCase

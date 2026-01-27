@@ -1,6 +1,18 @@
-const CalenderSvg = () => {
+interface CalenderSvgProps {
+  size?: number;
+  className?: string;
+}
+
+const CalenderSvg = ({ size = 24, className }: CalenderSvgProps) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M7 11H9V13H7V11ZM7 15H9V17H7V15ZM11 11H13V13H11V11ZM11 15H13V17H11V15ZM15 11H17V13H15V11ZM15 15H17V17H15V15Z"
         fill="currentColor"

@@ -13,7 +13,11 @@ import react from "eslint-plugin-react";
 import tsParser from "@typescript-eslint/parser";
 
 const FILE_GLOBS = ["**/*.{js,ts,jsx,tsx}"];
-const COMPONENT_GLOBS = ["src/components/**/*.{tsx,jsx}", "src/providers/**/*.{tsx,jsx}"];
+const COMPONENT_GLOBS = [
+  "src/components/**/*.{tsx,jsx}",
+  "src/providers/**/*.{tsx,jsx}",
+  "src/assets/svg/**/*.{tsx,jsx}",
+];
 const APP_ROUTER_GLOBS = ["src/app/**/*.{tsx,jsx}"];
 const APP_COMPONENTS_GLOBS = [
   "src/app/**/_components/**/*.{tsx,jsx}",

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
+import AuthProvider from "./_providers/AuthProvider";
 import QueryProviders from "./_providers/QueryProviders";
 import { pretendard } from "./fonts";
 import "./globals.css";
-import AuthProvider from "./_providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "GlobalNoamd",
@@ -17,7 +17,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body className={`${pretendard.className} antialiased`}>
+      <body className={`${pretendard.className} min-w-93.75 antialiased`}>
         <QueryProviders>
           <AuthProvider>{children}</AuthProvider>
         </QueryProviders>

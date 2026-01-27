@@ -27,5 +27,7 @@ export const ROUTES = {
     },
 
     RESERVATIONS_STATUS: "/profile/reservationsStatus",
+
+    HIDE_NAV_PREFIXES: ["/profile/myActivities/add/", "/profile/myActivities/edit/"],
   },
 } as const;

@@ -31,7 +31,7 @@ export const PROFILE_SIDE_MENU: ProfileSideMenuItem[] = [
   },
   {
     label: "예약 현황",
-    href: ROUTES.PROFILE.MY_ACTIVITIES.ROOT,
+    href: ROUTES.PROFILE.RESERVATIONS_STATUS,
     Icon: SettingSvg,
   },
   {

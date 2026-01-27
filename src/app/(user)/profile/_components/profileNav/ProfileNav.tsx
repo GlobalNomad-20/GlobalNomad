@@ -2,24 +2,34 @@
 
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-import { useProfileNavLogic } from "../../_hooks/useProfileNavLogic";
+import { useProfileNavState } from "../../_hooks/useProfileNavState";
 
 import NavItem from "./NavItem";
 
 import EditSvg from "@/assets/svg/EditSvg";
 import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { PROFILE_SIDE_MENU } from "@/constants/profileSideMenu";
+import { ROUTES } from "@/constants/routes";
 
 const ProfileNav = () => {
-  const { shouldHide, isActive } = useProfileNavLogic(MEDIA_QUERY.MOBILE);
+  const router = useRouter();
+  const { pathname, isMobile, shouldHideNav, isActive } = useProfileNavState(MEDIA_QUERY.MOBILE);
 
-  if (shouldHide) return null;
+  useEffect(() => {
+    if (isMobile === false && pathname === ROUTES.PROFILE.ROOT) {
+      router.replace(ROUTES.PROFILE.EDIT);
+    }
+  }, [isMobile, pathname, router]);
+
+  if (shouldHideNav) return null;
 
   return (
     <nav
-      className="mx-6 mt-7.5 rounded-xl border border-gray-50 px-3.5 py-6
-        shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] md:w-44.5 lg:w-72.5"
+      className="mx-6 mt-7.5 shrink-0 rounded-xl border border-gray-50 px-3.5 py-6
+        shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] md:m-0 md:w-44.5 lg:w-72.5"
     >
       <div className="mb-6 flex items-center justify-center md:mb-3 lg:mb-6">
         <div className="relative size-30 overflow-hidden md:size-17.5 lg:size-30">
@@ -32,7 +42,6 @@ const ProfileNav = () => {
           </div>
         </div>
       </div>
-
       <ul className="typo-16-m flex flex-col gap-3.5 text-gray-600 md:gap-3 lg:gap-3.5">
         {PROFILE_SIDE_MENU.map(({ href, label, Icon }) => {
           return (

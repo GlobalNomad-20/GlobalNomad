@@ -14,7 +14,10 @@ const SearchBar = () => {
         placeholder="내가 원하는 체험은"
         className="typo-14-m md:typo-18-m mx-2 flex-1 px-2 text-gray-500 outline-none"
       />
-      <Button variant="primary" className="md:typo-16-b h-[41px] w-[85px] md:h-[50px] md:w-30">
+      <Button
+        variant="primary"
+        className="md:typo-16-b h-[41px] w-[85px] active:bg-blue-500 md:h-[50px] md:w-30"
+      >
         검색하기
       </Button>
     </div>

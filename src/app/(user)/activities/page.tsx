@@ -3,6 +3,12 @@ import Image from "next/image";
 import ActivityCard from "@/app/_components/ActivityCard";
 import Banner from "@/app/_components/Banner";
 import SearchBar from "@/app/_components/SearchBar";
+import CategoryBadge from "@/app/_components/CategoryBadge";
+import MusicSvg from "@/assets/svg/MusicSvg";
+import FoodSvg from "@/assets/svg/FoodSvg";
+import TourSvg from "@/assets/svg/TourSvg";
+import BusSvg from "@/assets/svg/BusSvg";
+import WellbeingSvg from "@/assets/svg/WellbeingSvg";
 
 const Activities = () => {
   return (
@@ -48,7 +54,23 @@ const Activities = () => {
             </div>
             <div>드롭다운 필터</div>
           </div>
-          <div className="mb-6 md:mb-7.5">카테고리 필터</div>
+          <div className="mb-6 flex gap-2 md:mb-7.5 md:gap-5">
+            <CategoryBadge>
+              <MusicSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 문화 · 예술
+            </CategoryBadge>
+            <CategoryBadge>
+              <FoodSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 식음료
+            </CategoryBadge>
+            <CategoryBadge>
+              <TourSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 투어
+            </CategoryBadge>
+            <CategoryBadge>
+              <BusSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 관광
+            </CategoryBadge>
+            <CategoryBadge>
+              <WellbeingSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 웰빙
+            </CategoryBadge>
+          </div>
           <div
             className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
               lg:grid-cols-4 lg:gap-[24px]"

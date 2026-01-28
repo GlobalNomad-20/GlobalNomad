@@ -189,27 +189,30 @@ export default defineConfig([
     rules: {
       "check-file/filename-naming-convention": [
         "error",
-        { "**/*.{js,ts,jsx,tsx}": "CAMEL_CASE" },
-        {
-          ignoreMiddleExtensions: true,
-
-          // (경로는 프로젝트 루트 기준, 글롭 사용)
-          ignore: [
-            "src/app/**/error.*",
-            "src/app/**/global-error.*",
-            "src/app/**/not-found.*",
-            "src/app/**/loading.*",
-            "src/app/**/layout.*",
-            "src/app/**/template.*",
-            "src/app/**/page.*",
-            "src/app/**/default.*",
-            "src/app/**/route.*",
-            "src/app/**/sitemap.*",
-            "src/app/**/robots.*",
-            "src/middleware.*",
-          ],
-        },
+        { "**/*.{tsx,jsx}": "PASCAL_CASE" },
+        { ignoreMiddleExtensions: true },
       ],
+    },
+  },
+
+  // Next.js App Router 예약 파일들은 파일명 규칙 검사에서 제외
+  {
+    files: [
+      "src/app/**/error.{js,jsx,ts,tsx}",
+      "src/app/**/global-error.{js,jsx,ts,tsx}",
+      "src/app/**/not-found.{js,jsx,ts,tsx}",
+      "src/app/**/loading.{js,jsx,ts,tsx}",
+      "src/app/**/layout.{js,jsx,ts,tsx}",
+      "src/app/**/template.{js,jsx,ts,tsx}",
+      "src/app/**/page.{js,jsx,ts,tsx}",
+      "src/app/**/default.{js,jsx,ts,tsx}",
+      "src/app/**/route.{js,jsx,ts,tsx}",
+      "src/app/**/sitemap.{js,jsx,ts,tsx}",
+      "src/app/**/robots.{js,jsx,ts,tsx}",
+      "src/middleware.{js,ts}",
+    ],
+    rules: {
+      "check-file/filename-naming-convention": "off",
     },
   },
 

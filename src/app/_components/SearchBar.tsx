@@ -1,4 +1,5 @@
 import SearchSvg from "@/assets/svg/SearchSvg";
+import Button from "@/components/common/Button";
 
 const SearchBar = () => {
   return (
@@ -13,12 +14,9 @@ const SearchBar = () => {
         placeholder="내가 원하는 체험은"
         className="typo-14-m md:typo-18-m mx-2 flex-1 px-2 text-gray-500 outline-none"
       />
-      <button
-        className="bg-primary-500 typo-14-b md:typo-16-b h-[41px] w-[85px] rounded-xl px-[18px] py-3
-          text-white md:h-[50px] md:w-30 md:rounded-[14px]"
-      >
+      <Button variant="primary" className="md:typo-16-b h-[41px] w-[85px] md:h-[50px] md:w-30">
         검색하기
-      </button>
+      </Button>
     </div>
   );
 };

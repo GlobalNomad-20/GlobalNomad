@@ -29,7 +29,7 @@ const Activities = () => {
           </div>
           <div className="flex w-[327px] flex-col gap-3.5 md:w-171 md:gap-4 md:gap-5 lg:w-280">
             <div className="typo-18-b md:typo-32-b">🔥 인기 체험</div>
-            <div>
+            <div className="flex gap-3 overflow-hidden overflow-scroll md:gap-5 lg:gap-6">
               <ActivityCard />
               <ActivityCard />
               <ActivityCard />

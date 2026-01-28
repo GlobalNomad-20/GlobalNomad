@@ -5,7 +5,7 @@ import StarIcon from "@/assets/svg/starIcon";
 const ActivityCard = () => {
   return (
     <div
-      className="relative h-60.5 w-32.75 cursor-pointer rounded-[18px]
+      className="relative h-60.5 w-32.75 shrink-0 cursor-pointer rounded-[18px]
         shadow-[0px_2.25px_13.5px_0px_rgba(156,180,202,0.2)] md:h-105.75 md:w-82.75 lg:h-91.5
         lg:w-65.5"
     >

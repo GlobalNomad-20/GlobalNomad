@@ -80,3 +80,6 @@ export const API_ENDPOINTS = {
     ME_IMAGE: "/users/me/image",
   },
 } as const;
+
+export const BASE_URL = "https://sp-globalnomad-api.vercel.app/20-2";
+export const REFRESH_URL = BASE_URL + API_ENDPOINTS.AUTH.TOKENS;

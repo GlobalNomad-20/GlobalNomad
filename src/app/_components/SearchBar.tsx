@@ -1,4 +1,4 @@
-import SearchIcon from "@/assets/svg/searchIcon";
+import SearchSvg from "@/assets/svg/SearchSvg";
 
 const SearchBar = () => {
   return (
@@ -7,7 +7,7 @@ const SearchBar = () => {
         pl-[20px] shadow-[0_6px_10px_rgba(13,153,255,0.05)] md:h-[70px] md:pt-[10px] md:pr-3
         md:pb-[10px] md:pl-8 lg:rounded-3xl"
     >
-      <SearchIcon className="h-4 w-4 text-gray-500" />
+      <SearchSvg className="h-4 w-4 text-gray-500" />
       <input
         type="text"
         placeholder="내가 원하는 체험은"

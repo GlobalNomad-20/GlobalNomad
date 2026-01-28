@@ -1,6 +1,6 @@
 import React from "react";
 
-const searchIcon = (props: React.SVGProps<SVGSVGElement>) => {
+const SearchSvg = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
@@ -11,4 +11,4 @@ const searchIcon = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default searchIcon;
+export default SearchSvg;

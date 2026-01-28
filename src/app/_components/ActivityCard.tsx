@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import StarIcon from "@/assets/svg/starIcon";
+import StarSvg from "@/assets/svg/StarSvg";
 
 const ActivityCard = ({ isSmall = false }: { isSmall?: boolean }) => {
   const mobileWidth = isSmall ? "w-[155px]" : "w-32.75";
@@ -30,7 +30,7 @@ const ActivityCard = ({ isSmall = false }: { isSmall?: boolean }) => {
           className="typo-12-m md:typo-14-m md:md-4.5 mb-2.5 flex items-center leading-[18px]
             md:leading-[24px]"
         >
-          <StarIcon className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
+          <StarSvg className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
           <span className="text-gray-950">3.9</span>
           <span className="ml-[2px] text-gray-400">(108)</span>
         </div>

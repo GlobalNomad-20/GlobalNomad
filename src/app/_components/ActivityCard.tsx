@@ -2,12 +2,13 @@ import Image from "next/image";
 
 import StarIcon from "@/assets/svg/starIcon";
 
-const ActivityCard = () => {
+const ActivityCard = ({ isSmall = false }: { isSmall?: boolean }) => {
+  const mobileWidth = isSmall ? "w-[155px]" : "w-32.75";
   return (
     <div
-      className="relative h-60.5 w-32.75 shrink-0 cursor-pointer rounded-[18px]
-        shadow-[0px_2.25px_13.5px_0px_rgba(156,180,202,0.2)] md:h-105.75 md:w-82.75 lg:h-91.5
-        lg:w-65.5"
+      className={`relative h-60.5 shrink-0 cursor-pointer rounded-[18px]
+        shadow-[0px_2.25px_13.5px_0px_rgba(156,180,202,0.2)] ${mobileWidth} md:h-105.75 md:w-82.75
+        lg:h-91.5 lg:w-65.5`}
     >
       <div
         className="absolute top-0 h-44 w-full overflow-hidden rounded-[18px]

@@ -1,12 +1,15 @@
+import Image from "next/image";
+
 const Banner = () => {
   return (
     <div
       className="relative h-[181px] w-[327px] shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]
         md:h-[375px] md:w-[684px] lg:h-[500px] lg:w-[1120px]"
     >
-      <img
+      <Image
         src="/image/banner.jpg"
         alt="배너 이미지"
+        fill
         className="h-full w-full rounded-xl object-cover"
       />
       <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/0 to-black/40" />

@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import AlertBellSvg from "@/assets/svg/AlertBellSvg";
+import AlertPopup from "../alertPopup/AlertPopup";
+
 import { ROUTES } from "@/constants/routes";
 
 interface Props {
@@ -18,7 +19,6 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
 
   const handleClickProfile = () => {
     const isMdUp = window.matchMedia("(min-width: 768px)").matches;
-
     router.push(isMdUp ? ROUTES.PROFILE.EDIT : ROUTES.PROFILE.ROOT);
   };
 
@@ -37,8 +37,8 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
 
   return (
     <nav className="typo-14-m">
-      <div className="flex items-center gap-5">
-        <AlertBellSvg />
+      <div className="flex h-full items-center gap-5 px-4 py-2">
+        <AlertPopup />
         <div className="h-3.5 w-px bg-gray-100" />
         <button type="button" onClick={handleClickProfile} className="flex items-center gap-2.5">
           <div className="relative size-7.5 overflow-hidden">

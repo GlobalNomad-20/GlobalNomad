@@ -1,17 +1,13 @@
 export interface ModalOptions {
-  content: string;
-  icon?: React.ReactNode;
-  buttonCount?: 1 | 2;
-  confirmText?: string;
-  cancelText?: string;
-  onConfirm?: () => void | Promise<void>;
-  onCancel?: () => void;
+  position?: "center" | "bottom";
+  children?: React.ReactNode;
   isLoading?: boolean;
+  containerClassName?: string;
 }
 
 export interface ModalState {
   options: ModalOptions | null;
   openModal: (options: ModalOptions) => void;
   closeModal: () => void;
-  setLoading: (isLoading: boolean) => void;
+  updateOptions: (options: Partial<ModalOptions>) => void;
 }

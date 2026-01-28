@@ -1,20 +1,20 @@
 import { create } from "zustand";
 
-import { ModalState, ModalOptions } from "@/types/modal";
+import { ModalState } from "@/types/modal";
 
 export const useModalStore = create<ModalState>((set) => {
   return {
     options: null,
-    openModal: (options: ModalOptions) => {
-      return set({ options: { ...options, isLoading: false } });
+    openModal: (options) => {
+      return set({ options });
     },
     closeModal: () => {
       return set({ options: null });
     },
-    setLoading: (isLoading: boolean) => {
+    updateOptions: (newOptions) => {
       return set((state) => {
         return {
-          options: state.options ? { ...state.options, isLoading } : null,
+          options: state.options ? { ...state.options, ...newOptions } : null,
         };
       });
     },

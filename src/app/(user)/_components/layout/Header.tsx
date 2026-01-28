@@ -1,12 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import UserAuthNav from "./UserAuthNav";
 
 import { ROUTES } from "@/constants/routes";
+import useAuthStore from "@/store/useAuthStore";
 
 const Header = () => {
-  const isLogin = true;
+  const isLoggedIn = useAuthStore((state) => {
+    return state.isLoggedIn;
+  });
+  const user = useAuthStore((state) => {
+    return state.user;
+  });
 
   return (
     <header className="h-12 px-6 md:h-20 md:px-7.5">
@@ -21,7 +29,11 @@ const Header = () => {
             />
           </Link>
         </h1>
-        <UserAuthNav isLogin={isLogin} userName="김지훈" profileImage="/image/profile.png" />
+        <UserAuthNav
+          isLogin={isLoggedIn}
+          userName={user?.nickname}
+          profileImage={user?.profileImageUrl}
+        />
       </div>
     </header>
   );

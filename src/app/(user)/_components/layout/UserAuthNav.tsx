@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import AlertBellSvg from "@/assets/svg/AlertBellSvg";
 import { ROUTES } from "@/constants/routes";
@@ -11,6 +14,14 @@ interface Props {
 }
 
 const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
+  const router = useRouter();
+
+  const handleClickProfile = () => {
+    const isMdUp = window.matchMedia("(min-width: 768px)").matches;
+
+    router.push(isMdUp ? ROUTES.PROFILE.EDIT : ROUTES.PROFILE.ROOT);
+  };
+
   if (!isLogin) {
     return (
       <nav className="typo-14-m">
@@ -29,7 +40,7 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
       <div className="flex items-center gap-5">
         <AlertBellSvg />
         <div className="h-3.5 w-px bg-gray-100" />
-        <div className="flex items-center gap-2.5">
+        <button type="button" onClick={handleClickProfile} className="flex items-center gap-2.5">
           <div className="relative size-7.5 overflow-hidden">
             <Image
               src={profileImage}
@@ -39,7 +50,7 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
             />
           </div>
           {userName}
-        </div>
+        </button>
       </div>
     </nav>
   );

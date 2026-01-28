@@ -187,7 +187,29 @@ export default defineConfig([
   {
     files: [...COMPONENT_GLOBS, ...APP_COMPONENTS_GLOBS],
     rules: {
-      "check-file/filename-naming-convention": ["error", { "**/*.{tsx,jsx}": "PASCAL_CASE" }],
+      "check-file/filename-naming-convention": [
+        "error",
+        { "**/*.{js,ts,jsx,tsx}": "CAMEL_CASE" },
+        {
+          ignoreMiddleExtensions: true,
+
+          // (경로는 프로젝트 루트 기준, 글롭 사용)
+          ignore: [
+            "src/app/**/error.*",
+            "src/app/**/global-error.*",
+            "src/app/**/not-found.*",
+            "src/app/**/loading.*",
+            "src/app/**/layout.*",
+            "src/app/**/template.*",
+            "src/app/**/page.*",
+            "src/app/**/default.*",
+            "src/app/**/route.*",
+            "src/app/**/sitemap.*",
+            "src/app/**/robots.*",
+            "src/middleware.*",
+          ],
+        },
+      ],
     },
   },
 

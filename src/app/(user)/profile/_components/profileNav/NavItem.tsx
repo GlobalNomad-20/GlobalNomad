@@ -8,11 +8,17 @@ interface NavItemProps {
   children: ReactNode;
   href: string;
   isActive: boolean;
+  onClick?: () => void;
 }
 
-const NavItem = ({ children, href, isActive }: NavItemProps) => {
+const NavItem = ({ children, href, isActive, onClick }: NavItemProps) => {
+  const handleOnClick = () => {
+    if (!onClick) return;
+    onClick();
+  };
+
   return (
-    <li>
+    <li onClick={handleOnClick}>
       <Link
         href={href}
         className={clsx(

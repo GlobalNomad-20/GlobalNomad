@@ -9,8 +9,8 @@ import { ROUTES } from "@/constants/routes";
 
 interface Props {
   isLogin: boolean;
-  userName: string;
-  profileImage: string;
+  userName?: string;
+  profileImage?: string | null;
 }
 
 const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
@@ -43,7 +43,7 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
         <button type="button" onClick={handleClickProfile} className="flex items-center gap-2.5">
           <div className="relative size-7.5 overflow-hidden">
             <Image
-              src={profileImage}
+              src={profileImage || "/image/profile.png"}
               fill
               className="object-cover object-left"
               alt="사용자 프로필 이미지"

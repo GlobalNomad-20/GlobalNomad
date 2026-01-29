@@ -17,7 +17,7 @@ const Header = () => {
   });
 
   return (
-    <header className="h-12 px-6 md:h-20 md:px-7.5">
+    <header className="absolute h-12 w-full bg-transparent px-6 md:h-20 md:px-7.5">
       <div className="mx-auto flex h-full max-w-380 items-center justify-between">
         <h1 className="relative size-7 overflow-hidden md:w-43.5">
           <Link href={ROUTES.ACTIVITIES.ROOT}>

@@ -1,13 +1,16 @@
 import clsx from "clsx";
 
+import AlertItem from "./AlertItem";
+
 import AlertBellSvg from "@/assets/svg/AlertBellSvg";
+import DeleteSvg from "@/assets/svg/DeleteSvg";
 import { usePopup } from "@/hooks/usePopup";
 
 const AlertPopup = () => {
-  const { popupRef, triggerRef, open, handleToggle } = usePopup();
+  const { popupRef, triggerRef, open, handleToggle, handleClose } = usePopup();
 
   return (
-    <div className="relative">
+    <div className="static md:relative">
       <button ref={triggerRef} onClick={handleToggle}>
         <AlertBellSvg className={clsx(open && "text-primary-500")} />
       </button>
@@ -15,12 +18,19 @@ const AlertPopup = () => {
         <div
           ref={popupRef}
           className={clsx(
-            "absolute top-full right-0 z-50 flex flex-col rounded-md border px-1 py-1.5",
-            `bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)] dark:border-neutral-600
-            dark:bg-neutral-800`,
+            `absolute top-15.5 right-6 left-6 z-50 flex flex-col rounded-lg bg-white pb-2
+            shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] md:top-10 md:-right-1.25 md:left-auto
+            md:w-57.75`,
           )}
         >
-          <button>내부 컨텐츠</button>
+          <div className="mb-3.5 flex items-center justify-between px-5 pt-4">
+            <h4 className="typo-16-b h-fit">알림 6개</h4>
+            <button className="cursor-pointer" onClick={handleClose}>
+              <DeleteSvg />
+            </button>
+          </div>
+          <AlertItem />
+          <AlertItem />
         </div>
       )}
     </div>

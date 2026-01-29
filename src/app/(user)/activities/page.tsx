@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-import ActivityCard from "@/app/_components/ActivityCard";
-import Banner from "@/app/_components/Banner";
-import SearchBar from "@/app/_components/SearchBar";
-import CategoryBadge from "@/app/_components/CategoryBadge";
+import ActivityCard from "@/app/(user)/activities/_components/ActivityCard";
+import Banner from "@/app/(user)/activities/_components/Banner";
+import SearchBar from "@/app/(user)/activities/_components/SearchBar";
+import CategoryBadge from "@/app/(user)/activities/_components/CategoryBadge";
 import MusicSvg from "@/assets/svg/MusicSvg";
 import FoodSvg from "@/assets/svg/FoodSvg";
 import TourSvg from "@/assets/svg/TourSvg";

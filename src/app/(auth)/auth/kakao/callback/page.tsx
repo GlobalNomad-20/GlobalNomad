@@ -2,7 +2,7 @@
 
 import { AxiosResponse } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
@@ -99,4 +99,12 @@ const KakaoCallbackPage = () => {
   );
 };
 
-export default KakaoCallbackPage;
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <KakaoCallbackPage />
+    </Suspense>
+  );
+};
+
+export default Page;

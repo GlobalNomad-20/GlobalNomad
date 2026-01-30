@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ import { useModalStore } from "@/store/useModalStore";
 import InvalidPasswordModal from "@/app/(auth)/login/_components/InvalidPasswordModal";
 
 // 로그인 페이지
-const Login = () => {
+const LoginContent = () => {
   const navigation = useRouter();
   const { login, setTokens, user } = useAuthStore();
   const [emailError, setEmailError] = useState(false);
@@ -148,6 +148,14 @@ const Login = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Login = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 };
 

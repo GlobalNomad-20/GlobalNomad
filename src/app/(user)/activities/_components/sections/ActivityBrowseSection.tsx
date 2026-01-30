@@ -1,4 +1,5 @@
 import ActivityCard from "../common/ActivityCard";
+import DropdownOption from "../common/DropdownOption";
 import CategoryFilter from "../filters/CategoryFilter";
 
 const ActivityBrowseSection = () => {
@@ -6,7 +7,7 @@ const ActivityBrowseSection = () => {
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
       <div className="mb-2.5 flex justify-between md:mb-[17px] lg:mb-5">
         <div className="typo-18-b md:typo-32-b leading-[26px] md:leading-[32px]">🛼 모든 체험</div>
-        <div>드롭다운 필터</div>
+        <DropdownOption />
       </div>
       <CategoryFilter />
       <div

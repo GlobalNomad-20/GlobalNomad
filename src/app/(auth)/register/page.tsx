@@ -47,9 +47,15 @@ const Register = () => {
   const onRegisterSubmit: SubmitHandler<ISignUpForm> = async (data) => {
     try {
       const { email, password, nickname } = data;
-      const res = await client.post(API_ENDPOINTS.USERS.SIGNUP, { email, password, nickname });
+      await client.post(API_ENDPOINTS.USERS.SIGNUP, { email, password, nickname });
+      const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
       setTokens(res.data.accessToken, res.data.refreshToken);
       login(res.data.user);
+      openModal({
+        position: "center",
+        containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
+        children: <OKModal message="가입이 완료되었습니다." closeModal={closeModal} />,
+      });
     } catch {
       openModal({
         position: "center",

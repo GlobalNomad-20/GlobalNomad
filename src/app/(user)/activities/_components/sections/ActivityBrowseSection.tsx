@@ -1,8 +1,19 @@
+"use client";
+
+import useActivities from "../../_hooks/useActivities";
 import ActivityCard from "../common/ActivityCard";
 import DropdownOption from "../common/DropdownOption";
 import CategoryFilter from "../filters/CategoryFilter";
 
 const ActivityBrowseSection = () => {
+  const { data } = useActivities({
+    category: undefined,
+    keyword: undefined,
+    sort: undefined,
+    page: 1,
+    size: 20,
+  });
+
   return (
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
       <div className="mb-2.5 flex justify-between md:mb-[17px] lg:mb-5">
@@ -14,12 +25,9 @@ const ActivityBrowseSection = () => {
         className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
           lg:grid-cols-4 lg:gap-[24px]"
       >
-        <ActivityCard isSmall />
-        <ActivityCard isSmall />
-        <ActivityCard isSmall />
-        <ActivityCard isSmall />
-        <ActivityCard isSmall />
-        <ActivityCard isSmall />
+        {data?.activities.map((activity) => {
+          return <ActivityCard key={activity.id} activity={activity} />;
+        })}
       </div>
       <div className="flex justify-center">
         <div>페이지네이션</div>

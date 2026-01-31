@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
@@ -13,28 +14,39 @@ import Button from "@/components/common/Button";
 import { useModalStore } from "@/store/useModalStore";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
 
-// 로그인 페이지
-const Login = () => {
+// 회원가입 폼 데이터 정의
+interface ISignUpForm {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+// 회원가입 페이지
+const Register = () => {
   const navigation = useRouter();
   const { login, setTokens, user } = useAuthStore();
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
-  const [nicknameError, setNicknameError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [nickname, setNickname] = useState("");
-  const canLogin = email && password && !emailError && !passwordError;
   const { openModal } = useModalStore();
 
-  // 회원가입 처리
-  const onLoginAction = async (formData: FormData) => {
-    const email = formData.get("email")?.toString() ?? "";
-    const password = formData.get("password")?.toString() ?? "";
-    const nickname = formData.get("nickname")?.toString() ?? "";
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<ISignUpForm>({
+    mode: "onBlur",
+  });
 
+  // 패스워드(패스워드 확인용)
+  const password = useWatch({
+    control,
+    name: "password",
+  });
+
+  // 회원가입 처리
+  const onRegisterSubmit: SubmitHandler<ISignUpForm> = async (data) => {
     try {
+      const { email, password, nickname } = data;
       const res = await client.post(API_ENDPOINTS.USERS.SIGNUP, { email, password, nickname });
       setTokens(res.data.accessToken, res.data.refreshToken);
       login(res.data.user);
@@ -45,48 +57,6 @@ const Login = () => {
         children: <OKModal message="Hello" />,
       });
     }
-  };
-
-  // 이메일 검증
-  const handleValidateEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.exec(email)) setEmailError(false);
-    else setEmailError(true);
-  };
-
-  // 패스워드 검증
-  const handleValidatePassword = () => {
-    setPasswordError(password.length < 8);
-  };
-
-  // 패스워드 확인 검증
-  const handleValidatePasswordConfirm = () => {
-    setPasswordConfirmError(password.length != passwordConfirm.length);
-  };
-
-  // 닉네임 검증
-  const handleValidateNickname = () => {
-    setNicknameError(nickname.length > 10);
-  };
-
-  // 이메일이 변경됐을 때
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  // 패스워드가 변경됐을 때
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  // 패스워드 확인
-  const handleChangePasswordConfirm = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordConfirm(e.target.value);
-  };
-
-  // 닉네임이 변경됐을 때
-  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
   };
 
   const handleKakaoClick = () => {
@@ -110,37 +80,45 @@ const Login = () => {
             className="mt-6 hidden md:block"
           />
         </Link>
-        <form className="mt-10.5 w-full md:mt-15.5" action={onLoginAction}>
+        <form className="mt-10.5 w-full md:mt-15.5" onSubmit={handleSubmit(onRegisterSubmit)}>
           {/* 이메일 */}
           <div className="typo-16-m mb-2.5 text-gray-950">이메일</div>
           <input
             placeholder="이메일을 입력해 주세요"
             type="email"
-            name="email"
             className={`text-16-m w-full rounded-2xl border
-              ${emailError ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
-            value={email}
-            onChange={handleChangeEmail}
-            onBlur={handleValidateEmail}
+              ${errors.email ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
+            {...register("email", {
+              required: "이메일을 입력해 주세요.",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "잘못된 이메일 입니다.",
+              },
+            })}
           />
 
-          {emailError && <div className="typo-12-m mt-1.5 text-red-500">잘못된 이메일 입니다.</div>}
+          {errors.email && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.email.message}</div>
+          )}
 
           {/* 닉네임 */}
           <div className="typo-16-m mt-5 mb-2.5 text-gray-950">닉네임</div>
           <input
             placeholder="닉네임을 입력해 주세요"
             type="text"
-            name="text"
             className={`text-16-m w-full rounded-2xl border
-              ${nicknameError ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
-            value={nickname}
-            onChange={handleChangeNickname}
-            onBlur={handleValidateNickname}
+              ${errors.nickname ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
+            {...register("nickname", {
+              required: "닉네임을 입력해 주세요.",
+              maxLength: {
+                value: 10,
+                message: "열 자 이하로 작성해주세요.",
+              },
+            })}
           />
 
-          {nicknameError && (
-            <div className="typo-12-m mt-1.5 text-red-500">열 자 이하로 작성해주세요.</div>
+          {errors.nickname && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.nickname.message}</div>
           )}
 
           {/* 비밀번호 */}
@@ -148,16 +126,19 @@ const Login = () => {
           <input
             placeholder="8자 이상 입력해 주세요"
             type="password"
-            name="password"
             className={`text-16-m w-full rounded-2xl border py-[17.5px] pl-5 outline-0
-              ${passwordError ? "border-red-500" : "border-gray-100"}`}
-            value={password}
-            onChange={handleChangePassword}
-            onBlur={handleValidatePassword}
+              ${errors.password ? "border-red-500" : "border-gray-100"}`}
+            {...register("password", {
+              required: "비밀번호를 입력해 주세요.",
+              minLength: {
+                value: 8,
+                message: "8자 이상 입력해 주세요.",
+              },
+            })}
           />
 
-          {passwordError && (
-            <div className="typo-12-m mt-1.5 text-red-500">8자 이상 입력해 주세요.</div>
+          {errors.password && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.password.message}</div>
           )}
 
           {/* 비밀번호 확인 */}
@@ -165,20 +146,24 @@ const Login = () => {
           <PasswordInput
             placeholder="비밀번호를 한 번 더 입력해 주세요"
             type="password"
-            name="password"
-            className={`w-full ${passwordConfirmError ? "border-red-500" : ""}`}
-            value={passwordConfirm}
-            onChange={handleChangePasswordConfirm}
-            onBlur={handleValidatePasswordConfirm}
+            className={`w-full ${errors.passwordConfirm ? "border-red-500" : ""}`}
+            {...register("passwordConfirm", {
+              required: "비밀번호가 일치하지 않습니다.",
+              validate: (value) => {
+                return value === password || "비밀번호가 일치하지 않습니다.";
+              },
+            })}
           />
 
-          {passwordConfirmError && (
-            <div className="typo-12-m mt-1.5 text-red-500">비밀번호가 일치하지 않습니다.</div>
+          {errors.passwordConfirm && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.passwordConfirm.message}</div>
           )}
 
           <Button
-            variant={canLogin ? "primary" : "disabled"}
+            variant={isValid ? "primary" : "disabled"}
             className="mt-7.5 h-13.5 w-full text-white"
+            type="submit"
+            disabled={!isValid}
           >
             <div>회원가입하기</div>
           </Button>
@@ -211,4 +196,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

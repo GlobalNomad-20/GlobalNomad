@@ -1,14 +1,28 @@
+"use client";
+import { useState } from "react";
+
 import CategoryBadge from "../common/CategoryBadge";
 
 import { CATEGORY_BADGES } from "@/constants/categortBadgeItem";
 
+type CategoryValue = "문화 · 예술" | "식음료" | "스포츠" | "투어" | "관광" | "웰빙" | undefined;
+
 interface CategoryFilterProps {
-  setCategory: (value: "문화 · 예술" | "식음료" | "스포츠" | "투어" | "관광" | "웰빙") => void;
+  setCategory: (value: CategoryValue) => void;
 }
 const CategoryFilter = ({ setCategory }: CategoryFilterProps) => {
-  const handleClick = (value: "문화 · 예술" | "식음료" | "스포츠" | "투어" | "관광" | "웰빙") => {
-    setCategory(value);
+  const [activeCategory, setActiveCategory] = useState<CategoryValue | undefined>(undefined);
+
+  const handleClick = (value: CategoryValue) => {
+    if (value === activeCategory) {
+      setActiveCategory(undefined);
+      setCategory(undefined);
+    } else {
+      setActiveCategory(value);
+      setCategory(value);
+    }
   };
+
   return (
     <div className="mb-6 overflow-x-auto md:mb-7.5">
       <div className="scrollbar-hide flex w-max gap-2 px-1.5 md:gap-5">
@@ -21,6 +35,7 @@ const CategoryFilter = ({ setCategory }: CategoryFilterProps) => {
               handleBadgeClick={() => {
                 return handleClick(item.value);
               }}
+              isActive={activeCategory === item.value}
             />
           );
         })}

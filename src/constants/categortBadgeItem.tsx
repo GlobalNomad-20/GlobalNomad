@@ -36,4 +36,4 @@ export const CATEGORY_BADGES = [
     value: "웰빙",
     icon: <WellbeingSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" />,
   },
-];
+] as const;

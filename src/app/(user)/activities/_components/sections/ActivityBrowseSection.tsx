@@ -1,15 +1,20 @@
 "use client";
 
+import { useState } from "react";
+
 import useActivities from "../../_hooks/useActivities";
 import ActivityCard from "../common/ActivityCard";
 import DropdownOption from "../common/DropdownOption";
 import CategoryFilter from "../filters/CategoryFilter";
 
 const ActivityBrowseSection = () => {
+  //   const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sort, setSort] = useState<string>("latest");
+
   const { data } = useActivities({
     category: undefined,
     keyword: undefined,
-    sort: undefined,
+    sort: sort,
     page: 1,
     size: 20,
   });
@@ -18,7 +23,7 @@ const ActivityBrowseSection = () => {
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
       <div className="mb-2.5 flex justify-between md:mb-[17px] lg:mb-5">
         <div className="typo-18-b md:typo-32-b leading-[26px] md:leading-[32px]">🛼 모든 체험</div>
-        <DropdownOption />
+        <DropdownOption setSort={setSort} />
       </div>
       <CategoryFilter />
       <div

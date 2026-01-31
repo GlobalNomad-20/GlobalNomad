@@ -7,7 +7,7 @@ const PopularActivitySection = () => {
   const { data } = useActivities({
     category: undefined,
     keyword: undefined,
-    sort: undefined,
+    sort: "most_reviewed",
     page: 1,
     size: 20,
   });

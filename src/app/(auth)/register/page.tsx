@@ -26,7 +26,7 @@ interface ISignUpForm {
 const Register = () => {
   const navigation = useRouter();
   const { login, setTokens, user } = useAuthStore();
-  const { openModal } = useModalStore();
+  const { openModal, closeModal } = useModalStore();
 
   const {
     control,
@@ -54,7 +54,7 @@ const Register = () => {
       openModal({
         position: "center",
         containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message="Hello" />,
+        children: <OKModal message="이미 사용 중인 이메일입니다." closeModal={closeModal} />,
       });
     }
   };

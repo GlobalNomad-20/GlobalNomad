@@ -15,7 +15,7 @@ const TextField = ({ label, error, registration, className, ...props }: TextFiel
 
   return (
     <div className={`${className ?? ""}`}>
-      <label htmlFor={inputId} className="text-sm font-medium">
+      <label htmlFor={inputId} className="typo-16-m mb-2.5 inline-block">
         {label}
       </label>
       <input
@@ -25,12 +25,12 @@ const TextField = ({ label, error, registration, className, ...props }: TextFiel
           "w-full rounded-xl border px-5 py-3.5 transition-colors disabled:opacity-60",
           error
             ? "border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none"
-            : "border-gray-300 focus:ring-1 focus:ring-blue-500 focus:outline-none",
+            : "border-gray-100 focus:ring-1 focus:ring-blue-500 focus:outline-none",
         )}
         {...registration}
         {...props}
       />
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+      {error && <p className="typo-12-m mt-1.5 pl-2 text-red-500">{error}</p>}
     </div>
   );
 };

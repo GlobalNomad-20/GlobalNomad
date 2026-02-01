@@ -34,7 +34,7 @@ const VisibilityPasswordInput = ({
 
   return (
     <div className={`${className ?? ""}`}>
-      <label htmlFor={inputId} className="mb-2.5 text-sm font-medium">
+      <label htmlFor={inputId} className="typo-16-m mb-2.5 inline-block">
         {label}
       </label>
       <div
@@ -42,7 +42,7 @@ const VisibilityPasswordInput = ({
           "relative flex items-center gap-2 rounded-xl border py-3.5 pr-3.75 pl-5",
           error
             ? "border-red-500 focus-within:ring-1 focus-within:ring-red-500"
-            : `border-gray-300 focus-within:border-blue-500 focus-within:ring-1
+            : `border-gray-100 focus-within:border-blue-500 focus-within:ring-1
               focus-within:ring-blue-500`,
         )}
       >
@@ -66,7 +66,7 @@ const VisibilityPasswordInput = ({
           {visible ? <ActiveOnSvg /> : <ActiveOffSvg />}
         </button>
       </div>
-      {error && <p className="mt-1.5 pl-2 text-sm text-red-600">{error}</p>}
+      {error && <p className="typo-12-m mt-1.5 pl-2 text-red-500">{error}</p>}
     </div>
   );
 };

@@ -39,7 +39,8 @@ const VisibilityPasswordInput = ({
       </label>
       <div
         className={clsx(
-          "relative flex items-center gap-2 rounded-xl border py-3.5 pr-3.75 pl-5",
+          `relative flex items-center gap-2 rounded-xl border py-3.5 pr-3.75 pl-5
+          shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]`,
           error
             ? "border-red-500 focus-within:ring-1 focus-within:ring-red-500"
             : `border-gray-100 focus-within:border-blue-500 focus-within:ring-1

@@ -14,7 +14,7 @@ const TextField = ({ label, error, registration, className, ...props }: TextFiel
   const inputId = registration.name;
 
   return (
-    <div className={`${className ?? ""}`}>
+    <div className={clsx(className)}>
       <label htmlFor={inputId} className="typo-16-m mb-2.5 inline-block">
         {label}
       </label>
@@ -22,7 +22,8 @@ const TextField = ({ label, error, registration, className, ...props }: TextFiel
         id={inputId}
         aria-invalid={Boolean(error)}
         className={clsx(
-          "w-full rounded-xl border px-5 py-3.5 transition-colors disabled:opacity-60",
+          `w-full rounded-xl border px-5 py-3.5 shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]
+          transition-colors disabled:opacity-60`,
           error
             ? "border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none"
             : "border-gray-100 focus:ring-1 focus:ring-blue-500 focus:outline-none",

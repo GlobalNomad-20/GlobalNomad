@@ -1,9 +1,15 @@
 import Image from "next/image";
 
-import StarIcon from "@/assets/svg/starIcon";
+import StarSvg from "@/assets/svg/StarSvg";
+import { Activity } from "@/types/activityCardList";
 
-const ActivityCard = ({ isSmall = false }: { isSmall?: boolean }) => {
-  const mobileWidth = isSmall ? "w-[155px]" : "w-32.75";
+interface ActivityCardProps {
+  activity: Activity;
+  isSmall?: boolean;
+}
+
+const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
+  const mobileWidth = isSmall ? "w-32.75" : "w-[155px]";
   return (
     <div
       className={`relative h-60.5 shrink-0 cursor-pointer rounded-[18px]
@@ -24,21 +30,22 @@ const ActivityCard = ({ isSmall = false }: { isSmall?: boolean }) => {
           className="md:typo-18-b mb:mb-0.5 mb-1 truncate text-sm leading-[18px] font-semibold
             text-[#1F1F22] md:leading-[26px]"
         >
-          오 진짜 완전 긴 제목이다 대박사건이지예
+          {activity.title}
         </div>
         <div
           className="typo-12-m md:typo-14-m md:md-4.5 mb-2.5 flex items-center leading-[18px]
             md:leading-[24px]"
         >
-          <StarIcon className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
-          <span className="text-gray-950">3.9</span>
-          <span className="ml-[2px] text-gray-400">(108)</span>
+          <StarSvg className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
+          <span className="text-gray-950">{activity.rating}</span>
+          <span className="ml-[2px] text-gray-400">({activity.reviewCount})</span>
         </div>
         <div
           className="font-pretendard md:typo-18-b flex items-center text-[15px] leading-[18px]
             font-bold text-gray-950 md:leading-[26px]"
         >
-          ₩ 35,000<span className="typo-12-b md:typo-16-m text-gray-400">/ 인</span>
+          ₩ {activity.price}
+          <span className="typo-12-b md:typo-16-m text-gray-400">/ 인</span>
         </div>
       </div>
     </div>

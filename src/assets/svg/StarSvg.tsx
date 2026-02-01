@@ -1,6 +1,6 @@
 import React from "react";
 
-const starIcon = (props: React.SVGProps<SVGSVGElement>) => {
+const StarSvg = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
@@ -11,4 +11,4 @@ const starIcon = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default starIcon;
+export default StarSvg;

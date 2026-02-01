@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Banner = () => {
+const BannerSection = () => {
   return (
     <div
       className="relative h-[181px] w-[327px] shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]
@@ -26,4 +26,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default BannerSection;

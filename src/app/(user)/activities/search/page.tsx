@@ -1,11 +1,11 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
-import ActivityBrowseSection from "./_components/sections/ActivityBrowseSection";
-import PopularActivitySection from "./_components/sections/PopularActivitySection";
-import SearchSection from "./_components/sections/SearchSection";
+import BannerSection from "../_components/sections/BannerSection";
+import SearchResultsSection from "../_components/sections/SearchResultsSection";
+import SearchSection from "../_components/sections/SearchSection";
 
-import BannerSection from "@/app/(user)/activities/_components/sections/BannerSection";
-const Activities = () => {
+const SearchPage = () => {
   return (
     <div className="bg-white">
       <div className="relative h-200 md:h-350">
@@ -20,16 +20,17 @@ const Activities = () => {
         </div>
       </div>
       <div
-        className="ju relative z-20 -mt-[800px] flex flex-col items-center pt-[74px] pb-34
-          md:-mt-[1400px] md:pt-[103px] md:pb-[204px] lg:pb-[218px]"
+        className="relative z-20 -mt-200 flex flex-col items-center justify-center pt-18.5 pb-34
+          md:-mt-350 md:pt-25.75 md:pb-51 lg:pb-54.5"
       >
         <BannerSection />
         <SearchSection />
-        <PopularActivitySection />
-        <ActivityBrowseSection />
+        <Suspense fallback={<div>검색 결과 로딩 중...</div>}>
+          <SearchResultsSection />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export default Activities;
+export default SearchPage;

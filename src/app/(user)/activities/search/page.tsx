@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
 import BannerSection from "../_components/sections/BannerSection";
 import SearchResultsSection from "../_components/sections/SearchResultsSection";
@@ -24,7 +25,9 @@ const SearchPage = () => {
       >
         <BannerSection />
         <SearchSection />
-        <SearchResultsSection />
+        <Suspense fallback={<div>검색 결과 로딩 중...</div>}>
+          <SearchResultsSection />
+        </Suspense>
       </div>
     </div>
   );

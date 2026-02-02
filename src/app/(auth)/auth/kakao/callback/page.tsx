@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { AxiosResponse } from "axios";
@@ -69,13 +70,11 @@ const KakaoCallbackPage = () => {
 
         router.push(ROUTES.HOME);
       } catch {
-        console.log("error:", error);
         setError("로그인 처리 중 오류가 발생했습니다.");
       }
     };
 
     handleKakaoAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, router]);
 
   if (error) {

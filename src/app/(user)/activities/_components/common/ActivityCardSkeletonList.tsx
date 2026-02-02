@@ -1,9 +1,15 @@
 import ActivityCardSkeleton from "./ActivityCardSkeleton";
 
-const ActivityCardSkeletonList = ({ count }: { count: number }) => {
+interface ActivityCardSkeletonListProps {
+  count: number;
+}
+
+const ActivityCardSkeletonList = ({ count }: ActivityCardSkeletonListProps) => {
+  const skeletons = Array.from({ length: count });
+
   return (
     <>
-      {new Array(count).fill(null).map((_, i) => {
+      {skeletons.map((_, i) => {
         return <ActivityCardSkeleton key={i} />;
       })}
     </>

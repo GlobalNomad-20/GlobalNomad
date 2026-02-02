@@ -1,29 +1,44 @@
+"use client";
+import { useState } from "react";
+
 import CategoryBadge from "../common/CategoryBadge";
 
-import BusSvg from "@/assets/svg/BusSvg";
-import FoodSvg from "@/assets/svg/FoodSvg";
-import MusicSvg from "@/assets/svg/MusicSvg";
-import TourSvg from "@/assets/svg/TourSvg";
-import WellbeingSvg from "@/assets/svg/WellbeingSvg";
+import { CATEGORY_BADGES } from "@/constants/categortBadgeItem";
+import { CategoryValue } from "@/types/activityCategory";
 
-const CategoryFilter = () => {
+interface CategoryFilterProps {
+  setCategory: (value: CategoryValue) => void;
+}
+const CategoryFilter = ({ setCategory }: CategoryFilterProps) => {
+  const [activeCategory, setActiveCategory] = useState<CategoryValue | undefined>(undefined);
+
+  const handleClick = (value: CategoryValue) => {
+    if (value === activeCategory) {
+      setActiveCategory(undefined);
+      setCategory(undefined);
+    } else {
+      setActiveCategory(value);
+      setCategory(value);
+    }
+  };
+
   return (
-    <div className="mb-6 flex gap-2 md:mb-7.5 md:gap-5">
-      <CategoryBadge>
-        <MusicSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 문화 · 예술
-      </CategoryBadge>
-      <CategoryBadge>
-        <FoodSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 식음료
-      </CategoryBadge>
-      <CategoryBadge>
-        <TourSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 투어
-      </CategoryBadge>
-      <CategoryBadge>
-        <BusSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 관광
-      </CategoryBadge>
-      <CategoryBadge>
-        <WellbeingSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" /> 웰빙
-      </CategoryBadge>
+    <div className="mb-6 overflow-x-auto md:mb-7.5">
+      <div className="scrollbar-hide flex w-max gap-2 px-1.5 md:gap-5">
+        {CATEGORY_BADGES.map((item) => {
+          return (
+            <CategoryBadge
+              key={item.key}
+              value={item.value}
+              icon={item.icon}
+              handleBadgeClick={() => {
+                return handleClick(item.value);
+              }}
+              isActive={activeCategory === item.value}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

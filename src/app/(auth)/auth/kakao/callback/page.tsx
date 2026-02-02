@@ -7,6 +7,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
 import useAuthStore from "@/store/useAuthStore";
+import { ROUTES } from "@/constants/routes";
 
 const KakaoCallbackPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,7 @@ const KakaoCallbackPage = () => {
   const isProcessing = useRef(false);
 
   const handleGoHome = () => {
-    router.push("/");
+    router.push(ROUTES.HOME);
   };
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const KakaoCallbackPage = () => {
         useAuthStore.getState().setTokens(data.accessToken, data.refreshToken);
         useAuthStore.getState().login(data.user);
 
-        router.push("/");
+        router.push(ROUTES.HOME);
       } catch {
         console.log("error:", error);
         setError("로그인 처리 중 오류가 발생했습니다.");

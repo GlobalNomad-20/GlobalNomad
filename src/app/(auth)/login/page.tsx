@@ -13,6 +13,7 @@ import useAuthStore from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
 import { useModalStore } from "@/store/useModalStore";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
+import { ROUTES } from "@/constants/routes";
 
 interface ILoginForm {
   email: string;
@@ -50,17 +51,17 @@ const Login = () => {
   };
 
   const handleKakaoClick = () => {
-    window.location.href = "/auth/kakao?state=signin";
+    navigation.replace(ROUTES.AUTH.KAKAO("signin"));
   };
 
   useEffect(() => {
-    if (user && navigation) navigation.replace("/");
+    if (user && navigation) navigation.replace(ROUTES.HOME);
   }, [user, navigation]);
 
   return (
     <div className="flex w-full flex-col items-center px-6">
       <div className="mt-16.25 flex w-full flex-col items-center md:mt-34.75 md:w-160">
-        <Link className="flex flex-col items-center" href="/">
+        <Link className="flex flex-col items-center" href={ROUTES.HOME}>
           <Image width={144} height={144} src="/image/earth.png" alt="logo" />
           <Image
             width={255}

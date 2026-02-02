@@ -1,7 +1,12 @@
 export const ROUTES = {
+  HOME: "/",
+
   AUTH: {
     LOGIN: "/login",
     SIGNUP: "/signup",
+    KAKAO: (state: "signin" | "signup") => {
+      return `/auth/kakao?state=${state}`;
+    },
   },
 
   ACTIVITIES: {

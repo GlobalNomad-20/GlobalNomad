@@ -13,6 +13,7 @@ import useAuthStore from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
 import { useModalStore } from "@/store/useModalStore";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
+import { ROUTES } from "@/constants/routes";
 
 // 회원가입 폼 데이터 정의
 interface ISignUpForm {
@@ -25,7 +26,7 @@ interface ISignUpForm {
 // 회원가입 페이지
 const Register = () => {
   const navigation = useRouter();
-  const { login, setTokens, user } = useAuthStore();
+  const { user } = useAuthStore();
   const { openModal, closeModal } = useModalStore();
 
   const {
@@ -43,18 +44,21 @@ const Register = () => {
     name: "password",
   });
 
+  // 가입 완료 모달 확인 버튼 클릭 시
+  const onRegisterOK = () => {
+    closeModal();
+    navigation.replace(ROUTES.AUTH.LOGIN);
+  };
+
   // 회원가입 처리
   const onRegisterSubmit: SubmitHandler<ISignUpForm> = async (data) => {
     try {
       const { email, password, nickname } = data;
       await client.post(API_ENDPOINTS.USERS.SIGNUP, { email, password, nickname });
-      const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
-      setTokens(res.data.accessToken, res.data.refreshToken);
-      login(res.data.user);
       openModal({
         position: "center",
         containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message="가입이 완료되었습니다." closeModal={closeModal} />,
+        children: <OKModal message="가입이 완료되었습니다." closeModal={onRegisterOK} />,
       });
     } catch {
       openModal({
@@ -66,17 +70,17 @@ const Register = () => {
   };
 
   const handleKakaoClick = () => {
-    window.location.href = "/auth/kakao?state=signup";
+    navigation.replace(ROUTES.AUTH.KAKAO("signup"));
   };
 
   useEffect(() => {
-    if (user && navigation) navigation.replace("/");
+    if (user && navigation) navigation.replace(ROUTES.HOME);
   }, [user, navigation]);
 
   return (
     <div className="mb-25 flex w-full flex-col items-center px-6">
       <div className="mt-16.25 flex w-full flex-col items-center md:mt-34.75 md:w-160">
-        <Link className="flex flex-col items-center" href="/">
+        <Link className="flex flex-col items-center" href={ROUTES.HOME}>
           <Image width={144} height={144} src="/image/earth.png" alt="logo" />
           <Image
             width={255}

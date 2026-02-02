@@ -2,6 +2,7 @@
 
 import ModalPortal from "./ModalPortal";
 
+import { cn } from "@/utils/cn";
 import { useModal } from "@/hooks/useModal";
 
 const Modal = () => {
@@ -11,23 +12,24 @@ const Modal = () => {
 
   const { position = "center", children, containerClassName } = options;
 
-  const wrapperVariants = {
-    center: "items-center justify-center",
-    bottom: "items-end justify-center",
-  };
-
-  const contentVariants = {
-    center: "h-50 w-100 rounded-3xl md:rounded-[30px]",
-    bottom: "h-100 w-full rounded-t-4xl",
-  };
-
   return (
     <ModalPortal>
-      <div className={`fixed inset-0 z-9999 flex bg-black/40 ${wrapperVariants[position]}`}>
+      <div
+        className={cn("fixed inset-0 z-9999 flex bg-black/40", {
+          "items-center justify-center": position === "center",
+          "items-end justify-center": position === "bottom",
+        })}
+      >
         <div
           ref={modalRef}
-          className={`relative z-10 bg-white shadow-xl ${contentVariants[position]}
-            ${containerClassName || ""}`}
+          className={cn(
+            "relative z-10 bg-white shadow-xl",
+            {
+              "h-50 w-100 rounded-3xl md:rounded-[30px]": position === "center",
+              "h-100 w-full rounded-t-4xl": position === "bottom",
+            },
+            containerClassName,
+          )}
         >
           {children}
         </div>

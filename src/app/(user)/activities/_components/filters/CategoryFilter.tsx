@@ -4,8 +4,7 @@ import { useState } from "react";
 import CategoryBadge from "../common/CategoryBadge";
 
 import { CATEGORY_BADGES } from "@/constants/categortBadgeItem";
-
-type CategoryValue = "문화 · 예술" | "식음료" | "스포츠" | "투어" | "관광" | "웰빙" | undefined;
+import { CategoryValue } from "@/types/activityCategory";
 
 interface CategoryFilterProps {
   setCategory: (value: CategoryValue) => void;

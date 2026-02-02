@@ -24,7 +24,9 @@ interface ILoginForm {
 const Login = () => {
   const navigation = useRouter();
   const { login, setTokens, user } = useAuthStore();
-  const { openModal, closeModal } = useModalStore();
+  const { openModal, closeModal } = useModalStore((store) => {
+    return store.actions;
+  });
 
   const {
     register,

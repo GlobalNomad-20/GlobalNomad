@@ -1,24 +1,9 @@
+import ProfileEditField from "./_components/ProfileEditField";
+
 const ProfilePage = () => {
   return (
-    <div className="w-full">
-      {/* edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div>
-      edit 페이지<div className="h-96 bg-amber-950"></div> */}
+    <div className="w-full px-6 pt-8.75 pb-8.75 md:p-0">
+      <ProfileEditField />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { ActivitiesResponse } from "@/types/activityCardList";
 import { GetActivitiesParams } from "@/types/getActivitiesParams";
 
 const useInfiniteActivities = (params: GetActivitiesParams) => {
-  const { sort, method = "cursor", size = 2 } = params;
+  const { sort, method = "cursor", size = 8 } = params;
 
   return useInfiniteQuery<
     ActivitiesResponse,

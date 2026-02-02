@@ -20,10 +20,9 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex h-[53px] w-full items-center rounded-2xl bg-white pt-[6px] pr-[8px] pb-[6px]
-        pl-[20px] shadow-[0_6px_10px_rgba(13,153,255,0.05)] focus-within:shadow-lg
-        focus-within:shadow-sky-100 md:h-[70px] md:pt-[10px] md:pr-3 md:pb-[10px] md:pl-8
-        lg:rounded-3xl"
+      className="flex h-13.25 w-full items-center rounded-2xl bg-white pt-1.5 pr-2 pb-1.5 pl-5
+        shadow-[0_6px_10px_rgba(13,153,255,0.05)] focus-within:shadow-lg focus-within:shadow-sky-100
+        md:h-17.5 md:pt-2.5 md:pr-3 md:pb-2.5 md:pl-8 lg:rounded-3xl"
     >
       <SearchSvg className="h-4 w-4 text-gray-500" />
       <input
@@ -36,7 +35,7 @@ const SearchBar = () => {
       <Button
         type="submit"
         variant="primary"
-        className="md:typo-16-b h-[41px] w-[85px] active:bg-sky-600 md:h-[50px] md:w-30"
+        className="md:typo-16-b h-10.25 w-21.25 active:bg-sky-600 md:h-12.5 md:w-30"
       >
         검색하기
       </Button>

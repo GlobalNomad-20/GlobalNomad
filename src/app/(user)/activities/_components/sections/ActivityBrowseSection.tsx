@@ -22,14 +22,14 @@ const ActivityBrowseSection = () => {
 
   return (
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
-      <div className="mb-2.5 flex justify-between md:mb-[17px] lg:mb-5">
-        <div className="typo-18-b md:typo-32-b leading-[26px] md:leading-[32px]">🛼 모든 체험</div>
+      <div className="mb-2.5 flex justify-between md:mb-4.25 lg:mb-5">
+        <div className="typo-18-b md:typo-32-b leading-6.5 md:leading-8">🛼 모든 체험</div>
         <DropdownOption setSort={setSort} />
       </div>
       <CategoryFilter setCategory={setCategory} />
       <div
-        className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
-          lg:grid-cols-4 lg:gap-[24px]"
+        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+          lg:gap-6"
       >
         {isLoading ? (
           <ActivityCardSkeletonList count={8} />

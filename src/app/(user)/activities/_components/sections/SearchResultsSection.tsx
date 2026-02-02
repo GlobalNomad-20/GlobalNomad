@@ -29,8 +29,8 @@ const SearchResultsSection = () => {
       </div>
       <div className="w-full">
         <div
-          className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
-            lg:grid-cols-4 lg:gap-[24px]"
+          className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+            lg:gap-6"
         >
           {data?.activities.map((activity) => {
             return <ActivityCard key={activity.id} activity={activity} />;

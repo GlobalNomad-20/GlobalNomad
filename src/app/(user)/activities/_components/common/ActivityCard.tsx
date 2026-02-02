@@ -27,22 +27,22 @@ const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
           py-4 shadow-[0px_-4.5px_11.25px_0px_rgba(0,0,0,0.05)] md:h-34 md:px-7.5 md:py-5"
       >
         <div
-          className="md:typo-18-b mb:mb-0.5 mb-1 truncate text-sm leading-[18px] font-semibold
-            text-[#1F1F22] md:leading-[26px]"
+          className="md:typo-18-b mb:mb-0.5 mb-1 truncate text-sm leading-4.5 font-semibold
+            text-[#1F1F22] md:leading-6.5"
         >
           {activity.title}
         </div>
         <div
-          className="typo-12-m md:typo-14-m md:md-4.5 mb-2.5 flex items-center leading-[18px]
-            md:leading-[24px]"
+          className="typo-12-m md:typo-14-m md:md-4.5 mb-2.5 flex items-center leading-4.5
+            md:leading-6"
         >
           <StarSvg className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
           <span className="text-gray-950">{activity.rating}</span>
-          <span className="ml-[2px] text-gray-400">({activity.reviewCount})</span>
+          <span className="ml-0.5 text-gray-400">({activity.reviewCount})</span>
         </div>
         <div
-          className="font-pretendard md:typo-18-b flex items-center text-[15px] leading-[18px]
-            font-bold text-gray-950 md:leading-[26px]"
+          className="font-pretendard md:typo-18-b flex items-center text-[15px] leading-4.5
+            font-bold text-gray-950 md:leading-6.5"
         >
           ₩ {activity.price}
           <span className="typo-12-b md:typo-16-m text-gray-400">/ 인</span>

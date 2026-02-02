@@ -1,8 +1,9 @@
 "use client";
 
-import clsx from "clsx";
 import Link from "next/link";
 import { ReactNode } from "react";
+
+import { cn } from "@/utils/cn";
 
 interface NavItemProps {
   children: ReactNode;
@@ -21,7 +22,7 @@ const NavItem = ({ children, href, isActive, onClick }: NavItemProps) => {
     <li onClick={handleOnClick}>
       <Link
         href={href}
-        className={clsx(
+        className={cn(
           "flex items-center gap-2 rounded-[14px] py-3.75 pl-5 md:py-3.5 lg:py-3.75",
           isActive && "bg-primary-100 text-gray-950",
         )}

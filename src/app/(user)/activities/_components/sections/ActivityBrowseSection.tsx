@@ -1,0 +1,30 @@
+import ActivityCard from "../common/ActivityCard";
+import CategoryFilter from "../filters/CategoryFilter";
+
+const ActivityBrowseSection = () => {
+  return (
+    <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
+      <div className="mb-2.5 flex justify-between md:mb-[17px] lg:mb-5">
+        <div className="typo-18-b md:typo-32-b leading-[26px] md:leading-[32px]">🛼 모든 체험</div>
+        <div>드롭다운 필터</div>
+      </div>
+      <CategoryFilter />
+      <div
+        className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
+          lg:grid-cols-4 lg:gap-[24px]"
+      >
+        <ActivityCard isSmall />
+        <ActivityCard isSmall />
+        <ActivityCard isSmall />
+        <ActivityCard isSmall />
+        <ActivityCard isSmall />
+        <ActivityCard isSmall />
+      </div>
+      <div className="flex justify-center">
+        <div>페이지네이션</div>
+      </div>
+    </div>
+  );
+};
+
+export default ActivityBrowseSection;

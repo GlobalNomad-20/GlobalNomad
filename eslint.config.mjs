@@ -187,7 +187,32 @@ export default defineConfig([
   {
     files: [...COMPONENT_GLOBS, ...APP_COMPONENTS_GLOBS],
     rules: {
-      "check-file/filename-naming-convention": ["error", { "**/*.{tsx,jsx}": "PASCAL_CASE" }],
+      "check-file/filename-naming-convention": [
+        "error",
+        { "**/*.{tsx,jsx}": "PASCAL_CASE" },
+        { ignoreMiddleExtensions: true },
+      ],
+    },
+  },
+
+  // Next.js App Router 예약 파일들은 파일명 규칙 검사에서 제외
+  {
+    files: [
+      "src/app/**/error.{js,jsx,ts,tsx}",
+      "src/app/**/global-error.{js,jsx,ts,tsx}",
+      "src/app/**/not-found.{js,jsx,ts,tsx}",
+      "src/app/**/loading.{js,jsx,ts,tsx}",
+      "src/app/**/layout.{js,jsx,ts,tsx}",
+      "src/app/**/template.{js,jsx,ts,tsx}",
+      "src/app/**/page.{js,jsx,ts,tsx}",
+      "src/app/**/default.{js,jsx,ts,tsx}",
+      "src/app/**/route.{js,jsx,ts,tsx}",
+      "src/app/**/sitemap.{js,jsx,ts,tsx}",
+      "src/app/**/robots.{js,jsx,ts,tsx}",
+      "src/middleware.{js,ts}",
+    ],
+    rules: {
+      "check-file/filename-naming-convention": "off",
     },
   },
 

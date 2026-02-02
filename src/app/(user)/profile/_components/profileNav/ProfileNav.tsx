@@ -10,19 +10,28 @@ import { useProfileNavState } from "../../_hooks/useProfileNavState";
 import NavItem from "./NavItem";
 
 import EditSvg from "@/assets/svg/EditSvg";
+import LogOutSvg from "@/assets/svg/LogOutSvg";
 import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { PROFILE_SIDE_MENU } from "@/constants/profileSideMenu";
 import { ROUTES } from "@/constants/routes";
+import useAuthStore from "@/store/useAuthStore";
 
 const ProfileNav = () => {
   const router = useRouter();
   const { pathname, isMobile, shouldHideNav, isActive } = useProfileNavState(MEDIA_QUERY.MOBILE);
+  const logout = useAuthStore((state) => {
+    return state.logout;
+  });
 
   useEffect(() => {
     if (isMobile === false && pathname === ROUTES.PROFILE.ROOT) {
       router.replace(ROUTES.PROFILE.EDIT);
     }
   }, [isMobile, pathname, router]);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   if (shouldHideNav) return null;
 
@@ -54,6 +63,14 @@ const ProfileNav = () => {
               </NavItem>
             );
           })}
+          <NavItem
+            onClick={handleLogout}
+            href={ROUTES.ACTIVITIES.ROOT}
+            isActive={isActive(ROUTES.ACTIVITIES.ROOT)}
+          >
+            <LogOutSvg />
+            <div>로그아웃</div>
+          </NavItem>
         </ul>
       </nav>
     </div>

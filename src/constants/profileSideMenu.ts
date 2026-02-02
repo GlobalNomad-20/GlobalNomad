@@ -2,7 +2,6 @@ import type { ComponentType } from "react";
 
 import CalenderSvg from "@/assets/svg/CalenderSvg";
 import ListSvg from "@/assets/svg/ListSvg";
-import LogOutSvg from "@/assets/svg/LogOutSvg";
 import SettingSvg from "@/assets/svg/SettingSvg";
 import UserSvg from "@/assets/svg/UserSvg";
 import { ROUTES } from "@/constants/routes";
@@ -33,10 +32,5 @@ export const PROFILE_SIDE_MENU: ProfileSideMenuItem[] = [
     label: "예약 현황",
     href: ROUTES.PROFILE.RESERVATIONS_STATUS,
     Icon: SettingSvg,
-  },
-  {
-    label: "로그아웃",
-    href: ROUTES.ACTIVITIES.ROOT,
-    Icon: LogOutSvg,
   },
 ];

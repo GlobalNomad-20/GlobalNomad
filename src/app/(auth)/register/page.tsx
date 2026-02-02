@@ -70,7 +70,7 @@ const Register = () => {
   };
 
   const handleKakaoClick = () => {
-    navigation.replace(ROUTES.AUTH.KAKAO("signup"));
+    location.href = ROUTES.AUTH.KAKAO("signup");
   };
 
   useEffect(() => {

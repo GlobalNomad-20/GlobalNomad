@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   const handleKakaoClick = () => {
-    navigation.replace(ROUTES.AUTH.KAKAO("signin"));
+    location.href = ROUTES.AUTH.KAKAO("signin");
   };
 
   useEffect(() => {

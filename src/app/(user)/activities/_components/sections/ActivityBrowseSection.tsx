@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import useActivities from "../../_hooks/useActivities";
 import ActivityCard from "../common/ActivityCard";
+import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
 import DropdownOption from "../common/DropdownOption";
 import CategoryFilter from "../filters/CategoryFilter";
 
@@ -11,7 +12,7 @@ const ActivityBrowseSection = () => {
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string>("latest");
 
-  const { data } = useActivities({
+  const { data, isLoading } = useActivities({
     category: category,
     keyword: undefined,
     sort: sort,
@@ -30,9 +31,13 @@ const ActivityBrowseSection = () => {
         className="mb-6 grid grid-cols-2 gap-[18px] md:mb-7.5 md:grid-cols-2 md:gap-[20px]
           lg:grid-cols-4 lg:gap-[24px]"
       >
-        {data?.activities.map((activity) => {
-          return <ActivityCard key={activity.id} activity={activity} />;
-        })}
+        {isLoading ? (
+          <ActivityCardSkeletonList count={8} />
+        ) : (
+          data?.activities.map((activity) => {
+            return <ActivityCard key={activity.id} activity={activity} />;
+          })
+        )}
       </div>
       <div className="flex justify-center">
         <div>페이지네이션</div>

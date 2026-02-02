@@ -11,7 +11,9 @@ const UserLayout = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <main className="min-h-[calc(100vh-164px)] md:min-h-[calc(100vh-220px)]">{children}</main>
+      <main className="min-h-[calc(100vh-116px)] pt-12 md:min-h-[calc(100vh-140px)] md:pt-20">
+        {children}
+      </main>
       <Footer />
     </>
   );

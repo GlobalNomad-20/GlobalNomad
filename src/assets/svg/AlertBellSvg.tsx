@@ -1,6 +1,18 @@
-const AlertBellSvg = () => {
+interface AlertBellSvgProps {
+  size?: number;
+  className?: string;
+}
+
+const AlertBellSvg = ({ size = 24, className }: AlertBellSvgProps) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M13.5039 4.12654C13.5039 4.98709 12.8063 5.68471 11.9457 5.68471C11.0852 5.68471 10.3876 4.98709 10.3876 4.12654C10.3876 3.26598 11.0852 2.56836 11.9457 2.56836C12.8063 2.56836 13.5039 3.26598 13.5039 4.12654Z"
         fill="currentColor"

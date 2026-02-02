@@ -1,13 +1,19 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 import getActivities from "@/lib/server/activities";
 import { ActivitiesResponse } from "@/types/activityCardList";
 import { GetActivitiesParams } from "@/types/getActivitiesParams";
 
 const useInfiniteActivities = (params: GetActivitiesParams) => {
-  const { sort, method = "cursor", size = 8 } = params;
+  const { sort, method = "cursor", size = 2 } = params;
 
-  return useInfiniteQuery<ActivitiesResponse, Error, ActivitiesResponse, unknown[], number | null>({
+  return useInfiniteQuery<
+    ActivitiesResponse,
+    Error,
+    InfiniteData<ActivitiesResponse>,
+    unknown[],
+    number | null
+  >({
     queryKey: ["activities", sort, method],
     queryFn: ({ pageParam }) => {
       return getActivities({

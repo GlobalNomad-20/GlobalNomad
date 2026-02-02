@@ -8,7 +8,7 @@ export interface Activity {
 }
 
 export interface ActivitiesResponse {
-  cursorId: number;
+  cursorId: number | null;
   totalCount: number;
   activities: Activity[];
 }

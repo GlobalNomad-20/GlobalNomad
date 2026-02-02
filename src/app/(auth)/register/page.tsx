@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
+import axios from "axios";
 
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
@@ -63,11 +64,17 @@ const Register = () => {
         children: <OKModal message="가입이 완료되었습니다." closeModal={onRegisterOK} />,
         onBackgroundClose: onRegisterOK,
       });
-    } catch {
+    } catch (e: unknown) {
+      let message = "알 수 없는 에러";
+      if (axios.isAxiosError(e)) {
+        const code = e.response?.status;
+        if (code == 409) message = "이미 사용 중인 이메일입니다.";
+        else message = e.message;
+      }
       openModal({
         position: "center",
         containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message="이미 사용 중인 이메일입니다." closeModal={closeModal} />,
+        children: <OKModal message={message} closeModal={closeModal} />,
       });
     }
   };

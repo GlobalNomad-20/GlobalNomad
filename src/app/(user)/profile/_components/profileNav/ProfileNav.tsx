@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,6 +14,7 @@ import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { PROFILE_SIDE_MENU } from "@/constants/profileSideMenu";
 import { ROUTES } from "@/constants/routes";
 import useAuthStore from "@/store/useAuthStore";
+import { cn } from "@/utils/cn";
 
 const ProfileNav = () => {
   const router = useRouter();
@@ -56,9 +56,7 @@ const ProfileNav = () => {
           {PROFILE_SIDE_MENU.map(({ href, label, Icon }) => {
             return (
               <NavItem key={label} href={href} isActive={isActive(href)}>
-                <Icon
-                  className={clsx("md:size-5 lg:size-6", isActive(href) && "text-primary-500")}
-                />
+                <Icon className={cn("md:size-5 lg:size-6", isActive(href) && "text-primary-500")} />
                 <div>{label}</div>
               </NavItem>
             );

@@ -20,8 +20,8 @@ const Activities = () => {
         </div>
       </div>
       <div
-        className="relative z-20 -mt-200 flex flex-col items-center justify-center pt-18.5 pb-34
-          md:-mt-350 md:pt-25.75 md:pb-51 lg:pb-54.5"
+        className="ju relative z-20 -mt-[800px] flex flex-col items-center pt-[74px] pb-34
+          md:-mt-[1400px] md:pt-[103px] md:pb-[204px] lg:pb-[218px]"
       >
         <BannerSection />
         <SearchSection />

@@ -27,7 +27,9 @@ interface ISignUpForm {
 const Register = () => {
   const navigation = useRouter();
   const { user } = useAuthStore();
-  const { openModal, closeModal } = useModalStore();
+  const { openModal, closeModal } = useModalStore((store) => {
+    return store.actions;
+  });
 
   const {
     control,
@@ -59,6 +61,7 @@ const Register = () => {
         position: "center",
         containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
         children: <OKModal message="가입이 완료되었습니다." closeModal={onRegisterOK} />,
+        onBackgroundClose: onRegisterOK,
       });
     } catch {
       openModal({
@@ -155,7 +158,6 @@ const Register = () => {
           <div className="text-16-m mt-5 mb-2.5 text-gray-950">비밀번호 확인</div>
           <PasswordInput
             placeholder="비밀번호를 한 번 더 입력해 주세요"
-            type="password"
             className={`w-full ${errors.passwordConfirm ? "border-red-500" : ""}`}
             {...register("passwordConfirm", {
               required: "비밀번호가 일치하지 않습니다.",

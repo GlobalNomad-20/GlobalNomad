@@ -38,10 +38,11 @@ const KakaoCallbackPage = () => {
 
         let response: AxiosResponse;
 
-        if (state == "signup") {
+        if (state === "signup") {
           // 회원가입
+          const nickname = `카카오유저_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
           response = await client.post(API_ENDPOINTS.OAUTH.SIGN_UP("kakao"), {
-            nickname: "카카오유저",
+            nickname,
             redirectUri,
             token: code,
           });

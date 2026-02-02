@@ -4,7 +4,7 @@ import EyeOff from "@/components/image/EyeOff";
 import EyeOn from "@/components/image/EyeOn";
 
 type PasswordInputProps = {
-  className: string;
+  className?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(

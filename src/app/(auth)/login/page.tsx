@@ -22,7 +22,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const canLogin = email && password && !emailError && !passwordError;
-  const { openModal } = useModalStore();
+  const { openModal } = useModalStore((store) => {
+    return store.actions;
+  });
 
   // 로그인 처리
   const onLoginAction = async (formData: FormData) => {

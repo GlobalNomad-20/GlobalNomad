@@ -8,17 +8,30 @@ import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
 import DropdownOption from "../common/DropdownOption";
 import CategoryFilter from "../filters/CategoryFilter";
 
+import Pagination from "@/app/(user)/_components/pagination/Pagination";
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PAGE_LIMIT = 8;
+
 const ActivityBrowseSection = () => {
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string>("latest");
+  const [page, setPage] = useState(1);
 
   const { data, isLoading } = useActivities({
     category: category,
     keyword: undefined,
     sort: sort,
-    page: 1,
-    size: 20,
+    page,
+    size: PAGE_LIMIT,
   });
+
+  const totalCount = data?.totalCount ?? 0;
+  const totalPages = Math.ceil(totalCount / PAGE_LIMIT);
+
+  const handlePage = (num: number) => {
+    setPage(num);
+  };
 
   return (
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
@@ -39,9 +52,7 @@ const ActivityBrowseSection = () => {
           })
         )}
       </div>
-      <div className="flex justify-center">
-        <div>페이지네이션</div>
-      </div>
+      <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePage} />
     </div>
   );
 };

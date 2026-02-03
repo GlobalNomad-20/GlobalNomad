@@ -49,7 +49,7 @@ const PopularActivitySection = () => {
         </div>
       </div>
       {/* desktop & tablet */}
-      <div className="flex hidden gap-3 md:block md:gap-5 lg:gap-6">
+      <div className="hidden gap-3 md:block md:gap-5 lg:gap-6">
         <Swiper
           onReachEnd={handleReachEnd}
           navigation={true}

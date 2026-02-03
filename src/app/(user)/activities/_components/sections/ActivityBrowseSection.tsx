@@ -18,7 +18,7 @@ const ActivityBrowseSection = () => {
   const [sort, setSort] = useState<string>("latest");
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useActivities({
+  const { data, isLoading, isPlaceholderData } = useActivities({
     category: category,
     keyword: undefined,
     sort: sort,
@@ -59,7 +59,12 @@ const ActivityBrowseSection = () => {
           return <ActivityCard key={activity.id} activity={activity} />;
         })}
       </div>
-      <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePage} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={handlePage}
+        isPlaceholderData={isPlaceholderData}
+      />
     </div>
   );
 };

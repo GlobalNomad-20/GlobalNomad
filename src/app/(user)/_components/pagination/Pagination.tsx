@@ -5,9 +5,10 @@ interface Props {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  isPlaceholderData: boolean;
 }
 
-const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, isPlaceholderData }: Props) => {
   const handleClickPrev = () => {
     onPageChange(Math.max(currentPage - 1, 1));
   };
@@ -51,7 +52,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
 
         <button
           onClick={handleClickNext}
-          disabled={currentPage >= totalPages}
+          disabled={currentPage >= totalPages || isPlaceholderData}
           className="ml-3.5 cursor-pointer disabled:text-gray-300"
         >
           <PaginationNext />

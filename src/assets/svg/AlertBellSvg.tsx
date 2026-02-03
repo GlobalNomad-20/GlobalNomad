@@ -1,9 +1,10 @@
 interface AlertBellSvgProps {
   size?: number;
+  activeColor?: string;
   className?: string;
 }
 
-const AlertBellSvg = ({ size = 24, className }: AlertBellSvgProps) => {
+const AlertBellSvg = ({ size = 24, activeColor = "#FF2727", className }: AlertBellSvgProps) => {
   return (
     <svg
       className={className}
@@ -25,7 +26,7 @@ const AlertBellSvg = ({ size = 24, className }: AlertBellSvgProps) => {
         d="M14.3514 19.0197C14.3513 20.3518 13.2714 21.4318 11.9393 21.4318C10.6904 21.4317 9.6633 20.4822 9.5399 19.2658L9.5272 19.0197H14.3514Z"
         fill="currentColor"
       />
-      <rect x="15" y="4.54297" width="6" height="6" rx="3" fill="#FF2727" />
+      <rect x="15" y="4.54297" width="6" height="6" rx="3" fill={activeColor} />
       <rect x="15" y="4.54297" width="6" height="6" rx="3" stroke="white" />
     </svg>
   );

@@ -33,6 +33,17 @@ const ActivityBrowseSection = () => {
     setPage(num);
   };
 
+  if (isLoading) {
+    return (
+      <div
+        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+          lg:gap-6"
+      >
+        <ActivityCardSkeletonList count={8} />
+      </div>
+    );
+  }
+
   return (
     <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
       <div className="mb-2.5 flex justify-between md:mb-4.25 lg:mb-5">
@@ -44,13 +55,9 @@ const ActivityBrowseSection = () => {
         className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
           lg:gap-6"
       >
-        {isLoading ? (
-          <ActivityCardSkeletonList count={8} />
-        ) : (
-          data?.activities.map((activity) => {
-            return <ActivityCard key={activity.id} activity={activity} />;
-          })
-        )}
+        {data?.activities.map((activity) => {
+          return <ActivityCard key={activity.id} activity={activity} />;
+        })}
       </div>
       <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePage} />
     </div>

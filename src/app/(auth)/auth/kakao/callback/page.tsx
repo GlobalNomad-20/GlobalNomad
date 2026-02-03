@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { AxiosResponse } from "axios";
@@ -7,6 +8,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
 import useAuthStore from "@/store/useAuthStore";
+import { ROUTES } from "@/constants/routes";
 
 const KakaoCallbackPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +17,7 @@ const KakaoCallbackPage = () => {
   const isProcessing = useRef(false);
 
   const handleGoHome = () => {
-    router.push("/");
+    router.push(ROUTES.HOME);
   };
 
   useEffect(() => {
@@ -36,10 +38,11 @@ const KakaoCallbackPage = () => {
 
         let response: AxiosResponse;
 
-        if (state == "signup") {
+        if (state === "signup") {
           // 회원가입
+          const nickname = `카카오유저_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
           response = await client.post(API_ENDPOINTS.OAUTH.SIGN_UP("kakao"), {
-            nickname: "카카오유저",
+            nickname,
             redirectUri,
             token: code,
           });
@@ -66,15 +69,13 @@ const KakaoCallbackPage = () => {
         useAuthStore.getState().setTokens(data.accessToken, data.refreshToken);
         useAuthStore.getState().login(data.user);
 
-        router.push("/");
+        router.push(ROUTES.HOME);
       } catch {
-        console.log("error:", error);
         setError("로그인 처리 중 오류가 발생했습니다.");
       }
     };
 
     handleKakaoAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, router]);
 
   if (error) {

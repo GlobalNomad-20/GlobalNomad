@@ -1,27 +1,27 @@
 export const RESERVATION_STATUS_BADGES = {
   pending: {
     label: "예약 요청",
-    textColor: "#1790A0",
-    bgColor: "#DDF9F9",
+    textColor: "text-[#1790A0]",
+    bgColor: "bg-[#DDF9F9]",
   },
   canceled: {
     label: "예약 취소",
-    textColor: "text-gray-600",
-    bgColor: "bg-gray-100",
+    textColor: "text-[#383D41]",
+    bgColor: "bg-[#E2E3E5]",
   },
   confirmed: {
     label: "예약 완료",
-    textColor: "#2BA90D",
-    bgColor: "#E9FBE4",
+    textColor: "text-[#2BA90D]",
+    bgColor: "bg-[#E9FBE4]",
   },
   declined: {
     label: "예약 거절",
-    textColor: "#F96767",
-    bgColor: "#FCECEA",
+    textColor: "text-[#F96767]",
+    bgColor: "bg-[#FCECEA]",
   },
   completed: {
     label: "체험 완료",
-    textColor: "#0D6CD1",
-    bgColor: "#DAF0FF",
+    textColor: "text-[#0D6CD1]",
+    bgColor: "bg-[#DAF0FF]",
   },
 } as const;

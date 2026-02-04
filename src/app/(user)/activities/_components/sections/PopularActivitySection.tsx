@@ -16,9 +16,8 @@ const PopularActivitySection = () => {
   });
 
   const handleReachEnd = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
+    if (!hasNextPage) return;
+    fetchNextPage();
   };
 
   const activities =
@@ -38,14 +37,29 @@ const PopularActivitySection = () => {
   }
 
   return (
-    <div className="flex w-81.75 flex-col gap-1 md:w-171 md:gap-4 lg:w-280 lg:gap-5">
+    <div className="flex w-81.75 flex-col gap-1 md:w-180 md:gap-4 lg:w-287 lg:gap-5">
       <div className="typo-18-b md:typo-32-b leading-6.5 md:leading-8">🔥 인기 체험</div>
       {/* mobile */}
-      <div className="w-full overflow-scroll md:hidden">
-        <div className="flex gap-3 py-2.5">
-          {activities.map((activity) => {
-            return <ActivityCard key={activity.id} activity={activity} isSmall />;
-          })}
+      <div className="md:hidden">
+        <div className="w-full min-w-0">
+          <Swiper
+            onReachEnd={handleReachEnd}
+            slidesPerView="auto"
+            spaceBetween={12}
+            freeMode
+            watchOverflow={false}
+            observer
+            observeParents
+            className="w-full"
+          >
+            {activities.map((activity) => {
+              return (
+                <SwiperSlide key={activity.id} className="w-33! shrink-0! px-2 py-3">
+                  <ActivityCard activity={activity} isSmall />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
       </div>
       {/* desktop & tablet */}
@@ -56,12 +70,12 @@ const PopularActivitySection = () => {
           modules={[Navigation]}
           breakpoints={{
             768: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 4, spaceBetween: 24 },
+            1024: { slidesPerView: 4, spaceBetween: 2 },
           }}
         >
           {activities.map((activity) => {
             return (
-              <SwiperSlide key={activity.id} className="py-3 md:gap-3">
+              <SwiperSlide key={activity.id} className="px-3 py-6 md:gap-3">
                 <ActivityCard key={activity.id} activity={activity} isSmall />
               </SwiperSlide>
             );

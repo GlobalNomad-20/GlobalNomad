@@ -6,11 +6,10 @@ import AlertItem from "./AlertItem";
 
 import { NotificationResponse } from "@/types/notification";
 import { formatScheduleRange, getRelativeTime } from "@/utils/date";
-// 필요한 다른 import들 (AlertItem, getRelativeTime 등)은 상위에서 가져왔다고 가정합니다.
 
 interface NotificationListProps {
   isEmpty: boolean;
-  data: InfiniteData<NotificationResponse, unknown> | undefined; // 실제 데이터 타입으로 교체 필요 (예: InfiniteData<Page>)
+  data: InfiniteData<NotificationResponse, unknown> | undefined;
   isFetchingNextPage: boolean;
   onReachEnd: () => void;
   onDelete: (id: number) => void;

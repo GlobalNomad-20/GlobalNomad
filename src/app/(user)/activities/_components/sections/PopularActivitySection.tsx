@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -9,7 +11,13 @@ import useInfiniteActivities from "../../_hooks/useInfiniteActivities";
 import ActivityCard from "../common/ActivityCard";
 import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
 
+import SwiperNextSvg from "@/assets/svg/SwiperNextSvg";
+import SwiperPrevSvg from "@/assets/svg/SwiperPrevSvg";
+
 const PopularActivitySection = () => {
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteActivities({
     sort: "most_reviewed",
     method: "cursor",
@@ -18,6 +26,16 @@ const PopularActivitySection = () => {
   const handleReachEnd = () => {
     if (!hasNextPage) return;
     fetchNextPage();
+  };
+
+  const handleSwiperInit = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
+
+  const handleSlideChange = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
   };
 
   const activities =
@@ -63,10 +81,23 @@ const PopularActivitySection = () => {
         </div>
       </div>
       {/* desktop & tablet */}
-      <div className="hidden gap-3 md:block md:gap-5 lg:gap-6">
+      <div className="relative hidden gap-3 md:block md:gap-5 lg:gap-6">
+        <button
+          className={`swiper-prev absolute top-1/2 left-3 z-20 -translate-x-1/2 -translate-y-1/2
+            cursor-pointer rounded-[100px] border border-gray-300 bg-white px-4.75 py-5.25
+            text-black shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] transition hover:bg-gray-50
+            ${isBeginning ? "pointer-events-none opacity-0" : "opacity-100"} `}
+        >
+          <SwiperPrevSvg className="h-3 w-4" />
+        </button>
         <Swiper
+          onSwiper={handleSwiperInit}
+          onSlideChange={handleSlideChange}
           onReachEnd={handleReachEnd}
-          navigation={true}
+          navigation={{
+            prevEl: ".swiper-prev",
+            nextEl: ".swiper-next",
+          }}
           modules={[Navigation]}
           breakpoints={{
             768: { slidesPerView: 2, spaceBetween: 20 },
@@ -81,6 +112,14 @@ const PopularActivitySection = () => {
             );
           })}
         </Swiper>
+        <button
+          className={`swiper-next absolute top-1/2 right-2 z-20 translate-x-1/2 -translate-y-1/2
+            cursor-pointer rounded-[100px] border border-gray-300 bg-white px-4.75 py-5.25
+            text-black shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] transition hover:bg-gray-50
+            ${isEnd ? "pointer-events-none opacity-0" : "opacity-100"} `}
+        >
+          <SwiperNextSvg className="h-3 w-4" />
+        </button>
       </div>
     </div>
   );

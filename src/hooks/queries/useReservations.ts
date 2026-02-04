@@ -1,24 +1,78 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import getReservations from "@/api/reservations";
-import { GetMyReservationsParams } from "@/types/getReservationsParams";
-import { ReservationsResponse } from "@/types/reservations";
+import { createReservationReview, deleteReservation, getReservations } from "@/api/reservations";
+import {
+  GetReservationsParams,
+  ReservationsResponse,
+  ReservationReviewRequest,
+  ReservationStatus,
+} from "@/types/reservations";
 
-const useReservations = (params: GetMyReservationsParams) => {
-  const { cursorId, size, status } = params;
-
-  return useQuery<ReservationsResponse>({
-    queryKey: ["reservations", cursorId, size, status],
-    queryFn: () => {
+export const useGetReservations = (params: GetReservationsParams) => {
+  const { size, status } = params;
+  return useInfiniteQuery<ReservationsResponse>({
+    queryKey: ["reservations", size, status],
+    initialPageParam: null,
+    queryFn: ({ pageParam }) => {
       return getReservations({
-        cursorId,
+        cursorId: pageParam as number | undefined,
         size,
         status,
       });
     },
+    getNextPageParam: (lastPage) => {
+      if (lastPage.cursorId) {
+        return lastPage.cursorId;
+      }
+      return null;
+    },
   });
 };
 
-export default useReservations;
+export const useDeleteReservation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      reservationId,
+      status,
+    }: {
+      reservationId: number;
+      status: ReservationStatus;
+    }) => {
+      return deleteReservation(reservationId, status);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reservations"] });
+      console.log("예약이 취소되었습니다.");
+    },
+    onError: (error) => {
+      console.error("상태 업데이트 실패:", error);
+    },
+  });
+};
+
+export const useCreateReservationReview = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      reservationId,
+      reviewData,
+    }: {
+      reservationId: number;
+      reviewData: ReservationReviewRequest;
+    }) => {
+      return createReservationReview(reservationId, reviewData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reservations"] });
+      console.log("리뷰가 등록되었습니다.");
+    },
+    onError: (error) => {
+      console.error("리뷰 등록 실패:", error);
+    },
+  });
+};

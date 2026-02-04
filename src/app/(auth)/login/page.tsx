@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
@@ -11,25 +12,33 @@ import { client } from "@/lib/client/client";
 import useAuthStore from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
 import { useModalStore } from "@/store/useModalStore";
-import InvalidPasswordModal from "@/app/(auth)/login/_components/InvalidPasswordModal";
+import OKModal from "@/app/(auth)/login/_components/OKModal";
+import { ROUTES } from "@/constants/routes";
+
+interface ILoginForm {
+  email: string;
+  password: string;
+}
 
 // 로그인 페이지
 const Login = () => {
   const navigation = useRouter();
   const { login, setTokens, user } = useAuthStore();
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const canLogin = email && password && !emailError && !passwordError;
-  const { openModal } = useModalStore((store) => {
+  const { openModal, closeModal } = useModalStore((store) => {
     return store.actions;
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<ILoginForm>({
+    mode: "onBlur",
+  });
+
   // 로그인 처리
-  const onLoginAction = async (formData: FormData) => {
-    const email = formData.get("email")?.toString() ?? "";
-    const password = formData.get("password")?.toString() ?? "";
+  const onLoginAction: SubmitHandler<ILoginForm> = async (data) => {
+    const { email, password } = data;
     try {
       const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
       setTokens(res.data.accessToken, res.data.refreshToken);
@@ -38,88 +47,74 @@ const Login = () => {
       openModal({
         position: "center",
         containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <InvalidPasswordModal />,
+        children: <OKModal message="비밀번호가 일치하지 않습니다." closeModal={closeModal} />,
       });
     }
   };
 
-  // 이메일 검증
-  const handleValidateEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.exec(email)) setEmailError(false);
-    else setEmailError(true);
-  };
-
-  // 패스워드 검증
-  const handleValidatePassword = () => {
-    setPasswordError(password.length < 8);
-  };
-
-  // 이메일이 변경됐을 때
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  // 패스워드가 변경됐을 때
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
   const handleKakaoClick = () => {
-    window.location.href = "/auth/kakao?state=signin";
+    location.href = ROUTES.AUTH.KAKAO("signin");
   };
 
   useEffect(() => {
-    if (user && navigation) navigation.replace("/");
+    if (user && navigation) navigation.replace(ROUTES.HOME);
   }, [user, navigation]);
 
   return (
     <div className="flex w-full flex-col items-center px-6">
       <div className="mt-16.25 flex w-full flex-col items-center md:mt-34.75 md:w-160">
-        <Image width={144} height={144} src="/image/earth.png" alt="logo" />
-        <Image
-          width={255}
-          height={31}
-          src="/image/logo.png"
-          alt="logo text"
-          className="mt-6 hidden md:block"
-        />
-        <form className="mt-10.5 w-full md:mt-15.5" action={onLoginAction}>
+        <Link className="flex flex-col items-center" href={ROUTES.HOME}>
+          <Image width={144} height={144} src="/image/earth.png" alt="logo" />
+          <Image
+            width={255}
+            height={31}
+            src="/image/logo.png"
+            alt="logo text"
+            className="mt-6 hidden md:block"
+          />
+        </Link>
+        <form className="mt-10.5 w-full md:mt-15.5" onSubmit={handleSubmit(onLoginAction)}>
           {/* 이메일 */}
           <div className="typo-16-m mb-2.5 text-gray-950">이메일</div>
           <input
+            {...register("email", {
+              required: "이메일을 입력해 주세요",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "이메일 형식으로 작성해주세요.",
+              },
+            })}
             placeholder="이메일을 입력해 주세요"
             type="email"
-            name="email"
             className={`text-16-m w-full rounded-2xl border
-              ${emailError ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
-            value={email}
-            onChange={handleChangeEmail}
-            onBlur={handleValidateEmail}
+              ${errors.email ? "border-red-500" : "border-gray-100"} py-[17.5px] pl-5 outline-0`}
           />
 
-          {emailError && (
-            <div className="typo-12-m mt-1.5 text-red-500">이메일 형식으로 작성해 주세요.</div>
+          {errors.email && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.email.message}</div>
           )}
 
           {/* 패스워드 */}
           <div className="text-16-m mt-5 mb-2.5 text-gray-950">비밀번호</div>
           <PasswordInput
+            {...register("password", {
+              required: "비밀번호를 입력해 주세요",
+              minLength: {
+                value: 8,
+                message: "8자 이상 입력해 주세요.",
+              },
+            })}
             placeholder="비밀번호를 입력해 주세요"
             type="password"
-            name="password"
-            className={`w-full ${passwordError ? "border-red-500" : ""}`}
-            value={password}
-            onChange={handleChangePassword}
-            onBlur={handleValidatePassword}
+            className={`w-full ${errors.password ? "border-red-500" : ""}`}
           />
 
-          {passwordError && (
-            <div className="typo-12-m mt-1.5 text-red-500">8자 이상 입력해 주세요.</div>
+          {errors.password && (
+            <div className="typo-12-m mt-1.5 text-red-500">{errors.password.message}</div>
           )}
 
           <Button
-            variant={canLogin ? "primary" : "disabled"}
+            variant={isValid ? "primary" : "disabled"}
             className="mt-7.5 h-13.5 w-full text-white"
           >
             <div>로그인하기</div>

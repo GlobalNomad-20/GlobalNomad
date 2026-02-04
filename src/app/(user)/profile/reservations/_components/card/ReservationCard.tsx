@@ -14,11 +14,10 @@ interface ReservationCardProps {
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
   const isPC = useMediaQuery(MEDIA_QUERY.PC);
-
   const badge = RESERVATION_STATUS_BADGES[reservation.status] || RESERVATION_STATUS_BADGES.pending;
 
   return (
-    <div className={cn("max-w-160", { "border-t border-t-gray-50 pt-5": !isPC })}>
+    <div className={cn("w-full max-w-160", { "border-t border-t-gray-50 pt-5": !isPC })}>
       {!isPC && (
         <h1 className="typo-16-b mb-3 px-2 text-gray-800">
           {new Date(reservation.date).toLocaleDateString("ko-KR")}
@@ -26,10 +25,9 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
       )}
       <div
         className={cn(
-          "relative h-34 max-w-160",
-          "mb-4 rounded-3xl p-6",
+          "relative mb-4 h-34 max-w-160 p-6",
+          "rounded-3xl shadow-[0_4px_20px_0_rgba(156,180,202,0.2)]",
           "lg:mb-0 lg:h-45 lg:rounded-4xl",
-          "shadow-[0_4px_24px_0_rgba(156,180,202,0.2)]",
         )}
       >
         <div className="absolute inset-0 -right-1 overflow-hidden rounded-3xl lg:rounded-4xl">
@@ -40,12 +38,12 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
             className="object-cover"
           />
         </div>
+
         <div
           className={cn(
-            "absolute top-0 -left-1 flex h-34 w-4/5 flex-col items-start justify-start",
-            "rounded-3xl bg-white p-5",
+            "absolute top-0 -left-1 flex h-34 w-4/5 flex-col items-start justify-start p-5",
+            "rounded-3xl bg-white shadow-[0_-8px_15px_0_rgba(0,0,0,0.05)]",
             "lg:h-45 lg:rounded-4xl lg:px-10 lg:py-7.5",
-            "shadow-[0_-8px_20px_0_rgba(0,0,0,0.05)]",
           )}
         >
           <div
@@ -70,33 +68,35 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
                 {reservation.headCount}명
               </span>
             </p>
-            {isPC && reservation.status === "completed" && (
-              <Button className="typo-14-m w-18 rounded-lg py-1.5">후기 작성</Button>
-            )}
-            {isPC && reservation.status === "pending" && (
-              <Button
-                className="typo-14-m w-18 rounded-lg bg-gray-50 py-1.5 text-gray-600
-                  hover:bg-gray-100"
-              >
-                예약 취소
-              </Button>
-            )}
+            {isPC &&
+              (reservation.status === "completed" ? (
+                <Button className="typo-14-m w-18 rounded-lg py-1.5">후기 작성</Button>
+              ) : (
+                reservation.status === "pending" && (
+                  <Button
+                    className="typo-14-m w-18 rounded-lg bg-gray-50 py-1.5 text-gray-600
+                      hover:bg-gray-100"
+                  >
+                    예약 취소
+                  </Button>
+                )
+              ))}
           </div>
         </div>
       </div>
-
-      {!isPC && reservation.status === "completed" && (
-        <Button className="typo-14-m w-full max-w-160 rounded-lg py-2.5">후기 작성</Button>
-      )}
-
-      {!isPC && reservation.status === "pending" && (
-        <Button
-          className="typo-14-m w-full max-w-160 rounded-lg bg-gray-50 py-2.5 text-gray-600
-            hover:bg-gray-100"
-        >
-          예약 취소
-        </Button>
-      )}
+      {!isPC &&
+        (reservation.status === "completed" ? (
+          <Button className="typo-14-m w-full max-w-160 rounded-lg py-2.5">후기 작성</Button>
+        ) : (
+          reservation.status === "pending" && (
+            <Button
+              className="typo-14-m w-full max-w-160 rounded-lg bg-gray-50 py-2.5 text-gray-600
+                hover:bg-gray-100"
+            >
+              예약 취소
+            </Button>
+          )
+        ))}
     </div>
   );
 };

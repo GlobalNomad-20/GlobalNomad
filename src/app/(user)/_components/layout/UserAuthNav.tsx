@@ -16,7 +16,6 @@ interface Props {
 
 const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
   const router = useRouter();
-
   const handleClickProfile = () => {
     const isMdUp = window.matchMedia("(min-width: 768px)").matches;
     router.push(isMdUp ? ROUTES.PROFILE.EDIT : ROUTES.PROFILE.ROOT);

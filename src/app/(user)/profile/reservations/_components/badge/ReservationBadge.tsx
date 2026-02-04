@@ -1,7 +1,9 @@
 "use client";
 
+import ReservationBadgeItem from "./ReservationBadgeItem";
+
 import { RESERVATION_STATUS_BADGES } from "@/constants/reservationBadgeItem";
-import { ReservationStatus } from "@/types/getReservationsParams";
+import { ReservationStatus } from "@/types/reservations";
 import { cn } from "@/utils/cn";
 
 interface ReservationBadgeProps {
@@ -18,15 +20,10 @@ const statusOptions: Array<{ key: ReservationStatus | undefined; label: string }
   { key: "declined", label: RESERVATION_STATUS_BADGES.declined.label },
 ];
 
-const baseStyle = `typo-16-m flex h-10 min-w-25 flex-shrink-0 items-center justify-center rounded-4xl border cursor-pointer transition-colors`;
-
-const ReservationBadge = ({ selectedStatus, onStatusChange }: ReservationBadgeProps) => {
-  const handleStatusChange = (status?: ReservationStatus) => {
-    return () => {
-      onStatusChange(status);
-    };
-  };
-
+const ReservationBadge = ({
+  selectedStatus,
+  onStatusChange: handleStatusChange,
+}: ReservationBadgeProps) => {
   return (
     <div
       className={cn(
@@ -34,21 +31,15 @@ const ReservationBadge = ({ selectedStatus, onStatusChange }: ReservationBadgePr
         "scrollbar-hide",
       )}
     >
-      {statusOptions.map((status) => {
+      {statusOptions.map((option) => {
         return (
-          <button
-            key={status.key || "all"}
-            type="button"
-            onClick={handleStatusChange(status.key)}
-            className={cn(
-              baseStyle,
-              selectedStatus === status.key
-                ? "bg-[#333333] text-white"
-                : "border-[#D8D8D8] bg-white hover:bg-[#333333] hover:text-white",
-            )}
-          >
-            {status.label}
-          </button>
+          <ReservationBadgeItem
+            key={option.key ?? "all"}
+            label={option.label}
+            statusKey={option.key}
+            isSelected={selectedStatus === option.key}
+            onClick={handleStatusChange}
+          />
         );
       })}
     </div>

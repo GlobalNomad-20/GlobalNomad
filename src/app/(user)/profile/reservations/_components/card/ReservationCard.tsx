@@ -1,6 +1,9 @@
 "use client";
 
-import Button from "@/components/common/Button";
+import { useReservationModalHandlers } from "../../_hooks/useReservationModalHandlers";
+
+import ReservationActionButton from "./ReservationActionButton";
+
 import CustomImage from "@/components/common/CustomImage";
 import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { RESERVATION_STATUS_BADGES } from "@/constants/reservationBadgeItem";
@@ -14,6 +17,7 @@ interface ReservationCardProps {
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
   const isPC = useMediaQuery(MEDIA_QUERY.PC);
+  const { handleDeleteOpenModal, handleReviewOpenModal } = useReservationModalHandlers();
   const badge = RESERVATION_STATUS_BADGES[reservation.status] || RESERVATION_STATUS_BADGES.pending;
 
   return (
@@ -68,35 +72,26 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
                 {reservation.headCount}명
               </span>
             </p>
-            {isPC &&
-              (reservation.status === "completed" ? (
-                <Button className="typo-14-m w-18 rounded-lg py-1.5">후기 작성</Button>
-              ) : (
-                reservation.status === "pending" && (
-                  <Button
-                    className="typo-14-m w-18 rounded-lg bg-gray-50 py-1.5 text-gray-600
-                      hover:bg-gray-100"
-                  >
-                    예약 취소
-                  </Button>
-                )
-              ))}
+            {isPC && (
+              <ReservationActionButton
+                reservation={reservation}
+                onReviewOpen={handleReviewOpenModal}
+                onDeleteOpen={handleDeleteOpenModal}
+              />
+            )}
           </div>
         </div>
       </div>
-      {!isPC &&
-        (reservation.status === "completed" ? (
-          <Button className="typo-14-m w-full max-w-160 rounded-lg py-2.5">후기 작성</Button>
-        ) : (
-          reservation.status === "pending" && (
-            <Button
-              className="typo-14-m w-full max-w-160 rounded-lg bg-gray-50 py-2.5 text-gray-600
-                hover:bg-gray-100"
-            >
-              예약 취소
-            </Button>
-          )
-        ))}
+      {!isPC && (
+        <div className="mt-4 flex justify-center">
+          <ReservationActionButton
+            reservation={reservation}
+            isMobile
+            onReviewOpen={handleReviewOpenModal}
+            onDeleteOpen={handleDeleteOpenModal}
+          />
+        </div>
+      )}
     </div>
   );
 };

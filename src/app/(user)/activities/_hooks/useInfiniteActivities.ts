@@ -1,6 +1,6 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
-import getActivities from "@/lib/server/activities";
+import getActivities from "@/api/activities";
 import { ActivitiesResponse } from "@/types/activityCardList";
 import { GetActivitiesParams } from "@/types/getActivitiesParams";
 

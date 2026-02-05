@@ -23,7 +23,7 @@ interface ILoginForm {
 // 로그인 페이지
 const Login = () => {
   const navigation = useRouter();
-  const { login, setTokens, user } = useAuthStore();
+  const { login, user } = useAuthStore();
   const { openModal, closeModal } = useModalStore((store) => {
     return store.actions;
   });
@@ -41,7 +41,6 @@ const Login = () => {
     const { email, password } = data;
     try {
       const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
-      setTokens(res.data.accessToken, res.data.refreshToken);
       login(res.data.user);
     } catch {
       openModal({

@@ -22,6 +22,7 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: "/auth/login",
     TOKENS: "/auth/tokens",
+    LOGOUT: "/auth/logout",
   },
 
   MY_ACTIVITIES: {

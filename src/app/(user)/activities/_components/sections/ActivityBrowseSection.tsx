@@ -1,0 +1,72 @@
+"use client";
+
+import { useState } from "react";
+
+import useActivities from "../../_hooks/useActivities";
+import ActivityCard from "../common/ActivityCard";
+import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
+import DropdownOption from "../common/DropdownOption";
+import CategoryFilter from "../filters/CategoryFilter";
+
+import Pagination from "@/app/(user)/_components/pagination/Pagination";
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PAGE_LIMIT = 8;
+
+const ActivityBrowseSection = () => {
+  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sort, setSort] = useState<string>("latest");
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, isPlaceholderData } = useActivities({
+    category: category,
+    keyword: undefined,
+    sort: sort,
+    page,
+    size: PAGE_LIMIT,
+  });
+
+  const totalCount = data?.totalCount ?? 0;
+  const totalPages = Math.ceil(totalCount / PAGE_LIMIT);
+
+  const handlePage = (num: number) => {
+    setPage(num);
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+          lg:gap-6"
+      >
+        <ActivityCardSkeletonList count={8} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
+      <div className="mb-2.5 flex justify-between md:mb-4.25 lg:mb-5">
+        <div className="typo-18-b md:typo-32-b leading-6.5 md:leading-8">🛼 모든 체험</div>
+        <DropdownOption setSort={setSort} />
+      </div>
+      <CategoryFilter setCategory={setCategory} />
+      <div
+        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+          lg:gap-6"
+      >
+        {data?.activities.map((activity) => {
+          return <ActivityCard key={activity.id} activity={activity} />;
+        })}
+      </div>
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={handlePage}
+        isPlaceholderData={isPlaceholderData}
+      />
+    </div>
+  );
+};
+
+export default ActivityBrowseSection;

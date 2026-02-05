@@ -13,7 +13,11 @@ import react from "eslint-plugin-react";
 import tsParser from "@typescript-eslint/parser";
 
 const FILE_GLOBS = ["**/*.{js,ts,jsx,tsx}"];
-const COMPONENT_GLOBS = ["src/components/**/*.{tsx,jsx}", "src/providers/**/*.{tsx,jsx}"];
+const COMPONENT_GLOBS = [
+  "src/components/**/*.{tsx,jsx}",
+  "src/providers/**/*.{tsx,jsx}",
+  "src/assets/svg/**/*.{tsx,jsx}",
+];
 const APP_ROUTER_GLOBS = ["src/app/**/*.{tsx,jsx}"];
 const APP_COMPONENTS_GLOBS = [
   "src/app/**/_components/**/*.{tsx,jsx}",
@@ -36,7 +40,7 @@ const BASE_NAMING_CONVENTION = [
   // 2. 일반 변수/파라미터: camelCase
   {
     selector: "variableLike",
-    format: ["camelCase"],
+    format: ["camelCase", "PascalCase"],
     leadingUnderscore: "allow",
   },
   // 3. 타입(class, interface, type, enum): PascalCase
@@ -94,6 +98,11 @@ export default defineConfig([
         },
       ],
       "react-refresh/only-export-components": "off",
+
+      /**
+       * 컴포넌트 규칙
+       */
+      "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
 
       /**
        * Import 규칙
@@ -178,7 +187,32 @@ export default defineConfig([
   {
     files: [...COMPONENT_GLOBS, ...APP_COMPONENTS_GLOBS],
     rules: {
-      "check-file/filename-naming-convention": ["error", { "**/*.{tsx,jsx}": "PASCAL_CASE" }],
+      "check-file/filename-naming-convention": [
+        "error",
+        { "**/*.{tsx,jsx}": "PASCAL_CASE" },
+        { ignoreMiddleExtensions: true },
+      ],
+    },
+  },
+
+  // Next.js App Router 예약 파일들은 파일명 규칙 검사에서 제외
+  {
+    files: [
+      "src/app/**/error.{js,jsx,ts,tsx}",
+      "src/app/**/global-error.{js,jsx,ts,tsx}",
+      "src/app/**/not-found.{js,jsx,ts,tsx}",
+      "src/app/**/loading.{js,jsx,ts,tsx}",
+      "src/app/**/layout.{js,jsx,ts,tsx}",
+      "src/app/**/template.{js,jsx,ts,tsx}",
+      "src/app/**/page.{js,jsx,ts,tsx}",
+      "src/app/**/default.{js,jsx,ts,tsx}",
+      "src/app/**/route.{js,jsx,ts,tsx}",
+      "src/app/**/sitemap.{js,jsx,ts,tsx}",
+      "src/app/**/robots.{js,jsx,ts,tsx}",
+      "src/middleware.{js,ts}",
+    ],
+    rules: {
+      "check-file/filename-naming-convention": "off",
     },
   },
 

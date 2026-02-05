@@ -1,7 +1,12 @@
 export const ROUTES = {
+  HOME: "/",
+
   AUTH: {
     LOGIN: "/login",
     SIGNUP: "/signup",
+    KAKAO: (state: "signin" | "signup") => {
+      return `/auth/kakao?state=${state}`;
+    },
   },
 
   ACTIVITIES: {
@@ -13,6 +18,7 @@ export const ROUTES = {
 
   PROFILE: {
     ROOT: "/profile",
+    EDIT: "/profile/edit",
     RESERVATIONS: "/profile/reservations",
 
     MY_ACTIVITIES: {
@@ -26,5 +32,7 @@ export const ROUTES = {
     },
 
     RESERVATIONS_STATUS: "/profile/reservationsStatus",
+
+    HIDE_NAV_PREFIXES: ["/profile/myActivities/add/", "/profile/myActivities/edit/"],
   },
 } as const;

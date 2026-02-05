@@ -1,15 +1,11 @@
 import { useEffect, useCallback, useRef } from "react";
 
-import { useModalStore } from "@/store/useModalStore";
+import { useCloseModal, useModalOptions } from "@/store/useModalStore";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export const useModal = () => {
-  const options = useModalStore((state) => {
-    return state.options;
-  });
-  const closeModal = useModalStore((state) => {
-    return state.actions.closeModal;
-  });
+  const options = useModalOptions();
+  const closeModal = useCloseModal();
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -18,10 +14,9 @@ export const useModal = () => {
 
     if (options.onBackgroundClose) {
       options.onBackgroundClose();
-      return;
+    } else {
+      closeModal();
     }
-
-    closeModal();
   }, [options, closeModal]);
 
   useOutsideClick(modalRef, handleClose, !!options);
@@ -35,7 +30,6 @@ export const useModal = () => {
 
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = "hidden";
-
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {

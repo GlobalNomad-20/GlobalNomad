@@ -9,11 +9,13 @@ import {
   ReservationReviewRequest,
   ReservationStatus,
 } from "@/types/reservations";
+import { myReservationsKeys } from "@/lib/query/queryKeys";
 
 export const useGetReservations = (params: GetReservationsParams) => {
   const { size, status } = params;
+
   return useInfiniteQuery<ReservationsResponse>({
-    queryKey: ["reservations", size, status],
+    queryKey: myReservationsKeys.list(status),
     initialPageParam: null,
     queryFn: ({ pageParam }) => {
       return getReservations({
@@ -45,11 +47,10 @@ export const useDeleteReservation = () => {
       return deleteReservation(reservationId, status);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reservations"] });
-      console.log("예약이 취소되었습니다.");
+      queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
     },
     onError: (error) => {
-      console.error("상태 업데이트 실패:", error);
+      console.error("예약 취소 실패:", error);
     },
   });
 };
@@ -68,8 +69,7 @@ export const useCreateReservationReview = () => {
       return createReservationReview(reservationId, reviewData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reservations"] });
-      console.log("리뷰가 등록되었습니다.");
+      queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
     },
     onError: (error) => {
       console.error("리뷰 등록 실패:", error);

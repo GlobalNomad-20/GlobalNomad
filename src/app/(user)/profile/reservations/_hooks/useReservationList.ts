@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useGetReservations } from "@/hooks/queries/useReservations";
 import { ReservationStatus } from "@/types/reservations";
@@ -17,9 +17,9 @@ const useReservationsList = () => {
       status: selectedStatus,
     });
 
-  const handleSelectStatus = useCallback((status?: ReservationStatus) => {
+  const handleSelectStatus = (status?: ReservationStatus) => {
     setSelectedStatus(status);
-  }, []);
+  };
 
   const handleReachEnd = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -27,16 +27,13 @@ const useReservationsList = () => {
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const allReservations = useMemo(() => {
-    return (
-      data?.pages.flatMap((page) => {
-        return page.reservations;
-      }) ?? []
-    );
-  }, [data]);
+  const hasReservations =
+    data?.pages?.some((page) => {
+      return page.reservations.length > 0;
+    }) ?? false;
 
-  const isInitialEmpty = !isLoading && !selectedStatus && allReservations.length === 0;
-  const isFilterEmpty = !isLoading && !!selectedStatus && allReservations.length === 0;
+  const isInitialEmpty = !isLoading && !selectedStatus && !hasReservations;
+  const isFilterEmpty = !isLoading && !!selectedStatus && !hasReservations;
 
   const normalizedError = error instanceof Error ? error : null;
 

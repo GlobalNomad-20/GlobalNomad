@@ -1,31 +1,21 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { useCloseModal, useModalOptions } from "@/store/useModalStore";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
+export const useModal = (initialOpen?: boolean, position?: string) => {
+  const [isOpen, setIsOpen] = useState(initialOpen);
 
-export const useModal = () => {
-  const options = useModalOptions();
-  const closeModal = useCloseModal();
+  const onOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const handleClose = useCallback(() => {
-    if (!options) return;
-
-    if (options.onBackgroundClose) {
-      options.onBackgroundClose();
-    } else {
-      closeModal();
-    }
-  }, [options, closeModal]);
-
-  useOutsideClick(modalRef, handleClose, !!options);
+  const onClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   useEffect(() => {
-    if (!options) return;
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
+      if (e.key === "Escape") onClose();
     };
 
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -36,7 +26,7 @@ export const useModal = () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalStyle;
     };
-  }, [options, handleClose]);
+  }, [isOpen, onClose]);
 
-  return { options, modalRef, handleClose };
+  return { isOpen, onOpen, onClose, position };
 };

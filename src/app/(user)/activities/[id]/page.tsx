@@ -16,7 +16,7 @@ const ActivityDetail = () => {
         >
           <div>
             <ActivityImageSection />
-            <ActivityHeaderSection />
+            <ActivityHeaderSection isNotDesktop />
             <SectionBlock>
               <ActivityDescriptionSection />
             </SectionBlock>

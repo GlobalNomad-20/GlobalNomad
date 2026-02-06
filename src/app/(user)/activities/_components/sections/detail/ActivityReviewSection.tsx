@@ -20,7 +20,9 @@ const ActivityReviewSection = () => {
       <div className="flex flex-col items-center">
         <ReviewCard />
       </div>
-      <div className="mt-7.5 flex flex-col items-center md:mt-10 lg:mt-7.5">페이지네이션</div>
+      <div className="mt-7.5 flex flex-col items-center bg-yellow-300 md:mt-10 lg:mt-7.5">
+        페이지네이션
+      </div>
     </div>
   );
 };

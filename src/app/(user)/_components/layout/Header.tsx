@@ -12,6 +12,7 @@ const Header = () => {
   const isLoggedIn = useAuthStore((state) => {
     return state.isLoggedIn;
   });
+
   const user = useAuthStore((state) => {
     return state.user;
   });

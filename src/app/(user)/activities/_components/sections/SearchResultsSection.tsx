@@ -1,21 +1,47 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import useActivities from "../../_hooks/useActivities";
 import ActivityCard from "../common/ActivityCard";
+import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
+
+import Pagination from "@/app/(user)/_components/pagination/Pagination";
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PAGE_LIMIT = 8;
 
 const SearchResultsSection = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("q") ?? "";
+  const [page, setPage] = useState(1);
 
-  const { data } = useActivities({
+  const { data, isLoading, isPlaceholderData } = useActivities({
     category: undefined,
     keyword,
     sort: undefined,
-    page: 1,
-    size: 20,
+    page,
+    size: PAGE_LIMIT,
   });
+
+  const totalCount = data?.totalCount ?? 0;
+  const totalPages = Math.ceil(totalCount / PAGE_LIMIT);
+
+  const handlePage = (num: number) => {
+    setPage(num);
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+          lg:gap-6"
+      >
+        <ActivityCardSkeletonList count={8} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-82 flex-col gap-6 md:w-171 md:gap-7.5 lg:w-280">
@@ -36,9 +62,12 @@ const SearchResultsSection = () => {
             return <ActivityCard key={activity.id} activity={activity} />;
           })}
         </div>
-        <div className="flex justify-center">
-          <div>페이지네이션</div>
-        </div>
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={handlePage}
+          isPlaceholderData={isPlaceholderData}
+        />
       </div>
     </div>
   );

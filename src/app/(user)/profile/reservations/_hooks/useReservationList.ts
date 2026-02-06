@@ -1,52 +1,43 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
+
+import useReservationFilter from "./useReservationFilter";
 
 import { useGetReservations } from "@/hooks/queries/useReservations";
-import { ReservationStatus } from "@/types/reservations";
 
 const pageSize = 5;
 
-// 예약 내역 리스트 조회, 필터 상태 관리 훅
+// 예약 내역 리스트 조회 훅
 const useReservationsList = () => {
-  const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | undefined>(undefined);
+  const { selectedStatus, setSelectedStatus, getEmptyState } = useReservationFilter();
 
-  const { data, isLoading, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useGetReservations({
-      size: pageSize,
-      status: selectedStatus,
-    });
-
-  const handleSelectStatus = (status?: ReservationStatus) => {
-    setSelectedStatus(status);
-  };
-
-  const handleReachEnd = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  const { data, isLoading, ...queryHelpers } = useGetReservations({
+    size: pageSize,
+    status: selectedStatus,
+  });
 
   const hasReservations =
     data?.pages?.some((page) => {
       return page.reservations.length > 0;
     }) ?? false;
 
-  const isInitialEmpty = !isLoading && !selectedStatus && !hasReservations;
-  const isFilterEmpty = !isLoading && !!selectedStatus && !hasReservations;
+  const { isInitialEmpty, isFilterEmpty } = getEmptyState(isLoading, hasReservations);
 
-  const normalizedError = error instanceof Error ? error : null;
+  const handleReachEnd = useCallback(() => {
+    if (queryHelpers.hasNextPage && !queryHelpers.isFetchingNextPage) {
+      queryHelpers.fetchNextPage();
+    }
+  }, [queryHelpers]);
 
   return {
     selectedStatus,
-    handleSelectStatus,
+    handleSelectStatus: setSelectedStatus,
     handleReachEnd,
     isInitialEmpty,
     isFilterEmpty,
     isLoading,
-    error: normalizedError,
-    isFetchingNextPage,
-    hasNextPage,
+    ...queryHelpers,
     pages: data?.pages ?? [],
   };
 };

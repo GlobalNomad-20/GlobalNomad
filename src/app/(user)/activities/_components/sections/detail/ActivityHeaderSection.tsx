@@ -1,19 +1,12 @@
 import KebabMenuSvg from "@/assets/svg/KebabMenuSvg";
 import MapSvg from "@/assets/svg/MapSvg";
 import StarSvg from "@/assets/svg/StarSvg";
-import { cn } from "@/utils/cn";
 
-interface ActivityHeaderSectionProps {
-  isDesktop?: boolean;
-}
-
-const ActivityHeaderSection = ({ isDesktop = false }: ActivityHeaderSectionProps) => {
+const ActivityHeaderSection = () => {
   return (
     <div
-      className={cn(
-        "flex w-81.75 items-start justify-between md:w-171 lg:w-102.5",
-        isDesktop && "hidden",
-      )}
+      className={`flex w-81.75 items-start justify-between border-b border-gray-100 py-5 md:w-171
+        md:py-6 lg:w-102.5`}
     >
       <div>
         <div

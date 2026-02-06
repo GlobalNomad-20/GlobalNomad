@@ -16,7 +16,7 @@ const ActivityDetail = () => {
         >
           <div>
             <ActivityImageSection />
-            <ActivityHeaderSection isDesktop />
+            <ActivityHeaderSection />
             <SectionBlock>
               <ActivityDescriptionSection />
             </SectionBlock>
@@ -29,7 +29,7 @@ const ActivityDetail = () => {
           </div>
           <div className="hidden lg:block">
             <ActivityHeaderSection />
-            <div className="sticky top-10">
+            <div className="sticky top-5">
               <ReservationDesktop />
             </div>
           </div>

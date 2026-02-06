@@ -1,9 +1,6 @@
 const ActivityDescriptionSection = () => {
   return (
-    <div
-      className="flex h-120.5 w-81.75 flex-col gap-2 md:h-69.5 md:w-171 md:gap-3.5 lg:h-75.25
-        lg:w-167.5 lg:gap-2"
-    >
+    <div className="flex w-81.75 flex-col gap-2 md:w-171 md:gap-3.5 lg:w-167.5 lg:gap-2">
       <div className="typo-16-b md:typo-18-b text-gray-950">체험 설명</div>
       <div className="typo-16-m leading-[1.8] text-gray-950">
         안녕하세요! 저희 스트릿 댄스 체험을 소개합니다. 저희는 신나고 재미있는 스트릿 댄스 스타일을

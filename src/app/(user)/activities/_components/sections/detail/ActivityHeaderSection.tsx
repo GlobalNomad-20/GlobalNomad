@@ -4,7 +4,7 @@ import StarSvg from "@/assets/svg/StarSvg";
 
 const ActivityHeaderSection = () => {
   return (
-    <div className="flex h-30.25 w-81.75 items-start justify-between md:h-35 md:w-171 lg:w-102.5">
+    <div className="flex w-81.75 items-start justify-between md:w-171 lg:w-102.5">
       <div>
         <div
           className="typo-13-m md:typo-14-m mb-1 text-gray-700 md:mb-2.5 md:text-gray-950 lg:mb-2"

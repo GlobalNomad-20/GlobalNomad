@@ -5,13 +5,13 @@ interface ReservationDeleteCompleteModalProps {
 }
 
 const ReservationDeleteCompleteModal = ({
-  onClose: handleDeleteCloseModal,
+  onClose: handleClose,
 }: ReservationDeleteCompleteModalProps) => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-5 md:gap-6">
       <div className="typo-16-b md:typo-18-b">예약 취소가 완료되었습니다.</div>
       <Button
-        onClick={handleDeleteCloseModal}
+        onClick={handleClose}
         variant="outline"
         className="typo-14-m md:typo-16-m h-10 w-28 md:h-12 md:w-34"
       >

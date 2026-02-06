@@ -1,13 +1,14 @@
 "use client";
 
-import { useReservationModalHandlers } from "../../_hooks/useReservationModalHandlers";
+import ReservationReviewModal from "../modal/ReservationReviewModal";
+import ReservationDeleteModal from "../modal/ReservationDeleteModal";
 
-import ReservationActionButton from "./ReservationActionButton";
-
+import Button from "@/components/common/Button";
 import CustomImage from "@/components/common/CustomImage";
 import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { RESERVATION_STATUS_BADGES } from "@/constants/reservationBadgeItem";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useModal } from "@/hooks/useModal";
 import { Reservation } from "@/types/reservations";
 import { cn } from "@/utils/cn";
 
@@ -17,9 +18,68 @@ interface ReservationCardProps {
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
   const isPC = useMediaQuery(MEDIA_QUERY.PC);
-  const { handleDeleteOpenModal, handleReviewOpenModal } = useReservationModalHandlers();
+  const reservationReviewModal = useModal();
+  const reservationDeleteModal = useModal();
   const badge = RESERVATION_STATUS_BADGES[reservation.status] || RESERVATION_STATUS_BADGES.pending;
 
+  const handleOpenReservationReviewModal = () => {
+    reservationReviewModal.onOpen();
+  };
+  const handleOpenReservationDeleteModal = () => {
+    reservationDeleteModal.onOpen();
+  };
+
+  const handleCloseReservationReviewModal = () => {
+    reservationReviewModal.onClose();
+  };
+  const handleCloseReservationDeleteModal = () => {
+    reservationDeleteModal.onClose();
+  };
+
+  const renderAction = () => {
+    const { status, reviewSubmitted } = reservation;
+
+    const commonClass = !isPC ? "h-11 w-full" : "h-8 w-24";
+    const typoClass = "typo-14-m rounded-lg";
+
+    // 후기 작성 완료 상태
+    if (status === "completed" && reviewSubmitted) {
+      return (
+        <div
+          className={cn(
+            typoClass,
+            "flex cursor-not-allowed items-center justify-center bg-gray-50 text-gray-400",
+            commonClass,
+          )}
+        >
+          후기 작성 완료
+        </div>
+      );
+    }
+
+    // 후기 작성 가능 상태
+    if (status === "completed" && !reviewSubmitted) {
+      return (
+        <Button onClick={handleOpenReservationReviewModal} className={cn(typoClass, commonClass)}>
+          후기 작성
+        </Button>
+      );
+    }
+
+    // 예약 취소 가능 상태
+    if (status === "pending") {
+      return (
+        <Button
+          onClick={handleOpenReservationDeleteModal}
+          className={cn(typoClass, "bg-gray-50 text-gray-600 hover:bg-gray-100", commonClass)}
+        >
+          예약 취소
+        </Button>
+      );
+    }
+
+    return null;
+  };
   return (
     <div className={cn("w-full max-w-160", { "border-t border-t-gray-50 pt-5": !isPC })}>
       {!isPC && (
@@ -72,25 +132,26 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
                 {reservation.headCount}명
               </span>
             </p>
-            {isPC && (
-              <ReservationActionButton
-                reservation={reservation}
-                onReviewOpen={handleReviewOpenModal}
-                onDeleteOpen={handleDeleteOpenModal}
-              />
-            )}
+            {isPC && renderAction()}
           </div>
         </div>
       </div>
-      {!isPC && (
-        <div className="mt-4 flex justify-center">
-          <ReservationActionButton
-            reservation={reservation}
-            isMobile
-            onReviewOpen={handleReviewOpenModal}
-            onDeleteOpen={handleDeleteOpenModal}
-          />
-        </div>
+      {!isPC && <div className="mt-4 flex justify-center">{renderAction()}</div>}
+
+      {reservationReviewModal.isOpen && (
+        <ReservationReviewModal
+          isOpen={!!reservationReviewModal.isOpen}
+          onClose={handleCloseReservationReviewModal}
+          reservationDetail={reservation}
+        />
+      )}
+
+      {reservationDeleteModal.isOpen && (
+        <ReservationDeleteModal
+          isOpen={!!reservationDeleteModal.isOpen}
+          onClose={handleCloseReservationDeleteModal}
+          reservationId={reservation.id}
+        />
       )}
     </div>
   );

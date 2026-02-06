@@ -52,6 +52,7 @@ const useAuthStore = create<AuthState>((set, get) => {
       await client.post(API_ENDPOINTS.AUTH.LOGOUT);
       set({
         user: null,
+        isLoggedIn: false,
         isInitialized: true,
       });
     },

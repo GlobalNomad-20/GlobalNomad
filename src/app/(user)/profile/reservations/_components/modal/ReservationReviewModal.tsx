@@ -82,11 +82,7 @@ const ReservationReviewModal = ({
 
   const startDateStr = `${reservationDetail.date}T${reservationDetail.startTime}`;
   const endDateStr = `${reservationDetail.date}T${reservationDetail.endTime}`;
-  const scheduleText = formatReservationDisplay(
-    startDateStr,
-    endDateStr,
-    reservationDetail.headCount,
-  );
+  const scheduleText = formatReservationDisplay(startDateStr, endDateStr);
 
   return (
     <Modal
@@ -113,7 +109,9 @@ const ReservationReviewModal = ({
           <div>
             <div className="mt-7 mb-3.5 flex flex-col items-center justify-between gap-1.5">
               <h2 className="typo-14-b md:typo-16-b">{reservationDetail.activity.title}</h2>
-              <h3 className="typo-13-m md:typo-14-m text-gray-500">{scheduleText}</h3>
+              <h3 className="typo-13-m md:typo-14-m text-gray-500">
+                {scheduleText}({reservationDetail.headCount}명)
+              </h3>
             </div>
             <StarRating rating={rating} onRatingChange={handleRatingChange} disabled={isPending} />
           </div>

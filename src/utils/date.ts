@@ -51,13 +51,9 @@ export const formatScheduleRange = (startDateStr: string, endDateStr?: string) =
 };
 
 /**
- * "2023. 02. 14 / 11:00 - 12:30 (10명)" 형태로 변환
+ * "2023. 02. 14 / 11:00 - 12:30" 형태로 변환
  */
-export const formatReservationDisplay = (
-  startDateStr: string,
-  endDateStr?: string,
-  headCount?: number,
-): string => {
+export const formatReservationDisplay = (startDateStr: string, endDateStr?: string): string => {
   const start = new Date(startDateStr);
   const year = start.getFullYear();
   const month = String(start.getMonth() + 1).padStart(2, "0");
@@ -72,7 +68,5 @@ export const formatReservationDisplay = (
     timePart = `${startTimeStr} - ${endTimeStr}`;
   }
 
-  const headPart = headCount != null ? ` (${headCount}명)` : "";
-
-  return `${dateStr} / ${timePart}${headPart}`;
+  return `${dateStr} / ${timePart}`;
 };

@@ -4,7 +4,6 @@ import AuthProvider from "./_providers/AuthProvider";
 import QueryProviders from "./_providers/QueryProviders";
 import { pretendard } from "./fonts";
 
-import Modal from "@/components/common/Modal";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,10 +20,7 @@ const RootLayout = ({
     <html lang="ko" className={pretendard.variable}>
       <body className={`${pretendard.className} min-w-93.75 antialiased`}>
         <QueryProviders>
-          <AuthProvider>
-            {children}
-            <Modal />
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </QueryProviders>
       </body>
     </html>

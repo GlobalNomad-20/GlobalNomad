@@ -11,9 +11,9 @@ import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
 import useAuthStore from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
-import { useModalStore } from "@/store/useModalStore";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
+import { useModal } from "@/hooks/useModal";
 
 interface ILoginForm {
   email: string;
@@ -24,9 +24,8 @@ interface ILoginForm {
 const Login = () => {
   const navigation = useRouter();
   const { login, user } = useAuthStore();
-  const { openModal, closeModal } = useModalStore((store) => {
-    return store.actions;
-  });
+  const passwordFailModal = useModal();
+
 
   const {
     register,
@@ -36,6 +35,14 @@ const Login = () => {
     mode: "onBlur",
   });
 
+  const handleOpenPasswordFailModal = () => {
+    passwordFailModal.onOpen();
+  };
+
+  const handleClosePasswordFailModal = () => {
+    passwordFailModal.onClose();
+  };
+
   // 로그인 처리
   const onLoginAction: SubmitHandler<ILoginForm> = async (data) => {
     const { email, password } = data;
@@ -43,11 +50,7 @@ const Login = () => {
       const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
       login(res.data.user);
     } catch {
-      openModal({
-        position: "center",
-        containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message="비밀번호가 일치하지 않습니다." closeModal={closeModal} />,
-      });
+      handleOpenPasswordFailModal();
     }
   };
 
@@ -143,6 +146,14 @@ const Login = () => {
           </Link>
         </div>
       </div>
+
+      {passwordFailModal.isOpen && (
+        <OKModal
+          isOpen={!!passwordFailModal.isOpen}
+          onClose={handleClosePasswordFailModal}
+          message="비밀번호가 일치하지 않습니다."
+        />
+      )}
     </div>
   );
 };

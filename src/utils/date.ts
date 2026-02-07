@@ -49,3 +49,24 @@ export const formatScheduleRange = (startDateStr: string, endDateStr?: string) =
 
   return `${dateStr} ${startTimeStr}~${endTimeStr}`;
 };
+
+/**
+ * "2023. 02. 14 / 11:00 - 12:30" 형태로 변환
+ */
+export const formatReservationDisplay = (startDateStr: string, endDateStr?: string): string => {
+  const start = new Date(startDateStr);
+  const year = start.getFullYear();
+  const month = String(start.getMonth() + 1).padStart(2, "0");
+  const day = String(start.getDate()).padStart(2, "0");
+  const dateStr = `${year}. ${month}. ${day}`;
+  const startTimeStr = formatDatePart(start, "time");
+
+  let timePart = startTimeStr;
+  if (endDateStr) {
+    const end = new Date(endDateStr);
+    const endTimeStr = formatDatePart(end, "time");
+    timePart = `${startTimeStr} - ${endTimeStr}`;
+  }
+
+  return `${dateStr} / ${timePart}`;
+};

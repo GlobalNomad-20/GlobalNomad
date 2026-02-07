@@ -1,55 +1,43 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
+
+import useReservationFilter from "./useReservationFilter";
 
 import { useGetReservations } from "@/hooks/queries/useReservations";
-import { ReservationStatus } from "@/types/reservations";
 
 const pageSize = 5;
 
-// 예약 내역 리스트 조회, 필터 상태 관리 훅
+// 예약 내역 리스트 조회 훅
 const useReservationsList = () => {
-  const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | undefined>(undefined);
+  const { selectedStatus, setSelectedStatus, getEmptyState } = useReservationFilter();
 
-  const { data, isLoading, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useGetReservations({
-      size: pageSize,
-      status: selectedStatus,
-    });
+  const { data, isLoading, ...queryHelpers } = useGetReservations({
+    size: pageSize,
+    status: selectedStatus,
+  });
 
-  const handleSelectStatus = useCallback((status?: ReservationStatus) => {
-    setSelectedStatus(status);
-  }, []);
+  const hasReservations =
+    data?.pages?.some((page) => {
+      return page.reservations.length > 0;
+    }) ?? false;
+
+  const { isInitialEmpty, isFilterEmpty } = getEmptyState(isLoading, hasReservations);
 
   const handleReachEnd = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+    if (queryHelpers.hasNextPage && !queryHelpers.isFetchingNextPage) {
+      queryHelpers.fetchNextPage();
     }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  const allReservations = useMemo(() => {
-    return (
-      data?.pages.flatMap((page) => {
-        return page.reservations;
-      }) ?? []
-    );
-  }, [data]);
-
-  const isInitialEmpty = !isLoading && !selectedStatus && allReservations.length === 0;
-  const isFilterEmpty = !isLoading && !!selectedStatus && allReservations.length === 0;
-
-  const normalizedError = error instanceof Error ? error : null;
+  }, [queryHelpers]);
 
   return {
     selectedStatus,
-    handleSelectStatus,
+    handleSelectStatus: setSelectedStatus,
     handleReachEnd,
     isInitialEmpty,
     isFilterEmpty,
     isLoading,
-    error: normalizedError,
-    isFetchingNextPage,
-    hasNextPage,
+    ...queryHelpers,
     pages: data?.pages ?? [],
   };
 };

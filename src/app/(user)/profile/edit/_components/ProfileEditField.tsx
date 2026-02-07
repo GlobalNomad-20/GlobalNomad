@@ -7,6 +7,7 @@ import Button from "@/components/common/Button";
 import TextField from "@/components/common/TextField";
 import VisibilityPasswordInput from "@/components/common/VisibilityPasswordInput";
 import { ROUTES } from "@/constants/routes";
+import useLogin from "@/hooks/useLogin";
 
 type FormValues = {
   nickname: string;
@@ -30,6 +31,7 @@ const ProfileEditField = () => {
     },
     mode: "onChange",
   });
+  useLogin();
   const password = useWatch({ control, name: "password" }) ?? "";
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

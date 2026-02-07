@@ -7,9 +7,9 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import useInfiniteActivities from "../../_hooks/useInfiniteActivities";
-import ActivityCard from "../common/ActivityCard";
-import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
+import useInfiniteActivities from "../../../_hooks/useInfiniteActivities";
+import ActivityCard from "../../common/ActivityCard";
+import ActivityCardSkeletonList from "../../common/ActivityCardSkeletonList";
 
 import SwiperNextSvg from "@/assets/svg/SwiperNextSvg";
 import SwiperPrevSvg from "@/assets/svg/SwiperPrevSvg";

@@ -1,10 +1,10 @@
 import Image from "next/image";
 
-import ActivityBrowseSection from "./_components/sections/ActivityBrowseSection";
-import PopularActivitySection from "./_components/sections/PopularActivitySection";
-import SearchSection from "./_components/sections/SearchSection";
+import ActivityBrowseSection from "./_components/sections/main/ActivityBrowseSection";
+import PopularActivitySection from "./_components/sections/main/PopularActivitySection";
+import SearchSection from "./_components/sections/main/SearchSection";
 
-import BannerSection from "@/app/(user)/activities/_components/sections/BannerSection";
+import BannerSection from "@/app/(user)/activities/_components/sections/main/BannerSection";
 const Activities = () => {
   return (
     <div className="bg-white">

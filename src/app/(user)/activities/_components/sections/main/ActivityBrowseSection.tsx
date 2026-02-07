@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-import useActivities from "../../_hooks/useActivities";
-import ActivityCard from "../common/ActivityCard";
-import ActivityCardSkeletonList from "../common/ActivityCardSkeletonList";
-import DropdownOption from "../common/DropdownOption";
-import CategoryFilter from "../filters/CategoryFilter";
+import useActivities from "../../../_hooks/useActivities";
+import ActivityCard from "../../common/ActivityCard";
+import ActivityCardSkeletonList from "../../common/ActivityCardSkeletonList";
+import DropdownOption from "../../common/DropdownOption";
+import CategoryFilter from "../../filters/CategoryFilter";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 

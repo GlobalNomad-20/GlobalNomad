@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import StarSvg from "@/assets/svg/StarSvg";
+import CustomImage from "@/components/common/CustomImage";
 import { Activity } from "@/types/activityCardList";
 
 interface ActivityCardProps {
@@ -20,7 +19,12 @@ const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
         className="absolute top-0 h-44 w-full overflow-hidden rounded-[18px]
           shadow-[0px_-4.5px_11.25px_0px_rgba(0,0,0,0.05)] md:h-105.75 lg:h-72.5"
       >
-        <Image src="/image/banner.jpg" alt="배너 이미지" fill className="object-cover" />
+        <CustomImage
+          src={activity.bannerImageUrl}
+          alt="배너 이미지"
+          fill
+          className="object-cover"
+        />
       </div>
       <div
         className="absolute bottom-0 z-10 flex h-25 w-full flex-col rounded-[18px] bg-white px-4.25

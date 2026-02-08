@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -59,7 +60,11 @@ const SearchResultsSection = () => {
             lg:gap-6"
         >
           {data?.activities.map((activity) => {
-            return <ActivityCard key={activity.id} activity={activity} />;
+            return (
+              <Link key={activity.id} href={`/activities/${activity.id}`}>
+                <ActivityCard key={activity.id} activity={activity} />;
+              </Link>
+            );
           })}
         </div>
         <Pagination

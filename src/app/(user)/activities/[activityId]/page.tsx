@@ -30,7 +30,7 @@ const ActivityDetail = () => {
               <ActivityDescriptionSection data={activityIdData} />
             </div>
             <div className="section-block">
-              <ActivityMapSection />
+              <ActivityMapSection data={activityIdData} />
             </div>
             <div className="w-81.75 py-5 md:w-171 md:pt-7.5 md:pb-10 lg:w-167.5 lg:py-10">
               <ActivityReviewSection />

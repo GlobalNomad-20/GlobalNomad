@@ -1,0 +1,25 @@
+import { SVGAttributes } from "react";
+
+interface AltArrowLeftSvg extends SVGAttributes<SVGSVGElement> {
+  size?: number;
+}
+
+const AltArrowLeftSvg = ({ size = 24, ...props }: AltArrowLeftSvg) => {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M9.02771 12.7231C8.62716 12.3617 8.62716 11.6394 9.02771 11.278L14.07 6.72851C14.5655 6.28152 15.2727 6.70645 15.2727 7.45109V16.55C15.2727 17.2946 14.5655 17.7195 14.07 17.2726L9.02771 12.7231Z"
+        fill="#1F1F22"
+      />
+    </svg>
+  );
+};
+
+export default AltArrowLeftSvg;

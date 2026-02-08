@@ -25,7 +25,7 @@ const ActivityDetail = () => {
         >
           <div>
             <ActivityImageSection />
-            <ActivityHeaderSection isNotDesktop />
+            <ActivityHeaderSection data={activityIdData} isNotDesktop />
             <div className="section-block">
               <ActivityDescriptionSection data={activityIdData} />
             </div>
@@ -37,7 +37,7 @@ const ActivityDetail = () => {
             </div>
           </div>
           <div className="hidden lg:block">
-            <ActivityHeaderSection />
+            <ActivityHeaderSection data={activityIdData} />
             <div className="sticky top-5">
               <ReservationDesktop />
             </div>

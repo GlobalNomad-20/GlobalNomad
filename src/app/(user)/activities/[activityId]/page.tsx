@@ -1,11 +1,21 @@
+"use client";
+
+import { useParams } from "next/navigation";
+
 import ReservationDesktop from "../_components/reservation/layouts/ReservationDesktop";
 import ActivityDescriptionSection from "../_components/sections/detail/ActivityDescriptionSection";
 import ActivityHeaderSection from "../_components/sections/detail/ActivityHeaderSection";
 import ActivityImageSection from "../_components/sections/detail/ActivityImageSection";
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
+import useActivityId from "../_hooks/useActivityId";
 
 const ActivityDetail = () => {
+  const param = useParams();
+  const activityId = Number(param.activityId);
+
+  const { data: activityIdData } = useActivityId(activityId);
+
   return (
     <div className="flex justify-center bg-white">
       <div className="mt-7.5 mb-21.25 md:mt-8.5 md:mb-14.5 lg:mt-22 lg:mb-50">
@@ -17,7 +27,7 @@ const ActivityDetail = () => {
             <ActivityImageSection />
             <ActivityHeaderSection isNotDesktop />
             <div className="section-block">
-              <ActivityDescriptionSection />
+              <ActivityDescriptionSection data={activityIdData} />
             </div>
             <div className="section-block">
               <ActivityMapSection />

@@ -1,15 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { ActivityDetailResponse } from "@/types/activityIdParams";
 
-import useActivityId from "../../../_hooks/useActivityId";
+interface ActivityDescriptionSectionProps {
+  data?: ActivityDetailResponse;
+}
 
-const ActivityDescriptionSection = () => {
-  const param = useParams();
-  const activityId = Number(param.activityId);
-
-  const { data } = useActivityId(activityId);
-
+const ActivityDescriptionSection = ({ data }: ActivityDescriptionSectionProps) => {
   return (
     <div className="flex w-81.75 flex-col gap-2 md:w-171 md:gap-3.5 lg:w-167.5 lg:gap-2">
       <div className="typo-16-b md:typo-18-b text-gray-950">체험 설명</div>

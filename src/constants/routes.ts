@@ -5,7 +5,7 @@ export const ROUTES = {
     LOGIN: "/login",
     SIGNUP: "/signup",
     KAKAO: (state: "signin" | "signup") => {
-      return `/auth/kakao?state=${state}`;
+      return `/api/auth/kakao?state=${state}`;
     },
   },
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import getActivities from "@/api/activities";
 import { ActivitiesResponse } from "@/types/activityCardList";
@@ -21,6 +21,7 @@ const useActivities = (params: GetActivitiesParams) => {
         method,
       });
     },
+    placeholderData: keepPreviousData,
   });
 };
 

@@ -26,7 +26,6 @@ const Login = () => {
   const { login, user } = useAuthStore();
   const passwordFailModal = useModal();
 
-
   const {
     register,
     handleSubmit,

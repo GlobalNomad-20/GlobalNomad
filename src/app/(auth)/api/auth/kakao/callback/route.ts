@@ -35,13 +35,15 @@ const GET = async (request: NextRequest) => {
 
     // 로그인 시 403 => 회원가입으로 리다이렉트
     if (state !== "signup" && res.status === 403) {
-      return NextResponse.redirect(`${baseURL}/api/auth/kakao?state=signup`);
+      return NextResponse.redirect(
+        `${baseURL}/auth/error?message=${encodeURIComponent("회원 정보가 없습니다. 가입이 필요합니다.")}`,
+      );
     }
 
     const data = await res.json();
     if (!res.ok) {
       return NextResponse.redirect(
-        `${baseURL}/auth/error/message=${encodeURIComponent(data.message || "로그인 실패")}`,
+        `${baseURL}/auth/error?message=${encodeURIComponent(data.message || "알 수 없는 이유로 인증에 실패했습니다.")}`,
       );
     }
 

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { COOKIE_OPTIONS, PUBLIC_PATH, TOKEN_MAX_AGE } from "@/constants/cookieConstants";
 import { refreshTokens } from "@/lib/client/auth";
 
-export const middleware = async (request: NextRequest) => {
+export const proxy = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
   if (!pathname.startsWith("/api/")) return NextResponse.next();
 

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
@@ -26,6 +27,17 @@ const Login = () => {
   const { login, user } = useAuthStore();
   const passwordFailModal = useModal();
 
+  const { mutate: requestLogin, isPending } = useMutation({
+    mutationFn: async (loginForm: ILoginForm) => {
+      return await client.post(API_ENDPOINTS.AUTH.LOGIN, loginForm);
+    },
+    onSuccess: ({ data }) => {
+      login(data);
+    },
+    onError: () => {
+      handleOpenPasswordFailModal();
+    },
+  });
 
   const {
     register,
@@ -45,13 +57,7 @@ const Login = () => {
 
   // 로그인 처리
   const onLoginAction: SubmitHandler<ILoginForm> = async (data) => {
-    const { email, password } = data;
-    try {
-      const res = await client.post(API_ENDPOINTS.AUTH.LOGIN, { email, password });
-      login(res.data.user);
-    } catch {
-      handleOpenPasswordFailModal();
-    }
+    requestLogin(data);
   };
 
   const handleKakaoClick = () => {
@@ -116,7 +122,7 @@ const Login = () => {
           )}
 
           <Button
-            variant={isValid ? "primary" : "disabled"}
+            variant={isValid && !isPending ? "primary" : "disabled"}
             className="mt-7.5 h-13.5 w-full text-white"
           >
             <div>로그인하기</div>

@@ -1,8 +1,11 @@
-"use client";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-// 카카오 로그인 에러 페이지
-const AuthErrorPage = () => {
-  return <div>인증 중 오류가 발생했습니다.</div>;
+import { ErrorContent } from "@/app/(auth)/auth/error/_components/ErrorContent";
+
+const Page = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
+  const params = await searchParams;
+  const message = params["message"] as string | undefined;
+  return <ErrorContent message={message} />;
 };
 
-export default AuthErrorPage;
+export default Page;

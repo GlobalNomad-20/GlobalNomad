@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
@@ -73,7 +74,9 @@ const PopularActivitySection = () => {
             {activities.map((activity) => {
               return (
                 <SwiperSlide key={activity.id} className="w-33! shrink-0! px-2 py-3">
-                  <ActivityCard activity={activity} isSmall />
+                  <Link key={activity.id} href={`/activities/${activity.id}`}>
+                    <ActivityCard activity={activity} isSmall />
+                  </Link>
                 </SwiperSlide>
               );
             })}
@@ -107,7 +110,9 @@ const PopularActivitySection = () => {
           {activities.map((activity) => {
             return (
               <SwiperSlide key={activity.id} className="px-3 py-6 md:gap-3">
-                <ActivityCard key={activity.id} activity={activity} isSmall />
+                <Link key={activity.id} href={`/activities/${activity.id}`}>
+                  <ActivityCard key={activity.id} activity={activity} isSmall />
+                </Link>
               </SwiperSlide>
             );
           })}

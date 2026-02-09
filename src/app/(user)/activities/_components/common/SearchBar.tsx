@@ -1,19 +1,19 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 import SearchSvg from "@/assets/svg/SearchSvg";
 import Button from "@/components/common/Button";
 
 const SearchBar = () => {
   const router = useRouter();
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!value) {

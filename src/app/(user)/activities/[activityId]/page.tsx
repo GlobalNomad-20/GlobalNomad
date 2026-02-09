@@ -26,7 +26,7 @@ const ActivityDetail = () => {
             lg:pb-0"
         >
           <div>
-            <ActivityImageSection />
+            <ActivityImageSection data={activityIdData} />
             <ActivityHeaderSection data={activityIdData} isNotDesktop />
             <div className="section-block">
               <ActivityDescriptionSection data={activityIdData} />

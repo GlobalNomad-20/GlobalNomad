@@ -69,7 +69,7 @@ const ActivityBrowseSection = () => {
         {data?.activities.map((activity) => {
           return (
             <Link key={activity.id} href={`/activities/${activity.id}`}>
-              <ActivityCard key={activity.id} activity={activity} />;
+              <ActivityCard key={activity.id} activity={activity} />
             </Link>
           );
         })}

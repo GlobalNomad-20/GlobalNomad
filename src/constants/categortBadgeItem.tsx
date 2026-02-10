@@ -7,6 +7,11 @@ import WellbeingSvg from "@/assets/svg/WellbeingSvg";
 
 export const CATEGORY_BADGES = [
   {
+    key: "All",
+    value: "전체",
+    icon: null,
+  },
+  {
     key: "culture",
     value: "문화 · 예술",
     icon: <MusicSvg className="h-3 w-3 hover:fill-white md:h-5 md:w-5" />,

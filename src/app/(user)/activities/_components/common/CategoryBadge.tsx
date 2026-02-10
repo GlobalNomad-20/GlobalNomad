@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 interface CategoryBadgeProps {
   value: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   handleBadgeClick: () => void;
   isActive: boolean;
 }

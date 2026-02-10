@@ -16,6 +16,9 @@ const CategoryFilter = ({ setCategory }: CategoryFilterProps) => {
     if (value === activeCategory) {
       setActiveCategory(undefined);
       setCategory(undefined);
+    } else if (value === "전체") {
+      setActiveCategory(value);
+      setCategory(undefined);
     } else {
       setActiveCategory(value);
       setCategory(value);

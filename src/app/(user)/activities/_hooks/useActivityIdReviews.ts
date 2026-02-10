@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import getActiviyIdReviews from "@/api/activityIdReviews";
 import { GetActivityIdReviewsParam, GetReviewsResponse } from "@/types/activityIdReviews";
@@ -11,6 +11,7 @@ const useActivityIdReviews = (params: GetActivityIdReviewsParam) => {
     queryFn: () => {
       return getActiviyIdReviews({ activityId, page, size });
     },
+    placeholderData: keepPreviousData,
   });
 };
 

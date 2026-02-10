@@ -1,17 +1,38 @@
+"use client";
+
+import { useState } from "react";
+
 import useActivityIdReviews from "../../../_hooks/useActivityIdReviews";
 import ReviewCard from "../../common/ReviewCard";
 
+import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import StarSvg from "@/assets/svg/StarSvg";
 import { ActivityDetailResponse } from "@/types/activityIdParams";
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PAGE_LIMIT = 3;
 
 interface ActivityReviewSectionProps {
   data: ActivityDetailResponse;
 }
 
 const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
+  const [page, setPage] = useState(1);
+
   const activityId = data.id;
 
-  const { data: reviewsData } = useActivityIdReviews({ activityId: activityId });
+  const { data: reviewsData, isPlaceholderData } = useActivityIdReviews({
+    activityId: activityId,
+    page,
+    size: PAGE_LIMIT,
+  });
+
+  const totalCount = reviewsData?.totalCount ?? 0;
+  const totalPage = Math.ceil(totalCount / PAGE_LIMIT);
+
+  const handlePage = (num: number) => {
+    setPage(num);
+  };
 
   const averageRating = Math.trunc(data.rating);
   const ratingComments: Record<number, string> = {
@@ -42,8 +63,13 @@ const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
           return <ReviewCard key={review.id} data={review} />;
         })}
       </div>
-      <div className="mt-7.5 flex flex-col items-center bg-yellow-300 md:mt-10 lg:mt-7.5">
-        페이지네이션
+      <div className="mt-7.5 flex flex-col items-center md:mt-10 lg:mt-7.5">
+        <Pagination
+          currentPage={page}
+          totalPages={totalPage}
+          onPageChange={handlePage}
+          isPlaceholderData={isPlaceholderData}
+        />
       </div>
     </div>
   );

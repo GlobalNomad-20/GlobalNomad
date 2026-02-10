@@ -1,36 +1,57 @@
 "use client";
 
 import Link from "next/link";
+import { SubmitHandler } from "react-hook-form";
 
-import useProfileEditForm from "../_hooks/useProfileEditForm";
+import useProfileEditForm, { ProfileFormValues } from "../_hooks/useProfileEditForm";
 
 import Button from "@/components/common/Button";
 import TextField from "@/components/common/TextField";
 import VisibilityPasswordInput from "@/components/common/VisibilityPasswordInput";
 import { ROUTES } from "@/constants/routes";
-import useAuthStore from "@/store/useAuthStore";
+import { useMyInfo, useUpdateMyInfo } from "@/hooks/queries/useUser";
+import useLogin from "@/hooks/useLogin";
+import { User } from "@/types/user";
 
-const ProfileEditField = () => {
-  const user = useAuthStore((s) => {
-    return s.user;
-  });
-  const { register, handleSubmit, errors, validationRules } = useProfileEditForm(user);
+interface ProfileEditFieldProps {
+  initialData: User | null;
+}
+
+const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
+  useLogin();
+  const { data: userData } = useMyInfo(initialData);
+  const { mutate: updateUserInfo } = useUpdateMyInfo();
+
+  const { register, handleSubmit, errors, validationRules } = useProfileEditForm(userData);
+
+  const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
+    const requestBody = {
+      nickname: data.nickname,
+      email: data.email,
+      ...(data.password ? { newPassword: data.password } : {}),
+    };
+    updateUserInfo(requestBody, {
+      onSuccess: () => {
+        alert("내 정보가 수정되었습니다.");
+      },
+      onError: (error) => {
+        const message = error instanceof Error ? error.message : "수정에 실패했습니다.";
+        alert(message);
+      },
+    });
+  };
 
   return (
     <section>
       <div className="mb-5 py-2.5">
         <h3 className="typo-18-b mb-2.5">내 정보</h3>
-        <p className="typo-14-m text-gray-500">닉네임과 비밀번호를 수정하실 수 있습니다.</p>
+        <p className="typo-14-m text-gray-500">닉네임, 이메일, 비밀번호를 수정하실 수 있습니다.</p>
       </div>
-      <form
-        className="flex flex-col gap-4.5 md:gap-6"
-        onSubmit={handleSubmit((data) => {
-          return console.log(data);
-        })}
-      >
+      <form className="flex flex-col gap-4.5 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label="닉네임"
           type="text"
+          defaultValue={initialData?.nickname}
           placeholder="닉네임을 입력하세요"
           error={errors.nickname?.message}
           registration={register("nickname", validationRules.nickname)}
@@ -38,13 +59,14 @@ const ProfileEditField = () => {
         <TextField
           label="이메일"
           type="email"
+          defaultValue={initialData?.email}
           placeholder="example@email.com"
           error={errors.email?.message}
           registration={register("email", validationRules.email)}
         />
         <VisibilityPasswordInput
           label="비밀번호"
-          placeholder="8자 이상 입력해 주세요"
+          placeholder="변경할 비밀번호 (8자 이상)"
           error={errors.password?.message}
           registration={register("password", validationRules.password)}
         />

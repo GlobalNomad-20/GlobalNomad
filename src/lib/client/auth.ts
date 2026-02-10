@@ -59,7 +59,6 @@ const fetchWithAuth = async <T>(url: string, options: RequestInit = {}): Promise
       ...options,
       headers: { ...options.headers, Authorization: `Bearer ${token}` },
     });
-    console.log("fetchWithAuth", res);
     return res.ok ? res.json() : null;
   } catch {
     return null;

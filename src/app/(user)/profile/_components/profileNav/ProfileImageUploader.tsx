@@ -50,6 +50,8 @@ const ProfileImageUploader = () => {
           <Image
             src={profileSrc}
             fill
+            sizes="(max-width: 768px) 120px, (max-width: 1200px) 70px, 120px"
+            priority
             className={cn("object-cover", isUploading && "opacity-50")}
             alt="사용자 프로필"
           />

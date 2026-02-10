@@ -1,6 +1,6 @@
 import ProfileEditField from "./_components/ProfileEditField";
 
-import { fetchMyInfoServer } from "@/api/user";
+import { fetchMyInfoServer } from "@/api/userSever";
 
 const ProfilePage = async () => {
   const userData = await fetchMyInfoServer();

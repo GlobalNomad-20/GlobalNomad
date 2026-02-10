@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import useActivities from "../../../_hooks/useActivities";
 import ActivityCard from "../../common/ActivityCard";
-import ActivityCardSkeletonList from "../../common/ActivityCardSkeletonList";
+import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 

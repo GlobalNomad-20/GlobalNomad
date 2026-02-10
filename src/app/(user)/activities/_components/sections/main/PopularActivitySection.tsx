@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import useInfiniteActivities from "../../../_hooks/useInfiniteActivities";
 import ActivityCard from "../../common/ActivityCard";
-import ActivityCardSkeletonList from "../../common/ActivityCardSkeletonList";
+import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import SwiperNextSvg from "@/assets/svg/SwiperNextSvg";
 import SwiperPrevSvg from "@/assets/svg/SwiperPrevSvg";

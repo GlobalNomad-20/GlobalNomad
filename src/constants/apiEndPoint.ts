@@ -77,7 +77,6 @@ export const API_ENDPOINTS = {
   USERS: {
     SIGNUP: "/users",
     ME: "/users/me",
-    ME_UPDATE: "/users/me",
     ME_IMAGE: "/users/me/image",
   },
 } as const;

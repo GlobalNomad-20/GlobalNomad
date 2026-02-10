@@ -27,7 +27,6 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
   const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
     const requestBody = {
       nickname: data.nickname,
-      email: data.email,
       ...(data.password ? { newPassword: data.password } : {}),
     };
     updateUserInfo(requestBody, {
@@ -59,9 +58,9 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
         <TextField
           label="이메일"
           type="email"
+          disabled
           defaultValue={initialData?.email}
           placeholder="example@email.com"
-          error={errors.email?.message}
           registration={register("email", validationRules.email)}
         />
         <VisibilityPasswordInput

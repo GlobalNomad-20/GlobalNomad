@@ -8,6 +8,7 @@ export interface User {
 }
 
 export interface UpdateUserParams {
+  email?: string;
   nickname?: string;
   profileImageUrl?: string;
   newPassword?: string;

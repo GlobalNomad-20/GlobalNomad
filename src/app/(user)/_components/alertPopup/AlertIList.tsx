@@ -42,7 +42,7 @@ const NotificationList = ({
       observer={true}
       observeParents={true}
       modules={[FreeMode, Mousewheel]}
-      className="h-64 w-full"
+      className="max-h-64 w-full"
     >
       {data?.pages.map((page) => {
         return page.notifications.map((noti) => {

@@ -45,18 +45,25 @@ const clearTokenCookies = async () => {
 const fetchWithAuth = async <T>(url: string, options: RequestInit = {}): Promise<T | null> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
+  const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  if (!accessToken) return null;
+  if (!accessToken && !refreshToken) {
+    console.log("❌ [fetchWithAuth] 토큰이 존재하지 않습니다.");
+    return null;
+  }
+
+  const token = accessToken || refreshToken;
 
   try {
     const res = await fetch(url, {
       ...options,
-      headers: { ...options.headers, Authorization: `Bearer ${accessToken}` },
+      headers: { ...options.headers, Authorization: `Bearer ${token}` },
     });
+    console.log("fetchWithAuth", res);
     return res.ok ? res.json() : null;
   } catch {
     return null;
   }
 };
 
-export { refreshTokens, setTokenCookies, clearTokenCookies, fetchWithAuth };
+export { clearTokenCookies, fetchWithAuth, refreshTokens, setTokenCookies };

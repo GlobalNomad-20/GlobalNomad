@@ -54,6 +54,7 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
           placeholder="닉네임을 입력하세요"
           error={errors.nickname?.message}
           registration={register("nickname", validationRules.nickname)}
+          autoComplete="username"
         />
         <TextField
           label="이메일"
@@ -62,18 +63,21 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
           defaultValue={initialData?.email}
           placeholder="example@email.com"
           registration={register("email", validationRules.email)}
+          autoComplete="email"
         />
         <VisibilityPasswordInput
           label="비밀번호"
           placeholder="변경할 비밀번호 (8자 이상)"
           error={errors.password?.message}
           registration={register("password", validationRules.password)}
+          autoComplete="new-password"
         />
         <VisibilityPasswordInput
           label="비밀번호 확인"
           placeholder="비밀번호를 한번 더 입력해 주세요"
           error={errors.passwordConfirm?.message}
           registration={register("passwordConfirm", validationRules.passwordConfirm)}
+          autoComplete="new-password"
         />
         <div className="typo-16-m flex gap-3 md:justify-center">
           <Link

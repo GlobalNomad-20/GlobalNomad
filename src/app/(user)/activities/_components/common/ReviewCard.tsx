@@ -24,7 +24,7 @@ const ReviewCard = ({ data }: ReviewCardProps) => {
   }
 
   return (
-    <div className="rounded-3xl bg-white p-5 shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]">
+    <div className="w-full rounded-3xl bg-white p-5 shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]">
       <div className="mb-1 flex gap-2">
         <div className="typo-14-b md:typo-16-b text-gray-950">{data?.user.nickname}</div>
         <div className="typo-12-b md:typo-14-b text-[#A4A1AA]">{formattedDate}</div>

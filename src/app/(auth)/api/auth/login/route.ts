@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
-import { setTokenCookies } from "@/lib/client/auth";
+import { setTokenCookies } from "@/lib/auth/auth";
 
 // 이메일로 로그인 후, 쿠키 설정해주는 api
 const POST = async (request: NextRequest) => {

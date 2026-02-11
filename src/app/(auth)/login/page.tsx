@@ -10,11 +10,11 @@ import { useMutation } from "@tanstack/react-query";
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
-import useAuthStore from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
 import { useModal } from "@/hooks/useModal";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface ILoginForm {
   email: string;
@@ -24,7 +24,12 @@ interface ILoginForm {
 // 로그인 페이지
 const Login = () => {
   const navigation = useRouter();
-  const { login, user } = useAuthStore();
+  const user = useAuthStore((s) => {
+    return s.user;
+  });
+  const login = useAuthStore((s) => {
+    return s.login;
+  });
   const passwordFailModal = useModal();
 
   const { mutate: requestLogin, isPending } = useMutation({
@@ -32,7 +37,7 @@ const Login = () => {
       return await client.post(API_ENDPOINTS.AUTH.LOGIN, loginForm);
     },
     onSuccess: ({ data }) => {
-      login(data);
+      login(data.user);
     },
     onError: () => {
       handleOpenPasswordFailModal();

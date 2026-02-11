@@ -1,62 +1,40 @@
-import { create } from "zustand";
+import { createStore, useStore } from "zustand";
+import { useContext } from "react";
 
-import { API_ENDPOINTS } from "@/constants/apiEndPoint";
-import { client } from "@/lib/client/client";
 import { User } from "@/types/user";
+import { AuthStoreContext } from "@/app/_providers/AuthProvider";
+import { client } from "@/lib/client/client";
+import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 
 // 로그인 상태 정보
-interface AuthState {
+export interface AuthState {
   user: User | null;
-  isLoggedIn: boolean;
-  isInitialized: boolean;
-
-  initialize: () => Promise<void>;
   login: (user: User) => void;
   logout: () => void;
 }
 
-const useAuthStore = create<AuthState>((set, get) => {
-  return {
-    user: null,
-    isLoggedIn: false,
-    isInitialized: false,
+export const createAuthStore = (init?: Partial<AuthState>) => {
+  return createStore<AuthState>((set) => {
+    return {
+      user: null,
 
-    // 초기화 함수(토큰값 불러오기 & 내정보 불러오기)
-    initialize: async () => {
-      if (get().isInitialized) return;
+      login: (user) => {
+        set({ user: user });
+      },
 
-      try {
-        const res = await client.get(API_ENDPOINTS.USERS.ME);
+      logout: async () => {
+        await client.post(API_ENDPOINTS.AUTH.LOGOUT);
         set({
-          user: res.data,
-          isLoggedIn: true,
-          isInitialized: true,
+          user: null,
         });
-      } catch {
-        set({
-          isInitialized: true,
-        });
-      }
-    },
+      },
 
-    // 로그인 및 내정보 업데이트
-    login: (user) => {
-      set({
-        user,
-        isLoggedIn: true,
-      });
-    },
+      ...init,
+    };
+  });
+};
 
-    // 로그아웃
-    logout: async () => {
-      await client.post(API_ENDPOINTS.AUTH.LOGOUT);
-      set({
-        user: null,
-        isLoggedIn: false,
-        isInitialized: true,
-      });
-    },
-  };
-});
-
-export default useAuthStore;
+export const useAuthStore = <T>(selector: (s: AuthState) => T) => {
+  const store = useContext(AuthStoreContext);
+  return useStore(store!, selector);
+};

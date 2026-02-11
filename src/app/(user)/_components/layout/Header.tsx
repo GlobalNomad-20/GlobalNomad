@@ -6,13 +6,9 @@ import Link from "next/link";
 import UserAuthNav from "./UserAuthNav";
 
 import { ROUTES } from "@/constants/routes";
-import useAuthStore from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Header = () => {
-  const isLoggedIn = useAuthStore((state) => {
-    return state.isLoggedIn;
-  });
-
   const user = useAuthStore((state) => {
     return state.user;
   });
@@ -31,7 +27,7 @@ const Header = () => {
           </Link>
         </h1>
         <UserAuthNav
-          isLogin={isLoggedIn}
+          isLogin={user != null}
           userName={user?.nickname}
           profileImage={user?.profileImageUrl}
         />

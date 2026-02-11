@@ -1,6 +1,7 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 import getActivities from "@/api/activities";
+import { activitiesKeys } from "@/lib/query/queryKeys";
 import { ActivitiesResponse } from "@/types/activityCardList";
 import { GetActivitiesParams } from "@/types/getActivitiesParams";
 
@@ -14,7 +15,7 @@ const useInfiniteActivities = (params: GetActivitiesParams) => {
     unknown[],
     number | null
   >({
-    queryKey: ["activities", sort, method],
+    queryKey: activitiesKeys.popular(sort, method),
     queryFn: ({ pageParam }) => {
       return getActivities({
         cursorId: pageParam,

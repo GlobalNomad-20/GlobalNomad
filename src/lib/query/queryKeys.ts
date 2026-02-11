@@ -40,3 +40,29 @@ export const activityIdKeys = {
     return [...activityIdKeys.all, "reviews", activityId, page, size] as const;
   },
 };
+
+// 체험 리스트 조회와 관련된 모든 키를 여기서 관리합니다.
+export const activitiesKeys = {
+  all: ["activities"] as const,
+
+  // 인기 체험 리스트 (무한스크롤)
+  popular: (sort?: string, method?: string) => {
+    return [...activitiesKeys.all, "popular", sort, method];
+  },
+
+  // 전체 체험 리스트 (검색/필터/페이지네이션)
+  list: (
+    category?: string,
+    keyword?: string,
+    sort?: string,
+    page?: number,
+    size?: number,
+    method?: string,
+  ) => {
+    return [
+      ...activitiesKeys.all,
+      "list",
+      { category, keyword, sort, page, size, method },
+    ] as const;
+  },
+};

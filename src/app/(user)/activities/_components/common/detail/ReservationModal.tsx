@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-handler-names */
 import GuestSelector from "../../reservation/components/GuestSelector";
+import TimeSelector from "../../reservation/components/TimeSelector";
 
 import Button from "@/components/common/Button";
 
@@ -13,6 +14,7 @@ const ReservationModal = ({ onCancel, onComplete }: ReservationModalProps) => {
     <div className="flex h-full flex-col p-6 md:px-7.5">
       <p className="typo-18-b md:typo-20-b mb-2 text-gray-950 md:mb-6">날짜</p>
       <GuestSelector />
+      <TimeSelector />
       <div className="flex gap-3">
         <Button onClick={onCancel} variant="outline">
           아니오

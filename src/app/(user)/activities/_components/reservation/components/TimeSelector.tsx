@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 
-const TimeSlotSelector = () => {
+const TimeSelector = () => {
   return (
     <div className="flex flex-col gap-1.25">
       <div className="typo-16-b text-gray-950">예약 가능한 시간</div>
@@ -17,4 +17,4 @@ const TimeSlotSelector = () => {
   );
 };
 
-export default TimeSlotSelector;
+export default TimeSelector;

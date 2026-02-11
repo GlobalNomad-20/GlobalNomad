@@ -1,6 +1,6 @@
+import ReservationCalendar from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
-import ReservationCalendar from "../components/ReservationCalendar";
-import TimeSlotSelector from "../components/TimeSlotSelector";
+import TimeSlotSelector from "../components/TimeSelector";
 
 import Button from "@/components/common/Button";
 

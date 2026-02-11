@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import useActivities from "../../../_hooks/useActivities";
-import ActivityCard from "../../common/ActivityCard";
+import ActivityCard from "../../common/main/ActivityCard";
 import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";

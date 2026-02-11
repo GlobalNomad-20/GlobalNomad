@@ -17,6 +17,14 @@ export const myReservationsKeys = {
   },
 };
 
+// 내 체험과 관련된 모든 키를 여기서 관리합니다.
+export const myActivitiesKeys = {
+  all: ["myActivities"] as const,
+  list: () => {
+    return [...myActivitiesKeys.all, "list"]; // 등록한 내 체험 리스트
+  },
+};
+
 // 유저 정보와 관련된 모든 키를 여기서 관리합니다.
 export const userKeys = {
   all: ["users"] as const,

@@ -1,9 +1,13 @@
 import ProfileEditField from "./_components/ProfileEditField";
 
-const ProfilePage = () => {
+import { fetchMyInfoServer } from "@/api/userSever";
+
+const ProfilePage = async () => {
+  const userData = await fetchMyInfoServer();
+
   return (
     <div className="w-full px-6 pt-8.75 pb-8.75 md:p-0">
-      <ProfileEditField />
+      <ProfileEditField initialData={userData} />
     </div>
   );
 };

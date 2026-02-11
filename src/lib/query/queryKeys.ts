@@ -16,3 +16,12 @@ export const myReservationsKeys = {
     return [...myReservationsKeys.all, "list", { status }]; // 예약 내역 리스트
   },
 };
+
+// 유저 정보와 관련된 모든 키를 여기서 관리합니다.
+export const userKeys = {
+  all: ["users"] as const,
+  // 내 정보 조회 키
+  me: () => {
+    return [...userKeys.all, "me"] as const;
+  },
+};

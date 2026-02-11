@@ -1,12 +1,11 @@
-import axios from "axios";
-
-import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
+import { API_ENDPOINTS } from "@/constants/apiEndPoint";
+import { client } from "@/lib/client/client";
 import { GetActivityIdReviewsParam } from "@/types/activityIdReviews";
 
 const getActiviyIdReviews = async (params: GetActivityIdReviewsParam) => {
   const { activityId } = params;
 
-  const response = await axios.get(BASE_URL + API_ENDPOINTS.ACTIVITIES.REVIEWS(activityId), {
+  const response = await client.get(API_ENDPOINTS.ACTIVITIES.REVIEWS(activityId), {
     params,
   });
 

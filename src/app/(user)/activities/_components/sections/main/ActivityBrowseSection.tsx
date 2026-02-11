@@ -10,6 +10,7 @@ import DropdownOption from "../../common/DropdownOption";
 import CategoryFilter from "../../filters/CategoryFilter";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
+import DropdownArrowSvg from "@/assets/svg/DropdownArrowSvg";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const PAGE_LIMIT = 8;
@@ -36,11 +37,20 @@ const ActivityBrowseSection = () => {
 
   if (isLoading) {
     return (
-      <div
-        className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
-          lg:gap-6"
-      >
-        <ActivityCardSkeletonList count={8} />
+      <div className="mt-10 w-82 md:mt-20 md:w-171 lg:w-280">
+        <div className="mb-2.5 flex justify-between md:mb-4.25 lg:mb-5">
+          <div className="typo-18-b md:typo-32-b leading-6.5 md:leading-8">🛼 모든 체험</div>
+          <div className="flex items-center gap-1.5">
+            <span>가격</span>
+            <DropdownArrowSvg />
+          </div>
+        </div>
+        <div
+          className="mb-6 grid grid-cols-2 gap-4.5 md:mb-7.5 md:grid-cols-2 md:gap-5 lg:grid-cols-4
+            lg:gap-6"
+        >
+          <ActivityCardSkeletonList count={8} />
+        </div>
       </div>
     );
   }
@@ -59,7 +69,7 @@ const ActivityBrowseSection = () => {
         {data?.activities.map((activity) => {
           return (
             <Link key={activity.id} href={`/activities/${activity.id}`}>
-              <ActivityCard key={activity.id} activity={activity} />;
+              <ActivityCard key={activity.id} activity={activity} />
             </Link>
           );
         })}

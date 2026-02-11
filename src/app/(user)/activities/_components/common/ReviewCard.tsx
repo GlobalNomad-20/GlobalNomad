@@ -1,3 +1,4 @@
+import { formatDate } from "@/app/(user)/_utils/formatDate";
 import StarSvg from "@/assets/svg/StarSvg";
 import { Review } from "@/types/activityIdReviews";
 
@@ -6,16 +7,7 @@ interface ReviewCardProps {
 }
 
 const ReviewCard = ({ data }: ReviewCardProps) => {
-  const rawDate = data?.createdAt;
-  let formattedDate = "";
-
-  if (rawDate) {
-    const date = new Date(rawDate);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    formattedDate = `${year}.${month}.${day}`;
-  }
+  const formattedDate = formatDate(data?.createdAt);
 
   const rating = Math.trunc(data?.rating ?? 0);
   const stars = [];

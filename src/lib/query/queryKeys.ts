@@ -26,11 +26,17 @@ export const userKeys = {
   },
 };
 
-// 상세 페이지와 관련된 모든 키를 여기서 관리합니다.
+// 체험 상세 페이지(activityId 기준)와 관련된 모든 쿼리 키를 여기서 관리합니다.
 export const activityIdKeys = {
   all: ["activities"] as const,
 
+  // 상세페이지 데이터 조회 키
   detail: (activityId: number) => {
     return [...activityIdKeys.all, "detail", activityId] as const;
+  },
+
+  // 상세페이지 체험에 해당하는 체험리뷰 조회 키
+  reviews: (activityId: number, page: number, size: number) => {
+    return [...activityIdKeys.all, "reviews", activityId, page, size] as const;
   },
 };

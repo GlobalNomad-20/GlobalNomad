@@ -1,13 +1,15 @@
 import KebabMenuSvg from "@/assets/svg/KebabMenuSvg";
 import MapSvg from "@/assets/svg/MapSvg";
 import StarSvg from "@/assets/svg/StarSvg";
+import { ActivityDetailResponse } from "@/types/activityIdParams";
 import { cn } from "@/utils/cn";
 
 interface ActivityHeaderSectionProps {
   isNotDesktop?: boolean;
+  data?: ActivityDetailResponse;
 }
 
-const ActivityHeaderSection = ({ isNotDesktop = false }: ActivityHeaderSectionProps) => {
+const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSectionProps) => {
   return (
     <div
       className={cn(
@@ -20,21 +22,19 @@ const ActivityHeaderSection = ({ isNotDesktop = false }: ActivityHeaderSectionPr
         <div
           className="typo-13-m md:typo-14-m mb-1 text-gray-700 md:mb-2.5 md:text-gray-950 lg:mb-2"
         >
-          문화 · 예술
+          {data?.category}
         </div>
-        <div className="typo-18-b md:typo-24-b mb-4 text-gray-950 lg:mb-4.25">
-          함께 배우면 즐거운 스트릿 댄스
-        </div>
+        <div className="typo-18-b md:typo-24-b mb-4 text-gray-950 lg:mb-4.25">{data?.title}</div>
         <div className="mb-2.5 flex items-center justify-start gap-1.5">
           <StarSvg className="h-4 w-4" />
           <div className="typo-14-m flex gap-0.75 text-gray-700">
-            <span>4.9 </span>
-            <span>(293)</span>
+            <span>{data?.rating} </span>
+            <span>({data?.reviewCount})</span>
           </div>
         </div>
         <div className="flex items-center justify-start gap-0.5">
           <MapSvg className="h-4 w-4" />
-          <div className="typo-14-m text-gray-700">서울 중구 청계천로 100 10F</div>
+          <div className="typo-14-m text-gray-700">{data?.address}</div>
         </div>
       </div>
       <div className="flex h-7 w-7 items-center justify-center">

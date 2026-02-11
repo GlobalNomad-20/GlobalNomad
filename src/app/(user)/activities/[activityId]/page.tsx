@@ -1,11 +1,23 @@
+"use client";
+
+import { useParams } from "next/navigation";
+
 import ReservationDesktop from "../_components/reservation/layouts/ReservationDesktop";
 import ActivityDescriptionSection from "../_components/sections/detail/ActivityDescriptionSection";
 import ActivityHeaderSection from "../_components/sections/detail/ActivityHeaderSection";
 import ActivityImageSection from "../_components/sections/detail/ActivityImageSection";
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
+import useActivityId from "../_hooks/useActivityId";
 
 const ActivityDetail = () => {
+  const param = useParams();
+  const activityId = Number(param.activityId);
+
+  const { data: activityIdData } = useActivityId(activityId);
+
+  if (!activityIdData) return null;
+
   return (
     <div className="flex justify-center bg-white">
       <div className="mt-7.5 mb-21.25 md:mt-8.5 md:mb-14.5 lg:mt-22 lg:mb-50">
@@ -14,20 +26,20 @@ const ActivityDetail = () => {
             lg:pb-0"
         >
           <div>
-            <ActivityImageSection />
-            <ActivityHeaderSection isNotDesktop />
+            <ActivityImageSection data={activityIdData} />
+            <ActivityHeaderSection data={activityIdData} isNotDesktop />
             <div className="section-block">
-              <ActivityDescriptionSection />
+              <ActivityDescriptionSection data={activityIdData} />
             </div>
             <div className="section-block">
-              <ActivityMapSection />
+              <ActivityMapSection data={activityIdData} />
             </div>
             <div className="w-81.75 py-5 md:w-171 md:pt-7.5 md:pb-10 lg:w-167.5 lg:py-10">
-              <ActivityReviewSection />
+              <ActivityReviewSection data={activityIdData} />
             </div>
           </div>
           <div className="hidden lg:block">
-            <ActivityHeaderSection />
+            <ActivityHeaderSection data={activityIdData} />
             <div className="sticky top-5">
               <ReservationDesktop />
             </div>

@@ -25,3 +25,12 @@ export const userKeys = {
     return [...userKeys.all, "me"] as const;
   },
 };
+
+// 상세 페이지와 관련된 모든 키를 여기서 관리합니다.
+export const activityIdKeys = {
+  all: ["activities"] as const,
+
+  detail: (activityId: number) => {
+    return [...activityIdKeys.all, "detail", activityId] as const;
+  },
+};

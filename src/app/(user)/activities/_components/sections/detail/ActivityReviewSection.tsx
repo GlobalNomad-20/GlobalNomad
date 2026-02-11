@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import useActivityIdReviews from "../../../_hooks/useActivityIdReviews";
-import ReviewCard from "../../common/ReviewCard";
+import ReviewCard from "../../common/detail/ReviewCard";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import StarSvg from "@/assets/svg/StarSvg";

@@ -1,4 +1,4 @@
-import KakaoMap from "../../common/KakaoMap";
+import KakaoMap from "../../common/detail/KakaoMap";
 
 import { ActivityDetailResponse } from "@/types/activityIdParams";
 

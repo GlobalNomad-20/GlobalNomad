@@ -1,31 +1,36 @@
+import RenderHighlightedText from "./RenderHighlightedText";
+
+import { cn } from "@/utils/cn";
+
 interface AlertItemProps {
   id: number;
-  title: string;
+  content: string;
   status: string;
   createdAt: string;
-  scheduleDate: string;
   isRead?: boolean;
   onDelete: (id: number) => void;
 }
 
-const AlertItem = ({ id, status, title, createdAt, scheduleDate, onDelete }: AlertItemProps) => {
-  const handleDelete = () => {
-    onDelete(id);
-  };
+const AlertItem = ({ id, status, content, createdAt, onDelete }: AlertItemProps) => {
+  const isApproved = status === "승인";
 
   return (
-    <button onClick={handleDelete} className="group w-full text-left">
-      <div className="bg-primary-100 px-5 py-4">
+    <button
+      // eslint-disable-next-line react/jsx-handler-names
+      onClick={() => {
+        return onDelete(id);
+      }}
+      className="group w-full text-left"
+    >
+      <div
+        className={cn("px-5 py-4 transition-colors", isApproved ? "bg-primary-100" : "bg-white")}
+      >
         <div className="mb-2 flex justify-between">
-          <div className="typo-14-b text-gray-950">예약 {status}</div>
+          <div className={cn("typo-14-b")}>예약 {status}</div>
           <div className="typo-12-m text-gray-400">{createdAt}</div>
         </div>
-        <div className="typo-14-body-m">
-          <h4>{title}</h4>
-          <div>{scheduleDate}</div>
-          <div>
-            예약이 <span className="text-primary-500">{status}</span>되었어요.
-          </div>
+        <div className="typo-14-body-m text-gray-950">
+          <p>{RenderHighlightedText(content)}</p>
         </div>
       </div>
     </button>

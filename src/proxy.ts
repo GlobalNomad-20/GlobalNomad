@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { COOKIE_OPTIONS, PUBLIC_PATH, TOKEN_MAX_AGE } from "@/constants/cookieConstants";
-import { refreshTokens } from "@/lib/client/auth";
+import { refreshTokens } from "@/lib/auth/auth";
 
 export const proxy = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;

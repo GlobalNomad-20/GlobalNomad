@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
-import { setTokenCookies } from "@/lib/client/auth";
+import { setTokenCookies } from "@/lib/auth/auth";
 
 // 카카오 로그인 성공 시, 리다이렉트 되는 callback api
 const GET = async (request: NextRequest) => {

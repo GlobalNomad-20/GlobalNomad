@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Button from "@/components/common/Button";
+import { ROUTES } from "@/constants/routes";
 
 const ReservationEmpty = () => {
   return (
@@ -11,7 +12,7 @@ const ReservationEmpty = () => {
       </div>
       <p className="typo-18-m mb-7.5 text-gray-600">아직 예약한 체험이 없습니다.</p>
       <Button className="w-46">
-        <Link href={"/activities"}>둘러보기</Link>
+        <Link href={ROUTES.ACTIVITIES.ROOT}>둘러보기</Link>
       </Button>
     </div>
   );

@@ -49,7 +49,9 @@ const ActivityDetail = () => {
           </div>
         </div>
       </div>
-      <ReservationBar data={activityIdData} />
+      <div className="sticky bottom-0 z-20 lg:hidden">
+        <ReservationBar data={activityIdData} />
+      </div>
     </>
   );
 };

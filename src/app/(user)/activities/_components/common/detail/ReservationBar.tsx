@@ -28,8 +28,8 @@ const ReservationBar = ({ data }: ReservationBarProps) => {
 
   return (
     <div
-      className="py sticky bottom-0 z-20 flex h-31 w-full flex-col justify-center gap-3 border-t
-        border-[#E6E6E6] bg-white px-6 py-4.5"
+      className="py flex h-31 w-full flex-col justify-center gap-3 border-t border-[#E6E6E6]
+        bg-white px-6 py-4.5"
     >
       <div className="flex justify-between">
         <div className="flex items-center gap-1.5">

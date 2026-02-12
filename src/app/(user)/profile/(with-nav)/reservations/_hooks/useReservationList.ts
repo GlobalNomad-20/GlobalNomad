@@ -6,10 +6,10 @@ import useReservationFilter from "./useReservationFilter";
 
 import { useGetReservations } from "@/hooks/queries/useReservations";
 
-const pageSize = 5;
+const pageSize = 10;
 
-// 예약 내역 리스트 조회 훅
-const useReservationsList = () => {
+// 예약 내역 무한 스크롤 리스트 조회 훅
+const useReservationList = () => {
   const { selectedStatus, setSelectedStatus, getEmptyState } = useReservationFilter();
 
   const { data, isLoading, ...queryHelpers } = useGetReservations({
@@ -42,4 +42,4 @@ const useReservationsList = () => {
   };
 };
 
-export default useReservationsList;
+export default useReservationList;

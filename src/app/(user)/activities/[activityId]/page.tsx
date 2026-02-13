@@ -43,7 +43,7 @@ const ActivityDetail = () => {
             <div className="hidden lg:block">
               <ActivityHeaderSection data={activityIdData} />
               <div className="sticky top-3">
-                <ReservationDesktop />
+                <ReservationDesktop data={activityIdData} />
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
-import useAuthStore from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
@@ -30,7 +30,9 @@ interface ISignUpForm extends SignUpRequest {
 // 회원가입 페이지
 const Register = () => {
   const navigation = useRouter();
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => {
+    return s.user;
+  });
   const registerCompleteModal = useModal();
   const errorModal = useModal();
   const [errorMessage, setErrorMessage] = useState("알 수 없는 에러");

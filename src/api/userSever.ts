@@ -1,5 +1,5 @@
 import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
-import { fetchWithAuth } from "@/lib/client/auth";
+import { fetchWithAuth } from "@/lib/auth/auth";
 import { User } from "@/types/user";
 
 export const fetchMyInfoServer = async () => {

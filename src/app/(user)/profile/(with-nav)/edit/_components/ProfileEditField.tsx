@@ -10,15 +10,14 @@ import TextField from "@/components/common/TextField";
 import VisibilityPasswordInput from "@/components/common/VisibilityPasswordInput";
 import { ROUTES } from "@/constants/routes";
 import { useMyInfo, useUpdateMyInfo } from "@/hooks/queries/useUser";
-import useLogin from "@/hooks/useLogin";
 import { User } from "@/types/user";
+import withAuth from "@/lib/auth/withAuth";
 
 interface ProfileEditFieldProps {
   initialData: User | null;
 }
 
 const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
-  useLogin();
   const { data: userData } = useMyInfo(initialData);
   const { mutate: updateUserInfo } = useUpdateMyInfo();
 
@@ -97,4 +96,4 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
   );
 };
 
-export default ProfileEditField;
+export default withAuth(ProfileEditField);

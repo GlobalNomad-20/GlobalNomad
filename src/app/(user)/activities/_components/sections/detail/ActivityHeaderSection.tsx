@@ -1,4 +1,5 @@
-import KebabMenuSvg from "@/assets/svg/KebabMenuSvg";
+import KebabDropdown from "../../common/detail/KebabDropdown";
+
 import MapSvg from "@/assets/svg/MapSvg";
 import StarSvg from "@/assets/svg/StarSvg";
 import { ActivityDetailResponse } from "@/types/activityIdParams";
@@ -14,7 +15,7 @@ const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSec
     <div
       className={cn(
         `flex w-81.75 items-start justify-between border-b border-gray-100 py-5 md:w-171 md:py-6
-        lg:w-102.5 lg:border-none`,
+        lg:w-102.5 lg:border-none lg:pb-0`,
         isNotDesktop && "lg:hidden",
       )}
     >
@@ -37,9 +38,7 @@ const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSec
           <div className="typo-14-m text-gray-700">{data?.address}</div>
         </div>
       </div>
-      <div className="flex h-7 w-7 items-center justify-center">
-        <KebabMenuSvg className="h-4 w-1" />
-      </div>
+      <KebabDropdown />
     </div>
   );
 };

@@ -12,7 +12,7 @@ import LogOutSvg from "@/assets/svg/LogOutSvg";
 import { MEDIA_QUERY } from "@/constants/mediaQurery";
 import { PROFILE_SIDE_MENU } from "@/constants/profileSideMenu";
 import { ROUTES } from "@/constants/routes";
-import useAuthStore from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { cn } from "@/utils/cn";
 
 const ProfileNav = () => {

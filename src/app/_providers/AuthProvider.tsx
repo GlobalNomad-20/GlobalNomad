@@ -1,20 +1,24 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { createContext, useState } from "react";
+import { StoreApi } from "zustand";
 
-import useAuthStore from "@/store/useAuthStore";
+import { AuthState, createAuthStore } from "@/store/useAuthStore";
 
-// useAuthStore의 초기화 함수 처리
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialize = useAuthStore((state) => {
-    return state.initialize;
+const AuthStoreContext = createContext<StoreApi<AuthState> | null>(null);
+
+const AuthProvider = ({
+  children,
+  initialState,
+}: {
+  children: React.ReactNode;
+  initialState?: Partial<AuthState>;
+}) => {
+  const [store] = useState(() => {
+    return createAuthStore(initialState);
   });
 
-  useEffect(() => {
-    initialize();
-  }, [initialize]);
-
-  return <>{children}</>;
+  return <AuthStoreContext.Provider value={store}>{children}</AuthStoreContext.Provider>;
 };
 
-export default AuthProvider;
+export { AuthStoreContext, AuthProvider };

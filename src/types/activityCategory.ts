@@ -1,5 +1,4 @@
 export type CategoryValue =
-  | "전체"
   | "문화 · 예술"
   | "식음료"
   | "스포츠"

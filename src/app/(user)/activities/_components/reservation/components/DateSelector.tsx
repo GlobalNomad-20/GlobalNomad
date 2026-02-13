@@ -14,7 +14,7 @@ const DateSelector = () => {
 
   return (
     <div className="w-81.75 md:w-89.75 lg:w-87.5">
-      <div className="typo-18-b md:typo-20-b lg:typo-16-b text-gray-950">날짜</div>
+      <div className="lg:typo-16-b hidden text-gray-950 lg:block">날짜</div>
       <DayPicker
         classNames={{
           day_button: "flex items-center justify-center w-12 h-9 cursor-pointer",

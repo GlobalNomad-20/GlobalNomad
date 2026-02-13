@@ -5,9 +5,9 @@ const TimeSelector = () => {
     <div className="flex w-81.75 flex-col gap-3.5 md:w-63.25 lg:w-full">
       <div className="typo-16-b text-gray-950">예약 가능한 시간</div>
       <div
-        className="h-32.5 w-full overflow-y-auto [&::-webkit-scrollbar]:w-1.5
-          [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300
-          [&::-webkit-scrollbar-track]:bg-transparent"
+        className="max-h-auto w-full overflow-y-auto md:max-h-60 lg:h-32.5
+          [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full
+          [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-transparent"
       >
         <div className="flex flex-col gap-3 pr-1">
           <Button

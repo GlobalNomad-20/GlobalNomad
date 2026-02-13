@@ -1,26 +1,25 @@
 /* eslint-disable react/jsx-handler-names */
-import GuestSelector from "../../reservation/components/GuestSelector";
-import TimeSelector from "../../reservation/components/TimeSelector";
+"use client";
 
-import Button from "@/components/common/Button";
+import ReservationMobile from "../../reservation/layouts/ReservationMobile";
+import ReservationTablet from "../../reservation/layouts/ReservationTablet";
+
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 interface ReservationModalProps {
-  onCancel: () => void;
   onComplete: () => void;
 }
 
-const ReservationModal = ({ onCancel, onComplete }: ReservationModalProps) => {
+const ReservationModal = ({ onComplete }: ReservationModalProps) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
-    <div className="flex h-full flex-col p-6 md:px-7.5">
-      <p className="typo-18-b md:typo-20-b mb-2 text-gray-950 md:mb-6">날짜</p>
-      <GuestSelector />
-      <TimeSelector />
-      <div className="flex gap-3">
-        <Button onClick={onCancel} variant="outline">
-          아니오
-        </Button>
-        <Button onClick={onComplete}>실행하기</Button>
-      </div>
+    <div className="flex h-full justify-center md:px-7.5">
+      {isMobile ? (
+        <ReservationMobile onComplete={onComplete} />
+      ) : (
+        <ReservationTablet onComplete={onComplete} />
+      )}
     </div>
   );
 };

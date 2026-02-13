@@ -47,19 +47,19 @@ const ReservationBar = ({ data }: ReservationBarProps) => {
             isOpen={isOpen}
             onClose={handleCancel}
             position="bottom"
-            containerClassName="h-[605px]"
+            containerClassName="h-auto"
           >
             <motion.div
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <ReservationModal onCancel={handleCancel} onComplete={handleComplete} />
+              <ReservationModal onComplete={handleComplete} />
             </motion.div>
           </Modal>
         )}
       </div>
-      <Button variant="disabled" className="w-full">
+      <Button variant="disabled" className="typo-16-b w-full">
         예약하기
       </Button>
     </div>

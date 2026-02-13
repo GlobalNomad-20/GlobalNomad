@@ -15,7 +15,7 @@ const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSec
     <div
       className={cn(
         `flex w-81.75 items-start justify-between border-b border-gray-100 py-5 md:w-171 md:py-6
-        lg:w-102.5 lg:border-none`,
+        lg:w-102.5 lg:border-none lg:pb-0`,
         isNotDesktop && "lg:hidden",
       )}
     >

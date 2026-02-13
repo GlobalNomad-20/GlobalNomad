@@ -7,9 +7,7 @@ interface Props {
 const MyActivityUpsertLayout = ({ children }: Props) => {
   return (
     <>
-      <main className="min-h-[calc(100vh-116px)] pt-12 md:min-h-[calc(100vh-140px)] md:pt-20">
-        {children}
-      </main>
+      <main className="mx-auto mb-18 max-w-175 pt-7.5 md:mb-12 md:pt-10 lg:mb-30">{children}</main>
     </>
   );
 };

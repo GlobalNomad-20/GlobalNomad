@@ -1,32 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useReservationList } from "../_hooks/useReservationList";
 
+import EmptyReservationSection from "./EmptyReservationSection";
 import ReservationsListPopup from "./popup/ReservationsListPopup";
 
 import { CalendarEvent } from "@/components/calenderView/CalendarEventItem";
 import CalendarView from "@/components/calenderView/CalenderView";
-import { Activity } from "@/types/activityCardList";
 
-interface CalendarSectionProps {
-  events: Record<string, CalendarEvent[]>;
-}
+const myEvents: Record<string, CalendarEvent[]> = {
+  "2026-02-14": [{ id: 1, title: "예약 2", type: "예약" }],
+};
 
-const CalendarSection = ({ events }: CalendarSectionProps) => {
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
-
-  const handleSelectedAcivity = (activity: Activity) => {
-    setSelectedActivity(activity);
-  };
+const CalendarSection = () => {
+  const {
+    reservationsList,
+    selectedActivity,
+    isFetchingNextPage,
+    isLoading,
+    isEmpty,
+    handleSelectedActivity,
+    handleReachEnd,
+  } = useReservationList();
 
   const handleDateClick = (date: string) => {
     console.log(`${date} 클릭됨`);
   };
 
+  if (isLoading) {
+    return null;
+  }
+
+  if (isEmpty) {
+    return <EmptyReservationSection />;
+  }
+
   return (
     <>
-      <ReservationsListPopup selectedActivity={selectedActivity} onClick={handleSelectedAcivity} />
-      <CalendarView events={events} onDateClick={handleDateClick} />
+      <ReservationsListPopup
+        data={reservationsList}
+        selectedActivity={selectedActivity}
+        isNext={isFetchingNextPage}
+        onClick={handleSelectedActivity}
+        onReachEnd={handleReachEnd}
+      />
+      <CalendarView events={myEvents} onDateClick={handleDateClick} />
     </>
   );
 };

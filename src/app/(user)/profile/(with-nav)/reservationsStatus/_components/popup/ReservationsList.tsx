@@ -7,7 +7,7 @@ import { MyActivitiesResponse } from "@/types/myActivities";
 
 interface ReservationsListProps {
   data: InfiniteData<MyActivitiesResponse, unknown> | undefined;
-  isFetchingNextPage: boolean;
+  isNext: boolean;
   onReachEnd: () => void;
   onClose: () => void;
   onClick: (activity: Activity) => void;
@@ -15,7 +15,7 @@ interface ReservationsListProps {
 
 const ReservationsList = ({
   data,
-  isFetchingNextPage,
+  isNext,
   onReachEnd: handleReachEnd,
   onClose: handleClose,
   onClick: handleClick,
@@ -49,7 +49,7 @@ const ReservationsList = ({
           );
         });
       })}
-      {isFetchingNextPage && (
+      {isNext && (
         <SwiperSlide className="h-auto!">
           <div className="flex items-center justify-center py-4">
             <div

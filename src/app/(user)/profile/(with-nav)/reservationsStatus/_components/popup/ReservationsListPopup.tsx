@@ -1,32 +1,31 @@
 "use client";
 
+import { InfiniteData } from "@tanstack/react-query";
+
 import ReservationsList from "./ReservationsList";
 
 import DropdownArrowSvg from "@/assets/svg/DropdownArrowSvg";
-import { useGetMyActivities } from "@/hooks/queries/useMyActivities";
 import { usePopup } from "@/hooks/usePopup";
 import { Activity } from "@/types/activityCardList";
+import { MyActivitiesResponse } from "@/types/myActivities";
 import { cn } from "@/utils/cn";
 
 interface ReservationsListPopupProps {
+  data: InfiniteData<MyActivitiesResponse, unknown> | undefined;
   selectedActivity: Activity | null;
+  isNext: boolean;
+  onReachEnd: () => void;
   onClick: (activity: Activity) => void;
 }
 
 const ReservationsListPopup = ({
+  data,
   selectedActivity,
+  isNext,
   onClick: handleClick,
+  onReachEnd: handleReachEnd,
 }: ReservationsListPopupProps) => {
-  const { data, fetchNextPage, ...queryHelpers } = useGetMyActivities({
-    size: 10,
-  });
   const { popupRef, triggerRef, open, handleToggle, handleClose } = usePopup();
-
-  const handleReachEnd = () => {
-    if (queryHelpers.hasNextPage && !queryHelpers.isFetchingNextPage) {
-      fetchNextPage();
-    }
-  };
 
   return (
     <div className="relative">
@@ -53,7 +52,7 @@ const ReservationsListPopup = ({
         >
           <ReservationsList
             data={data}
-            isFetchingNextPage={queryHelpers.isFetchingNextPage}
+            isNext={isNext}
             onReachEnd={handleReachEnd}
             onClose={handleClose}
             onClick={handleClick}

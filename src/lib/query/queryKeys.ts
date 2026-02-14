@@ -23,6 +23,9 @@ export const myActivitiesKeys = {
   list: () => {
     return [...myActivitiesKeys.all, "list"]; // 등록한 내 체험 리스트
   },
+  dashboard: (activityId: number, year: string, month: string) => {
+    return [...myActivitiesKeys.all, "dashboard", activityId, year, month] as const;
+  },
 };
 
 // 유저 정보와 관련된 모든 키를 여기서 관리합니다.

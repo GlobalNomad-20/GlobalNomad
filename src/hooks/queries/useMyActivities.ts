@@ -1,28 +1,23 @@
 "use client";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
+import { fetchReservationDashboard } from "@/api/myActivities";
 import { myActivitiesKeys } from "@/lib/query/queryKeys";
-import { GetMyActivitiesParams, MyActivitiesResponse } from "@/types/myActivities";
-import { getMyActivities } from "@/api/myActivities";
+import { ReservationDashboardResponse } from "@/types/activity";
+import { GetMyActivitiesParams } from "@/types/myActivities";
 
 export const useGetMyActivities = (params: GetMyActivitiesParams) => {
-  const { size } = params;
+  return useInfiniteQuery(getMyActivitiesQueryOptions(params.size as number));
+};
 
-  return useInfiniteQuery<MyActivitiesResponse>({
-    queryKey: myActivitiesKeys.list(),
-    initialPageParam: null,
-    queryFn: ({ pageParam }) => {
-      return getMyActivities({
-        cursorId: pageParam as number | undefined,
-        size,
-      });
+export const useReservationDashboard = (activityId: number, year: string, month: string) => {
+  return useQuery<ReservationDashboardResponse>({
+    queryKey: myActivitiesKeys.dashboard(activityId, year, month),
+    queryFn: () => {
+      return fetchReservationDashboard(activityId, year, month);
     },
-    getNextPageParam: (lastPage) => {
-      if (lastPage.cursorId) {
-        return lastPage.cursorId;
-      }
-      return null;
-    },
+    enabled: !!activityId && !!year && !!month,
   });
 };

@@ -4,15 +4,33 @@ import { useState } from "react";
 
 import { CalendarDay, getDynamicCalendarData } from "@/utils/calendar";
 
-export const useCalendar = (initialDate: Date = new Date()) => {
-  const [currentDate, setCurrentDate] = useState(initialDate);
+interface UseCalendarProps {
+  value?: Date;
+  defaultValue?: Date;
+  onChange?: (date: Date) => void;
+}
+
+export const useCalendar = ({ value, defaultValue, onChange }: UseCalendarProps = {}) => {
+  const [internalDate, setInternalDate] = useState(defaultValue || new Date());
+
+  const isControlled = value !== undefined;
+  const currentDate = isControlled ? value : internalDate;
+
+  const changeDate = (newDate: Date) => {
+    if (!isControlled) {
+      setInternalDate(newDate);
+    }
+    if (onChange) {
+      onChange(newDate);
+    }
+  };
 
   const prevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    changeDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
   const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    changeDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
   const days: CalendarDay[] = getDynamicCalendarData(
@@ -20,11 +38,5 @@ export const useCalendar = (initialDate: Date = new Date()) => {
     currentDate.getMonth(),
   );
 
-  return {
-    currentDate,
-    days,
-    prevMonth,
-    nextMonth,
-    setCurrentDate,
-  };
+  return { currentDate, days, prevMonth, nextMonth };
 };

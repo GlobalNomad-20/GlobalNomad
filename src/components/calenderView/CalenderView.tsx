@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 
 import CalendarCell from "./CalendarCell";
 import { CalendarEvent } from "./CalendarEventItem"; // 타입 import
@@ -14,16 +13,18 @@ import { useCalendar } from "@/hooks/calender/useCalendar";
 import { cn } from "@/utils/cn";
 
 interface CalendarViewProps {
-  events?: Record<string, CalendarEvent[]>;
-  onDateClick?: (date: string) => void;
-  onMonthChange?: (year: string, month: string) => void;
   className?: string;
+  date?: Date;
+  events?: Record<string, CalendarEvent[]>;
+  onMonthChange?: (year: string, month: string) => void;
+  onDateClick?: (date: string) => void;
 }
 
 const CalendarView = ({
+  date,
+  onMonthChange,
   events = {},
   onDateClick: handleDateClick,
-  onMonthChange,
   className,
 }: CalendarViewProps) => {
   const {
@@ -31,16 +32,17 @@ const CalendarView = ({
     days,
     prevMonth: handlePrevMonth,
     nextMonth: handleNextMonth,
-  } = useCalendar();
-
-  useEffect(() => {
-    if (onMonthChange) {
-      const year = String(currentDate.getFullYear());
-      const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // "02" 형태로 포맷팅
-
-      onMonthChange(year, month);
-    }
-  }, [currentDate, onMonthChange]);
+  } = useCalendar({
+    value: date,
+    onChange: (newDate) => {
+      if (onMonthChange) {
+        onMonthChange(
+          String(newDate.getFullYear()),
+          String(newDate.getMonth() + 1).padStart(2, "0"),
+        );
+      }
+    },
+  });
 
   return (
     <CalendarRoot

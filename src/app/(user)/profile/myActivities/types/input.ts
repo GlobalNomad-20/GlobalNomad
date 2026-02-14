@@ -1,7 +1,5 @@
 import { MyActivityFormValues } from "../_schema/myActivityFormSchema";
 
-import { CategoryValue } from "@/types/activityCategory";
-
 export interface InputWrapperProps {
   label?: string;
   error?: string;
@@ -12,9 +10,9 @@ export interface InputWrapperProps {
 
 export interface InputProps {
   name: keyof MyActivityFormValues;
-  label: string;
+  label?: string;
   placeholder?: string;
   required?: boolean;
   className?: string;
-  options?: readonly CategoryValue[];
+  options?: readonly (string | undefined)[];
 }

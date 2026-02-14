@@ -2,9 +2,21 @@ import { z } from "zod";
 
 const scheduleSchema = z
   .object({
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "날짜는 YYYY-MM-DD 형식으로 입력해 주세요."),
-    startTime: z.string().regex(/^\d{2}:\d{2}$/, "시작 시간 형식이 올바르지 않습니다."),
-    endTime: z.string().regex(/^\d{2}:\d{2}$/, "종료 시간 형식이 올바르지 않습니다."),
+    date: z
+      .string({
+        message: "날짜를 입력해 주세요.",
+      })
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "날짜는 YYYY-MM-DD 형식으로 입력해 주세요."),
+    startTime: z
+      .string({
+        message: "시작 시간을 입력해 주세요.",
+      })
+      .regex(/^\d{2}:\d{2}$/, "시작 시간 형식이 올바르지 않습니다."),
+    endTime: z
+      .string({
+        message: "종료 시간을 입력해 주세요.",
+      })
+      .regex(/^\d{2}:\d{2}$/, "종료 시간 형식이 올바르지 않습니다."),
   })
   .refine(
     (data) => {
@@ -18,22 +30,56 @@ const scheduleSchema = z
 
 export const myActivityFormSchema = z
   .object({
-    title: z.string().min(1, "제목을 입력해 주세요."),
-    category: z.string().min(1, "카테고리를 선택해 주세요."),
-    description: z.string().min(1, "설명을 입력해 주세요."),
-    address: z.string().min(1, "주소를 입력해 주세요."),
-    price: z
-      .number({ message: "가격은 숫자로 입력해 주세요." })
-      .min(0, "가격은 0원 이상이어야 합니다."),
+    title: z
+      .string({
+        message: "제목을 입력해 주세요.",
+      })
+      .min(1, "제목을 입력해 주세요."),
+    category: z
+      .string({
+        message: "카테고리를 선택해 주세요.",
+      })
+      .min(1, "카테고리를 선택해 주세요."),
+    description: z
+      .string({
+        message: "설명을 입력해 주세요.",
+      })
+      .min(1, "설명을 입력해 주세요."),
+    address: z
+      .string({
+        message: "주소를 입력해 주세요.",
+      })
+      .min(1, "주소를 입력해 주세요."),
+    price: z.preprocess(
+      (val) => {
+        if (val === "" || val === undefined) return undefined;
+        const num = Number(val);
+        return isNaN(num) ? undefined : num;
+      },
+      z
+        .number({
+          message: "가격은 숫자로 입력해 주세요.",
+        })
+        .min(0, "가격은 0원 이상이어야 합니다.")
+        .refine((val) => {
+          return val > 0;
+        }, "가격을 입력해 주세요."),
+    ),
     schedules: z
-      .array(scheduleSchema, { message: "예약 가능한 시간대는 배열로 입력해 주세요." })
+      .array(scheduleSchema, {
+        message: "예약 가능한 시간대를 등록해 주세요.",
+      })
       .min(1, "예약 가능한 시간대는 최소 1개 이상 등록해 주세요."),
     bannerImageUrl: z
-      .string()
+      .array(z.string(), {
+        message: "배너 이미지를 등록해 주세요.",
+      })
       .min(1, "배너 이미지를 등록해 주세요.")
-      .url("배너 이미지 URL 형식이 올바르지 않습니다."),
+      .max(1, "배너 이미지는 1개만 등록할 수 있습니다."),
     subImageUrls: z
-      .array(z.string().url("소개 이미지 URL 형식이 올바르지 않습니다."))
+      .array(z.string(), {
+        message: "소개 이미지를 등록해 주세요.",
+      })
       .max(4, "소개 이미지는 최대 4개까지 등록할 수 있습니다."),
   })
   .refine(

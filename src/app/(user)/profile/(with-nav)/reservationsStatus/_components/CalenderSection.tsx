@@ -1,16 +1,14 @@
 "use client";
 
+import { useCalendarQuery } from "../_hooks/useCalendarQuery";
 import { useReservationList } from "../_hooks/useReservationList";
+import { transformToCalendarEvents } from "../_utils/formattedEvents";
 
 import EmptyReservationSection from "./EmptyReservationSection";
 import ReservationsListPopup from "./popup/ReservationsListPopup";
 
-import { CalendarEvent } from "@/components/calenderView/CalendarEventItem";
 import CalendarView from "@/components/calenderView/CalenderView";
-
-const myEvents: Record<string, CalendarEvent[]> = {
-  "2026-02-14": [{ id: 1, title: "예약 2", type: "예약" }],
-};
+import { useReservationDashboard } from "@/hooks/queries/useMyActivities";
 
 const CalendarSection = () => {
   const {
@@ -23,17 +21,21 @@ const CalendarSection = () => {
     handleReachEnd,
   } = useReservationList();
 
+  const { year, month, handleMonthChange } = useCalendarQuery();
+
+  const controlledDate = new Date(Number(year), Number(month) - 1, 1);
+  const activityId = selectedActivity?.id;
+
+  const { data: dashboardData } = useReservationDashboard(activityId as number, year, month);
+
+  const formattedEvents = transformToCalendarEvents(dashboardData);
+
   const handleDateClick = (date: string) => {
     console.log(`${date} 클릭됨`);
   };
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (isEmpty) {
-    return <EmptyReservationSection />;
-  }
+  if (isLoading) return null;
+  if (isEmpty) return <EmptyReservationSection />;
 
   return (
     <>
@@ -44,7 +46,12 @@ const CalendarSection = () => {
         onClick={handleSelectedActivity}
         onReachEnd={handleReachEnd}
       />
-      <CalendarView events={myEvents} onDateClick={handleDateClick} />
+      <CalendarView
+        date={controlledDate}
+        events={formattedEvents}
+        onDateClick={handleDateClick}
+        onMonthChange={handleMonthChange}
+      />
     </>
   );
 };

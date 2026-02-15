@@ -4,14 +4,21 @@ import { AvailableScheduleByDate } from "@/types/activityReservationSchedule";
 interface TimeSelectorProps {
   schedules?: AvailableScheduleByDate[];
   selectedDate?: string;
+  setReservationTime: (time: number) => void;
 }
 
-const TimeSelector = ({ schedules, selectedDate }: TimeSelectorProps) => {
+const TimeSelector = ({ schedules, selectedDate, setReservationTime }: TimeSelectorProps) => {
   const selectedSchedule = schedules?.find((item) => {
     return item.date === selectedDate;
   });
 
   const activityTimes = selectedSchedule?.times;
+
+  const handleSelectedTime = (time: number) => {
+    return () => {
+      setReservationTime(time);
+    };
+  };
 
   return (
     <div className="flex w-81.75 flex-col gap-3.5 md:w-63.25 lg:w-full">
@@ -29,6 +36,7 @@ const TimeSelector = ({ schedules, selectedDate }: TimeSelectorProps) => {
                 variant="outline"
                 className="hover:border-primary-500 hover:bg-primary-100 hover:text-primary-500
                   hover:typo-16-b h-12.75 w-full hover:border-2 active:bg-sky-200"
+                onClick={handleSelectedTime(Time.id)}
               >
                 {Time.startTime} ~ {Time.endTime}
               </Button>

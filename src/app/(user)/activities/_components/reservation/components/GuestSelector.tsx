@@ -1,13 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MinusSvg from "@/assets/svg/MinusSvg";
 import PlusSvg from "@/assets/svg/PlusSvg";
 
-const GuestSelector = () => {
+interface GuestSelectorProps {
+  setReservationGuest: (count: number) => void;
+}
+
+const GuestSelector = ({ setReservationGuest }: GuestSelectorProps) => {
   const [personCount, setPersonCount] = useState(1);
+
+  useEffect(() => {
+    setReservationGuest(personCount);
+  }, [personCount, setReservationGuest]);
 
   const handleIncreaseCount = () => {
     setPersonCount((prev) => {
@@ -47,7 +55,7 @@ const GuestSelector = () => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.15 }}
-          className="typo-16-b w-5 text-center text-[##4B4B4B]"
+          className="typo-16-b w-5 text-center text-[#4B4B4B]"
         >
           {personCount}
         </motion.div>

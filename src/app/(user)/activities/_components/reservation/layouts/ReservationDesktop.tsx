@@ -16,6 +16,9 @@ interface ReservationDesktopProps {
 
 const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
+  const [reservationTime, setReservationTime] = useState(0);
+  const [reservationGuest, setReservationGuest] = useState(0);
+
   const activityId = data?.id;
 
   const year = selectedDate?.split("-")[0];
@@ -27,6 +30,8 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
     month,
   });
 
+  console.log(reservationGuest, reservationTime);
+
   return (
     <div
       className="mt-17 flex flex-col gap-6 rounded-3xl border border-[#DDDDDD] bg-white p-7.5
@@ -37,8 +42,12 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
         <span className="typo-20-m text-[#79747E]">/ 인</span>
       </div>
       <DateSelector setSelectedDate={setSelectedDate} />
-      <GuestSelector />
-      <TimeSelector schedules={ReservationData} selectedDate={selectedDate} />
+      <GuestSelector setReservationGuest={setReservationGuest} />
+      <TimeSelector
+        schedules={ReservationData}
+        selectedDate={selectedDate}
+        setReservationTime={setReservationTime}
+      />
       <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">
         <div className="flex items-center justify-start gap-1.5">
           <span className="typo-20-m text-[#79747E]">총 합계</span>

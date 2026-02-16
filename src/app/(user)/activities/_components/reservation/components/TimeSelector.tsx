@@ -1,22 +1,29 @@
 import Button from "@/components/common/Button";
 import { AvailableScheduleByDate } from "@/types/activityReservationSchedule";
+import { cn } from "@/utils/cn";
 
 interface TimeSelectorProps {
   schedules?: AvailableScheduleByDate[];
   selectedDate?: string;
-  setReservationTime: (time: number) => void;
+  reservationTime: number | undefined;
+  setReservationTime: (time: number | undefined) => void;
 }
 
-const TimeSelector = ({ schedules, selectedDate, setReservationTime }: TimeSelectorProps) => {
+const TimeSelector = ({
+  schedules,
+  selectedDate,
+  reservationTime,
+  setReservationTime,
+}: TimeSelectorProps) => {
   const selectedSchedule = schedules?.find((item) => {
     return item.date === selectedDate;
   });
 
   const activityTimes = selectedSchedule?.times;
 
-  const handleSelectedTime = (time: number) => {
+  const handleSelectedTime = (timeId: number) => {
     return () => {
-      setReservationTime(time);
+      setReservationTime(reservationTime === timeId ? undefined : timeId);
     };
   };
 
@@ -30,12 +37,19 @@ const TimeSelector = ({ schedules, selectedDate, setReservationTime }: TimeSelec
       >
         <div className="flex flex-col gap-3 pr-1">
           {activityTimes?.map((Time) => {
+            const isSelected = reservationTime === Time.id;
+
             return (
               <Button
                 key={Time.id}
                 variant="outline"
-                className="hover:border-primary-500 hover:bg-primary-100 hover:text-primary-500
-                  hover:typo-16-b h-12.75 w-full hover:border-2 active:bg-sky-200"
+                className={cn(
+                  "h-12.75 w-full active:bg-sky-200",
+                  `hover:border-primary-500 hover:bg-primary-100 hover:text-primary-500
+                  hover:typo-16-b hover:border-2`,
+                  isSelected &&
+                    "border-primary-500 bg-primary-100 text-primary-500 typo-16-b border-2",
+                )}
                 onClick={handleSelectedTime(Time.id)}
               >
                 {Time.startTime} ~ {Time.endTime}

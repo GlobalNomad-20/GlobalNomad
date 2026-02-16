@@ -17,8 +17,10 @@ interface ReservationDesktopProps {
 
 const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
-  const [reservationTime, setReservationTime] = useState(0);
+  const [reservationTime, setReservationTime] = useState<number | undefined>(undefined);
   const [reservationGuest, setReservationGuest] = useState(1);
+
+  const buttonActive = reservationTime != undefined;
 
   const activityId = data?.id;
 
@@ -54,6 +56,7 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
       <TimeSelector
         schedules={ReservationData}
         selectedDate={selectedDate}
+        reservationTime={reservationTime}
         setReservationTime={setReservationTime}
       />
       <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">
@@ -61,7 +64,11 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
           <span className="typo-20-m text-[#79747E]">총 합계</span>
           <span className="typo-20-b text-gray-950">￦ {totalPrice}</span>
         </div>
-        <Button variant="primary" className="typo-16-b h-12.5 w-33.75" onClick={handleClick}>
+        <Button
+          variant={buttonActive ? "primary" : "disabled"}
+          className="typo-16-b h-12.5 w-33.75"
+          onClick={handleClick}
+        >
           예약하기
         </Button>
       </div>

@@ -4,7 +4,7 @@ export interface CreateActivityReservationPathParams {
 }
 
 export interface CreateActivityReservationRequestBody {
-  scheduleId: number;
+  scheduleId: number | undefined;
   headCount: number;
 }
 

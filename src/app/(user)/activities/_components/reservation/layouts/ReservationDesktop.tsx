@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import useAvailableSchedule from "../../../_hooks/useAvailableSchedule";
+import useCreateActivityReservation from "../../../_hooks/useCreateActivityReservation";
 import DateSelector from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
 import TimeSelector from "../components/TimeSelector";
@@ -30,8 +31,14 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
     month,
   });
 
-  console.log(reservationTime);
+  const { mutate } = useCreateActivityReservation(activityId);
+
   const totalPrice = (data?.price ?? 0) * reservationGuest;
+
+  const handleClick = () => {
+    const body = { scheduleId: reservationTime, headCount: reservationGuest };
+    mutate(body);
+  };
 
   return (
     <div
@@ -54,7 +61,7 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
           <span className="typo-20-m text-[#79747E]">총 합계</span>
           <span className="typo-20-b text-gray-950">￦ {totalPrice}</span>
         </div>
-        <Button variant="primary" className="h-12.5 w-33.75">
+        <Button variant="primary" className="typo-16-b h-12.5 w-33.75" onClick={handleClick}>
           예약하기
         </Button>
       </div>

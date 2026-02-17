@@ -4,11 +4,14 @@ import { useState } from "react";
 
 import useAvailableSchedule from "../../../_hooks/useAvailableSchedule";
 import useCreateActivityReservation from "../../../_hooks/useCreateActivityReservation";
+import DetailModal from "../../common/detail/DetailModal";
 import DateSelector from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
 import TimeSelector from "../components/TimeSelector";
 
 import Button from "@/components/common/Button";
+import Modal from "@/components/common/Modal";
+import { useModal } from "@/hooks/useModal";
 import { ActivityDetailResponse } from "@/types/activityIdParams";
 
 interface ReservationDesktopProps {
@@ -19,6 +22,7 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
   const [reservationTime, setReservationTime] = useState<number | undefined>(undefined);
   const [reservationGuest, setReservationGuest] = useState(1);
+  const { isOpen, onOpen, onClose: handleCloseModal } = useModal();
 
   const buttonActive = reservationTime != undefined;
 
@@ -39,40 +43,56 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
 
   const handleClick = () => {
     const body = { scheduleId: reservationTime, headCount: reservationGuest };
-    mutate(body);
+    mutate(body, {
+      onSuccess: () => {
+        onOpen();
+      },
+    });
   };
 
   return (
-    <div
-      className="mt-17 flex flex-col gap-6 rounded-3xl border border-[#DDDDDD] bg-white p-7.5
-        shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]"
-    >
-      <div className="flex items-center justify-start gap-1.25">
-        <span className="typo-24-b text-gray-950">￦ {data?.price}원</span>
-        <span className="typo-20-m text-[#79747E]">/ 인</span>
-      </div>
-      <DateSelector setSelectedDate={setSelectedDate} />
-      <GuestSelector setReservationGuest={setReservationGuest} />
-      <TimeSelector
-        schedules={ReservationData}
-        selectedDate={selectedDate}
-        reservationTime={reservationTime}
-        setReservationTime={setReservationTime}
-      />
-      <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">
-        <div className="flex items-center justify-start gap-1.5">
-          <span className="typo-20-m text-[#79747E]">총 합계</span>
-          <span className="typo-20-b text-gray-950">￦ {totalPrice}</span>
+    <>
+      <div
+        className="mt-17 flex flex-col gap-6 rounded-3xl border border-[#DDDDDD] bg-white p-7.5
+          shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]"
+      >
+        <div className="flex items-center justify-start gap-1.25">
+          <span className="typo-24-b text-gray-950">￦ {data?.price}원</span>
+          <span className="typo-20-m text-[#79747E]">/ 인</span>
         </div>
-        <Button
-          variant={buttonActive ? "primary" : "disabled"}
-          className="typo-16-b h-12.5 w-33.75"
-          onClick={handleClick}
-        >
-          예약하기
-        </Button>
+        <DateSelector setSelectedDate={setSelectedDate} />
+        <GuestSelector setReservationGuest={setReservationGuest} />
+        <TimeSelector
+          schedules={ReservationData}
+          selectedDate={selectedDate}
+          reservationTime={reservationTime}
+          setReservationTime={setReservationTime}
+        />
+        <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">
+          <div className="flex items-center justify-start gap-1.5">
+            <span className="typo-20-m text-[#79747E]">총 합계</span>
+            <span className="typo-20-b text-gray-950">￦ {totalPrice}</span>
+          </div>
+          <Button
+            variant={buttonActive ? "primary" : "disabled"}
+            className="typo-16-b h-12.5 w-33.75"
+            onClick={handleClick}
+          >
+            예약하기
+          </Button>
+        </div>
       </div>
-    </div>
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          onClose={handleCloseModal}
+          position="center"
+          containerClassName="w-80 h-35 md:w-100 md:h-42.5"
+        >
+          <DetailModal onClose={handleCloseModal} />
+        </Modal>
+      )}
+    </>
   );
 };
 

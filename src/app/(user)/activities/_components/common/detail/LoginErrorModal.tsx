@@ -7,7 +7,7 @@ interface LoginErrorModalProps {
 
 const LoginErrorModal = ({
   onClose: handleCloseModal,
-  onComplete: LinkLoginPage,
+  onComplete: handleLoginPage,
 }: LoginErrorModalProps) => {
   return (
     <div className="flex h-full flex-col items-center justify-center p-6">
@@ -21,8 +21,7 @@ const LoginErrorModal = ({
           닫기
         </Button>
         <Button
-          // eslint-disable-next-line react/jsx-handler-names
-          onClick={LinkLoginPage}
+          onClick={handleLoginPage}
           className="typo-14-b md:typo-16-b h-10.25 w-28.25 md:h-11.75 md:w-33.75"
         >
           로그인하기

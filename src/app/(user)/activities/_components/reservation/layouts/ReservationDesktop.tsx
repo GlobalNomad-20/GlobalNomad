@@ -67,6 +67,10 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
     });
   };
 
+  const handleLinkLogin = () => {
+    router.push("/login");
+  };
+
   return (
     <>
       <div
@@ -117,13 +121,7 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
           position="center"
           containerClassName="w-80 h-35 md:w-100 md:h-42.5"
         >
-          <LoginErrorModal
-            onClose={handleLoginClose}
-            // eslint-disable-next-line react/jsx-handler-names
-            onComplete={() => {
-              return router.push("/login");
-            }}
-          />
+          <LoginErrorModal onClose={handleLoginClose} onComplete={handleLinkLogin} />
         </Modal>
       )}
     </>

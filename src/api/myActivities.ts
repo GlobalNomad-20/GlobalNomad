@@ -6,3 +6,8 @@ export const getMyActivities = async (params: GetMyActivitiesParams) => {
   const response = await client.get(API_ENDPOINTS.MY_ACTIVITIES.LIST, { params });
   return response.data;
 };
+
+export const getMyDetailActivity = async (activityId: number) => {
+  const response = await client.get(API_ENDPOINTS.ACTIVITIES.DETAIL(activityId));
+  return response.data;
+};

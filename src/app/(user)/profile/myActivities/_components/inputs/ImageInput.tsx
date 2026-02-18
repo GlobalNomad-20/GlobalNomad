@@ -87,7 +87,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
             "relative flex shrink-0 flex-col items-center justify-center transition-all",
             "h-20 w-20 rounded-lg border border-gray-100 shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
             "md:h-31.5 md:w-31.5 md:rounded-2xl lg:h-32 lg:w-32",
-            isFull ? "cursor-not-allowed bg-gray-100" : "cursor-pointer bg-white hover:bg-gray-50",
+            isFull ? "bg-gray-25 cursor-not-allowed" : "cursor-pointer bg-white hover:bg-gray-50",
             error && "border-red-500",
           )}
         >

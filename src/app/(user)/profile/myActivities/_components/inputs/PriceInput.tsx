@@ -30,7 +30,6 @@ export const PriceInput = ({ name, label, placeholder, required, className }: In
         value={formatPrice(field.value as number | undefined)}
         onChange={handlePriceChange}
         inputMode="numeric"
-        pattern="\d*"
         placeholder={placeholder}
         className={cn(
           "typo-16-m w-full rounded-2xl border border-gray-100 px-5 py-4.5 transition-colors",

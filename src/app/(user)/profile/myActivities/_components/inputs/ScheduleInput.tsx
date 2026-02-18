@@ -7,13 +7,15 @@ import { MyActivityFormValues } from "../../_schema/myActivityFormSchema";
 import { InputProps } from "../../types/input";
 
 import InputWrapper from "./InputWrapper";
+import SelectInput from "./select/SelectInput";
 
 import { cn } from "@/utils/cn";
 import { generateTimeOptions } from "@/utils/activityTime";
 import PlusSvg from "@/assets/svg/PlusSvg";
 import MinusSvg from "@/assets/svg/MinusSvg";
+import Button from "@/components/common/Button";
 
-export const ScheduleInput = ({ name, label, required, className }: InputProps) => {
+export const ScheduleInput = ({ name, label, required }: InputProps) => {
   const {
     setValue,
     watch,
@@ -35,13 +37,13 @@ export const ScheduleInput = ({ name, label, required, className }: InputProps) 
     setInputError(false);
   };
 
-  const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStartTime(e.target.value);
+  const handleStartTimeChange = (value: string) => {
+    setStartTime(value);
     setInputError(false);
   };
 
-  const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setEndTime(e.target.value);
+  const handleEndTimeChange = (value: string) => {
+    setEndTime(value);
     setInputError(false);
   };
 
@@ -61,7 +63,6 @@ export const ScheduleInput = ({ name, label, required, className }: InputProps) 
       shouldValidate: true,
     });
 
-    // 입력 필드 초기화
     setDate("");
     setStartTime("");
     setEndTime("");
@@ -81,104 +82,111 @@ export const ScheduleInput = ({ name, label, required, className }: InputProps) 
 
   return (
     <InputWrapper label={label} error={error} required={required}>
-      <div className={cn("space-y-4", className)}>
-        <div className="flex flex-col gap-3 md:flex-row">
+      <div className="mt-2 flex flex-col items-end gap-3 md:flex-row">
+        <div className="w-full">
+          <h2 className="typo-14-m md:typo-16-m mb-2.5">날짜</h2>
           <input
             type="date"
             value={date}
             onChange={handleDateChange}
             className={cn(
-              "typo-16-m flex-1 rounded-2xl border border-gray-100 px-5 py-4.5 transition-colors",
+              "typo-16-m w-full rounded-2xl border border-gray-100 px-5 py-4 transition-colors",
               "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
               "focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none",
               inputError && "border-red-500 focus:border-red-500 focus:ring-red-500",
             )}
           />
-
-          <div className="flex gap-3">
-            <select
+        </div>
+        <div className="flex w-full items-center gap-3">
+          <div className="w-full md:w-33.5">
+            <h2 className="typo-16-m mb-2.5 hidden md:block">시작 시간</h2>
+            <SelectInput
               value={startTime}
               onChange={handleStartTimeChange}
-              className={cn(
-                "typo-16-m flex-1 rounded-2xl border border-gray-100 px-5 py-4.5 transition-colors",
-                "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
-                "focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none",
-                !startTime && "text-gray-400",
-                inputError && "border-red-500 focus:border-red-500 focus:ring-red-500",
-              )}
-            >
-              <option value="" disabled>
-                시작 시간
-              </option>
-              {timeOptions.map((time) => {
-                return (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                );
-              })}
-            </select>
-
-            <select
+              placeholder="시작 시간"
+              options={timeOptions}
+              error={inputError ? " " : undefined}
+            />
+          </div>
+          <p className="typo-20-b mt-0 md:mt-5">-</p>
+          <div className="w-full md:w-33.5">
+            <h2 className="typo-16-m mb-2.5 hidden md:block">종료 시간</h2>
+            <SelectInput
               value={endTime}
               onChange={handleEndTimeChange}
-              className={cn(
-                "typo-16-m flex-1 rounded-2xl border border-gray-100 px-5 py-4.5 transition-colors",
-                "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
-                "focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none",
-                !endTime && "text-gray-400",
-                inputError && "border-red-500 focus:border-red-500 focus:ring-red-500",
-              )}
-            >
-              <option value="" disabled>
-                종료 시간
-              </option>
-              {timeOptions.map((time) => {
-                return (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                );
-              })}
-            </select>
-
-            <button
+              placeholder="종료 시간"
+              options={timeOptions}
+              error={inputError ? " " : undefined}
+            />
+          </div>
+          <div className="mt-0 flex h-10 w-10 items-center justify-center md:mt-7 md:h-13 md:w-13">
+            <Button
               type="button"
               onClick={handleAddSchedule}
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-900
-                text-white transition-colors hover:bg-gray-800"
+              className="h-7 w-7 rounded-full p-0 md:h-10.5 md:w-10.5"
             >
-              <PlusSvg className="h-6 w-6" />
-            </button>
+              <PlusSvg className="h-2 w-2 md:h-3 md:w-3" />
+            </Button>
           </div>
         </div>
-
-        {schedules.length > 0 && (
-          <div className="space-y-2">
-            {schedules.map((schedule, index) => {
-              return (
-                <div
-                  key={`${schedule.date}-${schedule.startTime}-${index}`}
-                  className="bg-gray-25 flex items-center justify-between rounded-xl border
-                    border-gray-100 px-5 py-3"
-                >
-                  <span className="typo-16-m text-gray-900">
-                    {schedule.date} · {schedule.startTime} ~ {schedule.endTime}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleRemoveSchedule(index)}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600
-                      transition-colors hover:bg-gray-100"
-                  >
-                    <MinusSvg className="h-5 w-5" />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
+
+      {schedules.length > 0 && (
+        <div className="mt-5 space-y-5 border-t border-t-gray-100 pt-5">
+          {schedules.map((schedule, index) => {
+            const handleNoOp = () => {};
+
+            return (
+              <div
+                key={`${schedule.date}-${schedule.startTime}-${index}`}
+                className="flex flex-col items-end gap-3 md:flex-row"
+              >
+                <div className="w-full">
+                  <input
+                    type="date"
+                    value={schedule.date}
+                    disabled
+                    className={cn(
+                      "typo-16-m bg-gray-25 w-full rounded-2xl border border-gray-100 px-5 py-4",
+                      "cursor-not-allowed text-gray-400 transition-colors",
+                      "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
+                    )}
+                  />
+                </div>
+                <div className="flex w-full items-center gap-3">
+                  <div className="pointer-events-none w-full opacity-50 md:w-33.5">
+                    <SelectInput
+                      value={schedule.startTime}
+                      onChange={handleNoOp}
+                      placeholder="시작 시간"
+                      options={timeOptions}
+                    />
+                  </div>
+                  <p className="typo-20-b text-gray-400">-</p>
+                  <div className="pointer-events-none w-full opacity-50 md:w-33.5">
+                    <SelectInput
+                      value={schedule.endTime}
+                      onChange={handleNoOp}
+                      placeholder="종료 시간"
+                      options={timeOptions}
+                    />
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center md:h-13 md:w-13">
+                    <Button
+                      type="button"
+                      onClick={handleRemoveSchedule(index)}
+                      variant="outline"
+                      className="h-7 w-7 rounded-full p-0 md:h-10.5 md:w-10.5"
+                    >
+                      <MinusSvg className="h-2 w-2 md:h-3 md:w-3" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </InputWrapper>
   );
 };

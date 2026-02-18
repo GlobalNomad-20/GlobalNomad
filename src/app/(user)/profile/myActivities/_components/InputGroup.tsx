@@ -6,46 +6,71 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { myActivityFormSchema, MyActivityFormValues } from "../_schema/myActivityFormSchema";
 
 import TextInput from "./inputs/TextInput";
-import SelectInput from "./inputs/SelectInput";
 import TextareaInput from "./inputs/TextareaInput";
 import PriceInput from "./inputs/PriceInput";
 import ScheduleInput from "./inputs/ScheduleInput";
 import ImageInput from "./inputs/ImageInput";
+import { FormSelectInput } from "./inputs/select/FormSelectInput";
 
 import Button from "@/components/common/Button";
 import { ACTIVITY_CATEGORIES } from "@/constants/categoryOption";
+import { MyActivityDetailResponse } from "@/types/myActivities";
 
 interface InputGroupProps {
   mode: "add" | "edit";
+  initialData?: MyActivityDetailResponse | null;
 }
 
-const InputGroup = ({ mode }: InputGroupProps) => {
+const InputGroup = ({ mode, initialData }: InputGroupProps) => {
+  const initValues = {
+    title: "",
+    category: "",
+    description: "",
+    address: "",
+    price: 0,
+    schedules: [],
+    bannerImageUrl: [],
+    subImageUrls: [],
+  } as MyActivityFormValues;
+
+  const defaultValues =
+    mode === "edit" && initialData
+      ? {
+          title: initialData.title,
+          category: initialData.category,
+          description: initialData.description,
+          address: initialData.address,
+          price: initialData.price,
+          schedules: initialData.schedules,
+          bannerImageUrl: [initialData.bannerImageUrl],
+          subImageUrls: initialData.subImages.map((img) => {
+            return img.imageUrl;
+          }),
+        }
+      : initValues;
+
   const myActivityForm = useForm({
     mode: "onBlur",
     resolver: zodResolver(myActivityFormSchema),
-    defaultValues: {
-      title: "",
-      category: "",
-      description: "",
-      address: "",
-      price: 0,
-      schedules: [],
-      bannerImageUrl: [],
-      subImageUrls: [],
-    } as MyActivityFormValues,
+    defaultValues,
   });
+
+  if (mode === "edit" && !initialData) {
+    return <div>데이터를 불러올 수 없습니다.</div>;
+  }
 
   return (
     <FormProvider {...myActivityForm}>
       <form
         onSubmit={myActivityForm.handleSubmit((data) => {
+          // TODO: mode에 따라 post/patch
           return console.log(data);
         })}
       >
         <div className="flex flex-col gap-7.5">
           <div className="flex flex-col gap-6">
             <TextInput name="title" label="제목" placeholder="제목을 입력해 주세요." required />
-            <SelectInput
+            <FormSelectInput
               name="category"
               label="카테고리"
               placeholder="카테고리를 선택해 주세요."

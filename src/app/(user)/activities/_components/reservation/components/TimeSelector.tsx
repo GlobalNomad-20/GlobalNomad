@@ -51,7 +51,6 @@ const TimeSelector = ({
         <div className="flex flex-col gap-3 pr-1">
           {activityTimes?.map((Time) => {
             const isSelected = reservationTime === Time.id;
-
             return (
               <Button
                 key={Time.id}

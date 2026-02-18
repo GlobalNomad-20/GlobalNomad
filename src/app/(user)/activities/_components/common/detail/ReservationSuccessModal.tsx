@@ -1,10 +1,10 @@
 import Button from "@/components/common/Button";
 
-interface DetailModalProps {
+interface ReservationSuccessModalProps {
   onClose: () => void;
 }
 
-const DetailModal = ({ onClose: handleCloseModal }: DetailModalProps) => {
+const ReservationSuccessModal = ({ onClose: handleCloseModal }: ReservationSuccessModalProps) => {
   return (
     <div className="flex h-full flex-col items-center justify-center p-6">
       <p className="typo-18-b mb-4 md:mb-5">예약이 완료되었습니다.</p>
@@ -20,4 +20,4 @@ const DetailModal = ({ onClose: handleCloseModal }: DetailModalProps) => {
   );
 };
 
-export default DetailModal;
+export default ReservationSuccessModal;

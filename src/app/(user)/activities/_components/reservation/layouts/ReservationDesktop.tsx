@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import useAvailableSchedule from "../../../_hooks/useAvailableSchedule";
 import useCreateActivityReservation from "../../../_hooks/useCreateActivityReservation";
-import DetailModal from "../../common/detail/DetailModal";
+import LoginErrorModal from "../../common/detail/LoginErrorModal";
+import ReservationSuccessModal from "../../common/detail/ReservationSuccessModal";
 import DateSelector from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
 import TimeSelector from "../components/TimeSelector";
@@ -19,10 +21,18 @@ interface ReservationDesktopProps {
 }
 
 const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
   const [reservationTime, setReservationTime] = useState<number | undefined>(undefined);
   const [reservationGuest, setReservationGuest] = useState(1);
-  const { isOpen, onOpen, onClose: handleCloseModal } = useModal();
+
+  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen, onClose: handleCloseModal } = useModal();
+  const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: handleLoginClose } = useModal();
+
+  const hasToken = () => {
+    if (typeof window === "undefined") return false;
+    return Boolean(localStorage.getItem("accessToken"));
+  };
 
   const buttonActive = reservationTime != undefined;
 
@@ -42,10 +52,17 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
   const totalPrice = (data?.price ?? 0) * reservationGuest;
 
   const handleClick = () => {
+    if (!hasToken()) {
+      onLoginOpen();
+      return;
+    }
+
+    if (!reservationTime) return;
+
     const body = { scheduleId: reservationTime, headCount: reservationGuest };
     mutate(body, {
       onSuccess: () => {
-        onOpen();
+        onSuccessOpen();
       },
     });
   };
@@ -77,19 +94,36 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
             variant={buttonActive ? "primary" : "disabled"}
             className="typo-16-b h-12.5 w-33.75"
             onClick={handleClick}
+            disabled={!buttonActive}
           >
             예약하기
           </Button>
         </div>
       </div>
-      {isOpen && (
+      {isSuccessOpen && (
         <Modal
-          isOpen={isOpen}
+          isOpen={isSuccessOpen}
           onClose={handleCloseModal}
           position="center"
           containerClassName="w-80 h-35 md:w-100 md:h-42.5"
         >
-          <DetailModal onClose={handleCloseModal} />
+          <ReservationSuccessModal onClose={handleCloseModal} />
+        </Modal>
+      )}
+      {isLoginOpen && (
+        <Modal
+          isOpen={isLoginOpen}
+          onClose={handleLoginClose}
+          position="center"
+          containerClassName="w-80 h-35 md:w-100 md:h-42.5"
+        >
+          <LoginErrorModal
+            onClose={handleLoginClose}
+            // eslint-disable-next-line react/jsx-handler-names
+            onComplete={() => {
+              return router.push("/login");
+            }}
+          />
         </Modal>
       )}
     </>

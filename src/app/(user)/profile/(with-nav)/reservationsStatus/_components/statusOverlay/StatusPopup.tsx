@@ -40,7 +40,7 @@ const StatusPopup = ({
     <div
       ref={popupRef}
       className={cn(
-        "absolute z-9999 h-98.25 w-85 rounded-xl border border-gray-200 bg-white shadow-lg",
+        "absolute z-9999 w-85 rounded-xl border border-gray-200 bg-white shadow-lg",
         !position ? "invisible opacity-0" : "visible opacity-100 transition-opacity",
       )}
       style={{

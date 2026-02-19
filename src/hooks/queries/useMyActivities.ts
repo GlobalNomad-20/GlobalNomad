@@ -40,18 +40,30 @@ export const useReservedSchedule = (activityId: number, date: string) => {
   });
 };
 
-export const useActivityReservations = ({
+export const useInfiniteActivityReservations = ({
   activityId,
   scheduleId,
   status,
-  size,
+  size = 10,
   cursorId,
 }: FetchReservationsParams) => {
-  return useQuery<ActivityReservationsResponse>({
+  return useInfiniteQuery<ActivityReservationsResponse>({
     queryKey: myActivitiesKeys.reservations(activityId, scheduleId, status, size, cursorId),
-    queryFn: () => {
-      return fetchActivityReservations({ activityId, scheduleId, status, size, cursorId });
+    initialPageParam: null,
+    queryFn: ({ pageParam }) => {
+      return fetchActivityReservations({
+        activityId,
+        scheduleId,
+        status,
+        size,
+        cursorId: pageParam as number | undefined,
+      });
     },
-    enabled: !!activityId && !!scheduleId && !!status,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.cursorId) {
+        return lastPage.cursorId;
+      }
+      return null;
+    },
   });
 };

@@ -1,3 +1,5 @@
+import ReservationStatusContent from "./ReservationStatusContent";
+
 import Modal from "@/components/common/Modal";
 import { useKeyPress } from "@/hooks/useKeyPress";
 
@@ -12,8 +14,7 @@ const StatusModal = ({ activityId, date, onClose: handleClose }: StatusModalProp
 
   return (
     <Modal position="bottom" isOpen={true} onClose={handleClose}>
-      <div>Activity ID: {activityId}</div>
-      <div>Date: {date}</div>
+      <ReservationStatusContent activityId={activityId} date={date} onClose={handleClose} />
     </Modal>
   );
 };

@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
+import ReservationStatusContent from "./ReservationStatusContent";
+
 import { useAutoPosition } from "@/hooks/useAutoPosition";
 import { usePopup } from "@/hooks/usePopup";
 import { cn } from "@/utils/cn";
@@ -46,10 +48,7 @@ const StatusPopup = ({
         left: position ? `${position.left}px` : 0,
       }}
     >
-      <h3>예약 상태 팝업</h3>
-      <p>Activity ID: {activityId}</p>
-      <p>Date: {date}</p>
-      <button onClick={handleClose}>닫기</button>
+      <ReservationStatusContent activityId={activityId} date={date} onClose={handleClose} />
     </div>,
     document.body,
   );

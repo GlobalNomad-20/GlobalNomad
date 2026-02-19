@@ -1,7 +1,11 @@
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
 import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
-import { GetMyActivitiesParams } from "@/types/myActivities";
+import {
+  ActivityReservationsResponse,
+  FetchReservationsParams,
+  GetMyActivitiesParams,
+} from "@/types/myActivities";
 
 export const getMyActivities = async (params: GetMyActivitiesParams) => {
   const response = await client.get(API_ENDPOINTS.MY_ACTIVITIES.LIST, { params });
@@ -28,6 +32,28 @@ export const fetchReservedSchedule = async (activityId: number, date: string) =>
     API_ENDPOINTS.MY_ACTIVITIES.RESERVED_SCHEDULE(activityId),
     {
       params: { date },
+    },
+  );
+
+  return response.data;
+};
+
+export const fetchActivityReservations = async ({
+  activityId,
+  scheduleId,
+  status,
+  size,
+  cursorId,
+}: FetchReservationsParams) => {
+  const response = await client.get<ActivityReservationsResponse>(
+    API_ENDPOINTS.MY_ACTIVITIES.RESERVATIONS(activityId),
+    {
+      params: {
+        scheduleId,
+        status,
+        size,
+        cursorId,
+      },
     },
   );
 

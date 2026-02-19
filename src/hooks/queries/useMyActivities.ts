@@ -3,10 +3,18 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
-import { fetchReservationDashboard, fetchReservedSchedule } from "@/api/myActivities";
+import {
+  fetchActivityReservations,
+  fetchReservationDashboard,
+  fetchReservedSchedule,
+} from "@/api/myActivities";
 import { myActivitiesKeys } from "@/lib/query/queryKeys";
 import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
-import { GetMyActivitiesParams } from "@/types/myActivities";
+import {
+  ActivityReservationsResponse,
+  FetchReservationsParams,
+  GetMyActivitiesParams,
+} from "@/types/myActivities";
 
 export const useGetMyActivities = (params: GetMyActivitiesParams) => {
   return useInfiniteQuery(getMyActivitiesQueryOptions(params.size as number));
@@ -29,5 +37,21 @@ export const useReservedSchedule = (activityId: number, date: string) => {
       return fetchReservedSchedule(activityId, date);
     },
     enabled: !!activityId && !!date,
+  });
+};
+
+export const useActivityReservations = ({
+  activityId,
+  scheduleId,
+  status,
+  size,
+  cursorId,
+}: FetchReservationsParams) => {
+  return useQuery<ActivityReservationsResponse>({
+    queryKey: myActivitiesKeys.reservations(activityId, scheduleId, status, size, cursorId),
+    queryFn: () => {
+      return fetchActivityReservations({ activityId, scheduleId, status, size, cursorId });
+    },
+    enabled: !!activityId && !!scheduleId && !!status,
   });
 };

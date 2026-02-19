@@ -1,3 +1,5 @@
+import { ReservationStatus } from "@/types/reservations";
+
 // 알람과 관련된 모든 키를 여기서 관리합니다.
 export const myNotificationsKeys = {
   all: ["myNotifications"] as const,
@@ -28,6 +30,23 @@ export const myActivitiesKeys = {
   },
   reservedSchedule: (activityId: number, date: string) => {
     return ["myActivities", "reservedSchedule", activityId, date] as const;
+  },
+  reservations: (
+    activityId: number,
+    scheduleId: number,
+    status: ReservationStatus,
+    size?: number,
+    cursorId?: number,
+  ) => {
+    return [
+      "myActivities",
+      "reservedSchedule",
+      activityId,
+      scheduleId,
+      status,
+      size,
+      cursorId,
+    ] as const;
   },
 };
 

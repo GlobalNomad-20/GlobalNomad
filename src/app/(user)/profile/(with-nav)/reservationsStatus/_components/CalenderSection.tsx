@@ -26,7 +26,7 @@ const CalendarSection = () => {
 
   const { year, month, handleMonthChange } = useCalendarQuery();
 
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [popupTarget, setPopupTarget] = useState<{ date: string; el: HTMLElement } | null>(null);
 
   const controlledDate = new Date(Number(year), Number(month) - 1, 1);
   const activityId = selectedActivity?.id;
@@ -34,14 +34,14 @@ const CalendarSection = () => {
   const { data: dashboardData } = useReservationDashboard(activityId as number, year, month);
   const formattedEvents = transformToCalendarEvents(dashboardData);
 
-  const handleDateClick = (date: string) => {
+  const handleDateClick = (date: string, el: HTMLElement) => {
     if (formattedEvents[date] !== undefined) {
-      setSelectedDate(date);
+      setPopupTarget({ date, el });
     }
   };
 
   const handleCloseOverlay = () => {
-    return setSelectedDate(null);
+    return setPopupTarget(null);
   };
 
   if (isLoading) return null;
@@ -62,10 +62,11 @@ const CalendarSection = () => {
         onDateClick={handleDateClick}
         onMonthChange={handleMonthChange}
       />
-      {selectedDate && activityId && (
+      {popupTarget && activityId && (
         <ResponsiveStatusOverlay
           activityId={activityId}
-          date={selectedDate}
+          date={popupTarget.date}
+          anchorEl={popupTarget.el}
           onClose={handleCloseOverlay}
         />
       )}

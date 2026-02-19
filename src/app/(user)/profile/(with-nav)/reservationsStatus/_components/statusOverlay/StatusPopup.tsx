@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
-import ReservationStatusContent from "./ReservationStatusContent";
+import ReservationStatusContent from "../statusContent/ReservationStatusContent";
 
 import { useAutoPosition } from "@/hooks/useAutoPosition";
 import { usePopup } from "@/hooks/usePopup";
@@ -40,7 +40,7 @@ const StatusPopup = ({
     <div
       ref={popupRef}
       className={cn(
-        "absolute z-9999 rounded-xl border border-gray-200 bg-white p-4 shadow-lg",
+        "absolute z-9999 h-98.25 w-85 rounded-xl border border-gray-200 bg-white shadow-lg",
         !position ? "invisible opacity-0" : "visible opacity-100 transition-opacity",
       )}
       style={{

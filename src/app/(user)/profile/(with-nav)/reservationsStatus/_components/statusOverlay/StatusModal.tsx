@@ -1,4 +1,4 @@
-import ReservationStatusContent from "./ReservationStatusContent";
+import ReservationStatusContent from "../statusContent/ReservationStatusContent";
 
 import Modal from "@/components/common/Modal";
 import { useKeyPress } from "@/hooks/useKeyPress";

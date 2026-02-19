@@ -26,6 +26,9 @@ export const myActivitiesKeys = {
   dashboard: (activityId: number, year: string, month: string) => {
     return [...myActivitiesKeys.all, "dashboard", activityId, year, month] as const;
   },
+  reservedSchedule: (activityId: number, date: string) => {
+    return ["myActivities", "reservedSchedule", activityId, date] as const;
+  },
 };
 
 // 유저 정보와 관련된 모든 키를 여기서 관리합니다.

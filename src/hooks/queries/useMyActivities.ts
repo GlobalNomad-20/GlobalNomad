@@ -3,9 +3,9 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
-import { fetchReservationDashboard } from "@/api/myActivities";
+import { fetchReservationDashboard, fetchReservedSchedule } from "@/api/myActivities";
 import { myActivitiesKeys } from "@/lib/query/queryKeys";
-import { ReservationDashboardResponse } from "@/types/activity";
+import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
 import { GetMyActivitiesParams } from "@/types/myActivities";
 
 export const useGetMyActivities = (params: GetMyActivitiesParams) => {
@@ -19,5 +19,15 @@ export const useReservationDashboard = (activityId: number, year: string, month:
       return fetchReservationDashboard(activityId, year, month);
     },
     enabled: !!activityId && !!year && !!month,
+  });
+};
+
+export const useReservedSchedule = (activityId: number, date: string) => {
+  return useQuery<ReservedScheduleResponse>({
+    queryKey: myActivitiesKeys.reservedSchedule(activityId, date),
+    queryFn: () => {
+      return fetchReservedSchedule(activityId, date);
+    },
+    enabled: !!activityId && !!date,
   });
 };

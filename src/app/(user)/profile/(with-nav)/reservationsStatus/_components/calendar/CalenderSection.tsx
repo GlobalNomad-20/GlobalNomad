@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
-import { useCalendarQuery } from "../_hooks/useCalendarQuery";
-import { useReservationList } from "../_hooks/useReservationList";
-import { transformToCalendarEvents } from "../_utils/formattedEvents";
+import { useCalendarQuery } from "../../_hooks/useCalendarQuery";
+import { useReservationList } from "../../_hooks/useReservationList";
+import { transformToCalendarEvents } from "../../_utils/formattedEvents";
+import ReservationsListPopup from "../reservationList/ReservationsListPopup";
+import ResponsiveStatusOverlay from "../statusOverlay/ResponsiveStatusOverlay";
 
 import EmptyReservationSection from "./EmptyReservationSection";
-import ReservationsListPopup from "./popup/ReservationsListPopup";
-import ResponsiveStatusOverlay from "./ResponsiveStatusOverlay";
 
 import CalendarView from "@/components/calenderView/CalenderView";
 import { useReservationDashboard } from "@/hooks/queries/useMyActivities";

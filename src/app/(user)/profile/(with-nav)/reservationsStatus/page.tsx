@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
-import CalendarSection from "./_components/CalenderSection";
+import CalendarSection from "./_components/calendar/CalenderSection";
 
 import { getMyActivitiesServer } from "@/api/myActivities.server";
 import { getMyActivitiesQueryOptions } from "@/hooks/queries/options/myActivitiesOptions";

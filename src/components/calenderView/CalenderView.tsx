@@ -17,7 +17,7 @@ interface CalendarViewProps {
   date?: Date;
   events?: Record<string, CalendarEvent[]>;
   onMonthChange?: (year: string, month: string) => void;
-  onDateClick?: (date: string) => void;
+  onDateClick?: (date: string, element: HTMLElement) => void;
 }
 
 const CalendarView = ({

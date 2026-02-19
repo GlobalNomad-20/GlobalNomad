@@ -8,7 +8,7 @@ import { cn } from "@/utils/cn";
 interface CalendarCellProps {
   day: CalendarDay;
   events: CalendarEvent[];
-  onClick?: (date: string) => void;
+  onClick?: (date: string, element: HTMLElement) => void;
 }
 
 const CalendarCell = ({ day, events, onClick }: CalendarCellProps) => {
@@ -19,11 +19,12 @@ const CalendarCell = ({ day, events, onClick }: CalendarCellProps) => {
   return (
     <div
       // eslint-disable-next-line react/jsx-handler-names
-      onClick={() => {
-        return onClick?.(day.dateStr);
+      onClick={(e) => {
+        return onClick?.(day.dateStr, e.currentTarget);
       }}
       className={cn(
-        "flex min-h-31 cursor-pointer flex-col gap-1 pt-4.5 transition-colors hover:bg-gray-50",
+        `relative flex min-h-31 cursor-pointer flex-col gap-1 pt-4.5 transition-colors
+        hover:bg-gray-50`,
         !day.isCurrentMonth && "bg-gray-50/50 text-gray-400",
       )}
     >

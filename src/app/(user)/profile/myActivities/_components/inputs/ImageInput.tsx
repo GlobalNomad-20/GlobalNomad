@@ -13,6 +13,7 @@ import { cn } from "@/utils/cn";
 import ImageAddSvg from "@/assets/svg/ImageAddSvg";
 import ImageFullSvg from "@/assets/svg/ImageFullSvg";
 import DeleteSvg from "@/assets/svg/DeleteSvg";
+import { useUploadProfileImage } from "@/hooks/queries/useMyActivities";
 
 type ArrayFieldKeys = {
   [K in keyof MyActivityFormValues]: MyActivityFormValues[K] extends string[] ? K : never;
@@ -31,6 +32,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
   } = useFormContext<MyActivityFormValues>();
 
   const { fileInputRef, handleEditClick, resetInput } = useProfileImageUploader();
+  const { mutate: uploadImage, isPending } = useUploadProfileImage();
 
   const images = (watch(name) as string[]) || [];
   const error = (errors[name as keyof MyActivityFormValues]?.message as string) || undefined;
@@ -40,18 +42,23 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    try {
-      // TODO: API 연결 후 변경 필요
-      const uploadedUrl = URL.createObjectURL(file);
-      const newImages = [...images, uploadedUrl];
-      setValue(name, newImages as MyActivityFormValues[ArrayFieldKeys], {
-        shouldValidate: true,
-      });
-    } catch (err) {
-      console.error("업로드 실패:", err);
-    } finally {
-      resetInput();
-    }
+
+    uploadImage(file, {
+      onSuccess: (response) => {
+        const uploadedUrl = response.activityImageUrl;
+        const newImages = [...images, uploadedUrl];
+        setValue(name, newImages as MyActivityFormValues[ArrayFieldKeys], {
+          shouldValidate: true,
+        });
+      },
+      onError: (err) => {
+        console.error("업로드 실패:", err);
+        alert("이미지 업로드에 실패했습니다.");
+      },
+      onSettled: () => {
+        resetInput();
+      },
+    });
   };
 
   const handleRemoveImage = (index: number) => {
@@ -64,7 +71,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
   };
 
   const handleImageAddClick = () => {
-    if (!isFull) {
+    if (!isFull && !isPending) {
       handleEditClick();
     }
   };
@@ -78,7 +85,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
           className="hidden"
           ref={fileInputRef}
           onChange={handleFileChange}
-          disabled={isFull}
+          disabled={isFull || isPending}
         />
 
         <div
@@ -87,20 +94,27 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
             "relative flex shrink-0 flex-col items-center justify-center transition-all",
             "h-20 w-20 rounded-lg border border-gray-100 shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
             "md:h-31.5 md:w-31.5 md:rounded-2xl lg:h-32 lg:w-32",
-            isFull ? "bg-gray-25 cursor-not-allowed" : "cursor-pointer bg-white hover:bg-gray-50",
+            isFull || isPending
+              ? "bg-gray-25 cursor-not-allowed"
+              : "cursor-pointer bg-white hover:bg-gray-50",
             error && "border-red-500",
           )}
         >
           <div className="flex flex-col items-center gap-1 md:gap-2">
             <div className="relative">
-              {isFull ? (
+              {isFull || isPending ? (
                 <ImageFullSvg className="h-8 w-8 text-gray-400 md:h-10 md:w-10" />
               ) : (
                 <ImageAddSvg className="h-6 w-6 md:h-8 md:w-8" />
               )}
             </div>
-            <span className={cn("typo-13-m md:typo-14-m", isFull ? "text-gray-400" : "text-black")}>
-              {images.length}/{maxCount}
+            <span
+              className={cn(
+                "typo-13-m md:typo-14-m",
+                isFull || isPending ? "text-gray-400" : "text-black",
+              )}
+            >
+              {isPending ? "업로드 중..." : `${images.length}/${maxCount}`}
             </span>
           </div>
         </div>

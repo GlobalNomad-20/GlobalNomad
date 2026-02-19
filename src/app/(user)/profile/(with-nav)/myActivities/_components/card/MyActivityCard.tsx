@@ -8,6 +8,7 @@ import { MyActivity } from "@/types/myActivities";
 import { cn } from "@/utils/cn";
 import Button from "@/components/common/Button";
 import { ROUTES } from "@/constants/routes";
+import { useDeleteActivity } from "@/hooks/queries/useMyActivities";
 
 interface MyActivityCardProps {
   myActivity: MyActivity;
@@ -15,9 +16,20 @@ interface MyActivityCardProps {
 
 const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
   const router = useRouter();
+  const { mutate: deleteActivity, isPending } = useDeleteActivity();
 
   const handleMyActivityEditRouteClick = () => {
     return router.push(ROUTES.PROFILE.MY_ACTIVITIES.EDIT(myActivity.id));
+  };
+
+  const handleDeleteClick = () => {
+    if (confirm(`"${myActivity.title}" 체험을 삭제하시겠습니까?`)) {
+      deleteActivity(myActivity.id, {
+        onSuccess: () => {
+          alert("체험이 삭제되었습니다.");
+        },
+      });
+    }
   };
 
   return (
@@ -34,6 +46,7 @@ const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
             lg:w-35 lg:rounded-4xl"
         >
           <CustomImage
+            key={myActivity.bannerImageUrl}
             src={myActivity.bannerImageUrl}
             alt={myActivity.title}
             fill
@@ -63,11 +76,17 @@ const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
               className="typo-14-m w-17 rounded-lg"
               onClick={handleMyActivityEditRouteClick}
               type="button"
+              disabled={isPending}
             >
               수정하기
             </Button>
-            <Button className="typo-14-m w-17 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100">
-              삭제하기
+            <Button
+              className="typo-14-m w-17 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
+              onClick={handleDeleteClick}
+              type="button"
+              disabled={isPending}
+            >
+              {isPending ? "삭제 중..." : "삭제하기"}
             </Button>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const scheduleSchema = z
   .object({
+    id: z.number().optional(),
     date: z
       .string({
         message: "날짜를 입력해 주세요.",

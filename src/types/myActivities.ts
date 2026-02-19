@@ -54,3 +54,75 @@ export interface MyActivityDetailResponse {
   createdAt: string;
   updatedAt: string;
 }
+export interface UploadActivityImageResponse {
+  activityImageUrl: string;
+}
+
+export interface CreateActivitySchedule {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface CreateActivityRequest {
+  title: string;
+  category: string;
+  description: string;
+  address: string;
+  price: number;
+  schedules: CreateActivitySchedule[];
+  bannerImageUrl: string;
+  subImageUrls: string[];
+}
+
+export interface UpdateActivitySchedule {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface UpdateActivityRequest {
+  title: string;
+  category: string;
+  description: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  subImageIdsToRemove: number[];
+  subImageUrlsToAdd: string[];
+  scheduleIdsToRemove: number[];
+  schedulesToAdd: UpdateActivitySchedule[];
+}
+
+export interface ActivityResponseScheduleTime {
+  endTime: string;
+  startTime: string;
+  id: number;
+}
+
+export interface ActivityResponseSchedule {
+  times: ActivityResponseScheduleTime[];
+  date: string;
+}
+
+export interface ActivityResponseSubImage {
+  imageUrl: string;
+  id: number;
+}
+
+export interface ActivityResponse {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  subImages: ActivityResponseSubImage[];
+  schedules: ActivityResponseSchedule[];
+}

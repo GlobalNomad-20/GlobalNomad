@@ -70,3 +70,20 @@ export const formatReservationDisplay = (startDateStr: string, endDateStr?: stri
 
   return `${dateStr} / ${timePart}`;
 };
+
+/**
+ * "YYYY-MM-DD" 형식의 날짜 문자열을 "YY년 M월 D일" 형식으로 변환합니다.
+ */
+export const formatShortKoreanDate = (dateString: string): string => {
+  if (!dateString) return "";
+
+  const [year, month, day] = dateString.split("-");
+
+  if (!year || !month || !day) return dateString;
+
+  const shortYear = year.slice(-2);
+  const numericMonth = Number(month);
+  const numericDay = Number(day);
+
+  return `${shortYear}년 ${numericMonth}월 ${numericDay}일`;
+};

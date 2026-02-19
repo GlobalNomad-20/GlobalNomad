@@ -28,13 +28,13 @@ export const myActivitiesKeys = {
   dashboard: (activityId: number, year: string, month: string) => {
     return [...myActivitiesKeys.all, "dashboard", activityId, year, month] as const;
   },
-  reservedSchedule: (activityId: number, date: string) => {
+  reservedSchedule: (activityId: number, date?: string) => {
     return ["myActivities", "reservedSchedule", activityId, date] as const;
   },
   reservations: (
     activityId: number,
-    scheduleId: number,
-    status: ReservationStatus,
+    scheduleId?: number,
+    status?: ReservationStatus,
     size?: number,
     cursorId?: number,
   ) => {

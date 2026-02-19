@@ -39,3 +39,26 @@ export interface ReservationReviewRequest {
   rating: number;
   content: string;
 }
+
+export interface UpdateReservationStatusParams {
+  activityId: number;
+  reservationId: number;
+  status: "confirmed" | "declined";
+}
+
+export interface UpdateReservationResponse {
+  id: number;
+  teamId: string;
+  userId: number;
+  activityId: number;
+  scheduleId: number;
+  status: string;
+  reviewSubmitted: boolean;
+  totalPrice: number;
+  headCount: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}

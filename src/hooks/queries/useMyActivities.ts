@@ -1,5 +1,5 @@
 "use client";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
@@ -7,6 +7,7 @@ import {
   fetchActivityReservations,
   fetchReservationDashboard,
   fetchReservedSchedule,
+  patchReservationStatus,
 } from "@/api/myActivities";
 import { myActivitiesKeys } from "@/lib/query/queryKeys";
 import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
@@ -15,6 +16,7 @@ import {
   FetchReservationsParams,
   GetMyActivitiesParams,
 } from "@/types/myActivities";
+import { UpdateReservationStatusParams } from "@/types/reservations";
 
 export const useGetMyActivities = (params: GetMyActivitiesParams) => {
   return useInfiniteQuery(getMyActivitiesQueryOptions(params.size as number));
@@ -64,6 +66,27 @@ export const useInfiniteActivityReservations = ({
         return lastPage.cursorId;
       }
       return null;
+    },
+  });
+};
+
+export const useUpdateReservationStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ activityId, reservationId, status }: UpdateReservationStatusParams) => {
+      return patchReservationStatus({ activityId, reservationId, status });
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: myActivitiesKeys.reservations(variables.activityId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: myActivitiesKeys.reservedSchedule(variables.activityId),
+      });
+    },
+    onError: (error) => {
+      console.error("예약 상태 변경 실패:", error);
     },
   });
 };

@@ -39,7 +39,9 @@ const ReservationsListPopup = ({
         <h4 className="typo-14-m md:typo-16-m">
           {selectedActivity ? selectedActivity.title : "체험을 선택해주세요"}
         </h4>
-        <DropdownArrowSvg />
+        <DropdownArrowSvg
+          className={cn("transition-transform duration-200", open ? "rotate-180" : "rotate-0")}
+        />
       </button>
       {open && (
         <div

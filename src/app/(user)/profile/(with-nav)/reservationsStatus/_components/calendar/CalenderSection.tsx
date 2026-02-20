@@ -41,7 +41,7 @@ const CalendarSection = () => {
   };
 
   const handleCloseOverlay = () => {
-    return setPopupTarget(null);
+    setPopupTarget(null);
   };
 
   if (isLoading) return null;

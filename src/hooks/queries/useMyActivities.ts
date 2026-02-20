@@ -4,6 +4,16 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 
 import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
+import {
+  createActivity,
+  deleteActivity,
+  fetchActivityReservations,
+  fetchReservationDashboard,
+  fetchReservedSchedule,
+  patchReservationStatus,
+  updateActivity,
+  uploadActivityImage,
+} from "@/api/myActivities";
 import { activityIdKeys, myActivitiesKeys } from "@/lib/query/queryKeys";
 import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
 import {
@@ -13,15 +23,7 @@ import {
   GetMyActivitiesParams,
   UpdateActivityRequest,
 } from "@/types/myActivities";
-import {
-  createActivity,
-  deleteActivity,
-  fetchActivityReservations,
-  fetchReservationDashboard,
-  fetchReservedSchedule,
-  updateActivity,
-  uploadActivityImage,
-} from "@/api/myActivities";
+import { UpdateReservationStatusParams } from "@/types/reservations";
 
 export const useGetMyActivities = (params: GetMyActivitiesParams) => {
   return useInfiniteQuery(getMyActivitiesQueryOptions(params.size as number));
@@ -47,19 +49,49 @@ export const useReservedSchedule = (activityId: number, date: string) => {
   });
 };
 
-export const useActivityReservations = ({
+export const useInfiniteActivityReservations = ({
   activityId,
   scheduleId,
   status,
-  size,
+  size = 10,
   cursorId,
 }: FetchReservationsParams) => {
-  return useQuery<ActivityReservationsResponse>({
+  return useInfiniteQuery<ActivityReservationsResponse>({
     queryKey: myActivitiesKeys.reservations(activityId, scheduleId, status, size, cursorId),
-    queryFn: () => {
-      return fetchActivityReservations({ activityId, scheduleId, status, size, cursorId });
+    initialPageParam: null,
+    queryFn: ({ pageParam }) => {
+      return fetchActivityReservations({
+        activityId,
+        scheduleId,
+        status,
+        size,
+        cursorId: pageParam as number | undefined,
+      });
     },
-    enabled: !!activityId && !!scheduleId && !!status,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.cursorId) {
+        return lastPage.cursorId;
+      }
+      return null;
+    },
+  });
+};
+
+export const useUpdateReservationStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ activityId, reservationId, status }: UpdateReservationStatusParams) => {
+      return patchReservationStatus({ activityId, reservationId, status });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...myActivitiesKeys.all],
+      });
+    },
+    onError: (error) => {
+      console.error("예약 상태 변경 실패:", error);
+    },
   });
 };
 

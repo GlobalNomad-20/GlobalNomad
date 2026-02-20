@@ -10,6 +10,7 @@ import {
   UpdateActivityRequest,
   UploadActivityImageResponse,
 } from "@/types/myActivities";
+import { UpdateReservationResponse, UpdateReservationStatusParams } from "@/types/reservations";
 
 export const getMyActivities = async (params: GetMyActivitiesParams) => {
   const response = await client.get(API_ENDPOINTS.MY_ACTIVITIES.LIST, { params });
@@ -93,6 +94,19 @@ export const fetchActivityReservations = async ({
         cursorId,
       },
     },
+  );
+
+  return response.data;
+};
+
+export const patchReservationStatus = async ({
+  activityId,
+  reservationId,
+  status,
+}: UpdateReservationStatusParams) => {
+  const response = await client.patch<UpdateReservationResponse>(
+    API_ENDPOINTS.MY_ACTIVITIES.RESERVATION_STATUS_UPDATE(activityId, reservationId),
+    { status },
   );
 
   return response.data;

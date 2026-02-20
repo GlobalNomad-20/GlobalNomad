@@ -48,7 +48,7 @@ const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
           className="font-pretendard md:typo-18-b flex items-center text-[15px] leading-4.5
             font-bold text-gray-950 md:leading-6.5"
         >
-          ₩ {activity.price}
+          ₩ {activity ? new Intl.NumberFormat("ko-KR").format(activity.price) : "-"}
           <span className="typo-12-b md:typo-16-m text-gray-400">/ 인</span>
         </div>
       </div>

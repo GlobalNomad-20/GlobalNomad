@@ -23,12 +23,15 @@ const ReservationCard = ({ reservation, status }: ReservationCardProps) => {
       </div>
       {status === "pending" && (
         <div className="typo-14-m flex flex-col gap-2 text-gray-600">
-          <button className="rounded-lg border border-gray-50 px-2.5 py-1.5 hover:cursor-pointer">
+          <button
+            className="hover:bg-gray-25 rounded-lg border border-gray-50 px-2.5 py-1.5
+              hover:cursor-pointer"
+          >
             승인하기
           </button>
           <button
-            className="hover:cursor-pointerpx-2.5 rounded-lg border border-gray-50 bg-gray-50
-              py-1.5"
+            className="rounded-lg border border-gray-50 bg-gray-50 px-2.5 py-1.5
+              hover:cursor-pointer hover:bg-gray-100"
           >
             거절하기
           </button>

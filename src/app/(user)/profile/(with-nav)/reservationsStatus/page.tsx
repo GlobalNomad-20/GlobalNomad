@@ -1,11 +1,23 @@
-import ReservationContent from "./_components/ReservationContent";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
-import { CalendarEvent } from "@/components/calenderView/CalendarEventItem";
+import CalendarSection from "./_components/calendar/CalenderSection";
 
-const ReservationsStatusPage = () => {
-  const myEvents: Record<string, CalendarEvent[]> = {
-    "2026-02-14": [{ id: 1, title: "예약 2", type: "예약" }],
-  };
+import { getMyActivitiesServer } from "@/api/myActivities.server";
+import { getMyActivitiesQueryOptions } from "@/hooks/queries/options/myActivitiesOptions";
+
+const ReservationsStatusPage = async () => {
+  const queryClient = new QueryClient();
+  const baseOptions = getMyActivitiesQueryOptions(10);
+
+  await queryClient.prefetchInfiniteQuery({
+    ...baseOptions,
+    queryFn: async ({ pageParam }) => {
+      return getMyActivitiesServer({
+        size: 10,
+        cursorId: pageParam as number | undefined,
+      });
+    },
+  });
 
   return (
     <div className="mb-3.5 w-full pt-7.5 md:mb-24 md:p-0">
@@ -15,7 +27,9 @@ const ReservationsStatusPage = () => {
           내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다.
         </p>
       </div>
-      <ReservationContent reservations={myEvents} />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <CalendarSection />
+      </HydrationBoundary>
     </div>
   );
 };

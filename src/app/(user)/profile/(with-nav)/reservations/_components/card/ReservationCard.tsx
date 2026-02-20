@@ -1,7 +1,7 @@
 "use client";
 
-import ReservationReviewModal from "../modal/ReservationReviewModal";
-import ReservationDeleteModal from "../modal/ReservationDeleteModal";
+import ReservationReviewModal from "../modals/ReservationReviewModal";
+import ReservationDeleteModal from "../modals/ReservationDeleteModal";
 
 import Button from "@/components/common/Button";
 import CustomImage from "@/components/common/CustomImage";

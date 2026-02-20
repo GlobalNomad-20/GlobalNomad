@@ -7,8 +7,10 @@ import { useOutsideClick } from "./useOutsideClick";
 export const usePopup = <
   TPopup extends HTMLElement = HTMLDivElement,
   TTrigger extends HTMLElement = HTMLButtonElement,
->() => {
-  const [open, setOpen] = useState(false);
+>(
+  initialOpen: boolean = false,
+) => {
+  const [open, setOpen] = useState(initialOpen);
 
   const popupRef = useRef<TPopup>(null);
   const triggerRef = useRef<TTrigger>(null);
@@ -29,11 +31,9 @@ export const usePopup = <
 
   useEffect(() => {
     if (!open) return;
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") handleClose();
     };
-
     document.addEventListener("keydown", onKeyDown);
     return () => {
       return document.removeEventListener("keydown", onKeyDown);

@@ -1,3 +1,5 @@
+import { ReservationStatus } from "@/types/reservations";
+
 // 알람과 관련된 모든 키를 여기서 관리합니다.
 export const myNotificationsKeys = {
   all: ["myNotifications"] as const,
@@ -20,8 +22,32 @@ export const myReservationsKeys = {
 // 내 체험과 관련된 모든 키를 여기서 관리합니다.
 export const myActivitiesKeys = {
   all: ["myActivities"] as const,
+  schedule: ["reservedSchedule"] as const,
   list: () => {
     return [...myActivitiesKeys.all, "list"]; // 등록한 내 체험 리스트
+  },
+  dashboard: (activityId: number, year: string, month: string) => {
+    return [...myActivitiesKeys.all, "dashboard", activityId, year, month] as const;
+  },
+  reservedSchedule: (activityId: number, date?: string) => {
+    return [...myActivitiesKeys.all, "reservedSchedule", activityId, date] as const;
+  },
+  reservations: (
+    activityId: number,
+    scheduleId?: number,
+    status?: ReservationStatus,
+    size?: number,
+    cursorId?: number,
+  ) => {
+    return [
+      ...myActivitiesKeys.all,
+      "reservedSchedule",
+      activityId,
+      scheduleId,
+      status,
+      size,
+      cursorId,
+    ] as const;
   },
 };
 

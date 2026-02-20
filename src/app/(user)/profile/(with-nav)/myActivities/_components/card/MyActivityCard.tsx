@@ -8,6 +8,8 @@ import { MyActivity } from "@/types/myActivities";
 import { cn } from "@/utils/cn";
 import Button from "@/components/common/Button";
 import { ROUTES } from "@/constants/routes";
+import { useModal } from "@/hooks/useModal";
+import ActivityDeleteModal from "@/app/(user)/profile/myActivities/_components/modals/ActivityDeleteModal";
 
 interface MyActivityCardProps {
   myActivity: MyActivity;
@@ -15,9 +17,18 @@ interface MyActivityCardProps {
 
 const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
   const router = useRouter();
+  const activityDeleteModal = useModal();
 
   const handleMyActivityEditRouteClick = () => {
     return router.push(ROUTES.PROFILE.MY_ACTIVITIES.EDIT(myActivity.id));
+  };
+
+  const handleOpenActivityDeleteModal = () => {
+    activityDeleteModal.onOpen();
+  };
+
+  const handleCloseActivityDeleteModal = () => {
+    activityDeleteModal.onClose();
   };
 
   return (
@@ -34,6 +45,7 @@ const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
             lg:w-35 lg:rounded-4xl"
         >
           <CustomImage
+            key={myActivity.bannerImageUrl}
             src={myActivity.bannerImageUrl}
             alt={myActivity.title}
             fill
@@ -66,12 +78,24 @@ const MyActivityCard = ({ myActivity }: MyActivityCardProps) => {
             >
               수정하기
             </Button>
-            <Button className="typo-14-m w-17 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100">
+            <Button
+              className="typo-14-m w-17 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
+              onClick={handleOpenActivityDeleteModal}
+              type="button"
+            >
               삭제하기
             </Button>
           </div>
         </div>
       </div>
+      {activityDeleteModal.isOpen && (
+        <ActivityDeleteModal
+          activityId={myActivity.id}
+          isOpen={!!activityDeleteModal.isOpen}
+          onClose={handleCloseActivityDeleteModal}
+          onBackgroundClick={handleCloseActivityDeleteModal}
+        />
+      )}
     </div>
   );
 };

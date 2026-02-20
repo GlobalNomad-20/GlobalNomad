@@ -3,6 +3,7 @@
 
 import { useReservationFilter } from "../../_hooks/useReservationFilter";
 
+import ScheduleSwiperList from "./ScheduleSwiperList";
 import StatusTab from "./StatusTab";
 import TimeDropdown from "./TimeDropdown";
 
@@ -23,12 +24,18 @@ const ReservationStatusContent = ({
 }: ReservationStatusContentProps) => {
   const { data: scheduleData } = useReservedSchedule(activityId, date);
 
-  const { activeSchedule, currentTab, currentCounts, setSelectedScheduleId, setCurrentTab } =
-    useReservationFilter(scheduleData);
+  const {
+    activeScheduleId,
+    activeSchedule,
+    currentTab,
+    currentCounts,
+    setSelectedScheduleId,
+    setCurrentTab,
+  } = useReservationFilter(scheduleData);
 
   return (
     <div className="item flex flex-col">
-      <div className="flex flex-col px-6 pt-6 pb-5">
+      <div className="flex flex-col px-6 pt-6 pb-3 md:pb-5">
         <div
           className="typo-18-b lg:typo-20-b mb-3 flex flex-row items-center justify-between
             text-gray-950"
@@ -38,6 +45,10 @@ const ReservationStatusContent = ({
             <DeleteSvg />
           </button>
         </div>
+      </div>
+      <div
+        className="grid w-full grid-cols-1 gap-3 px-6 pb-5 md:grid-cols-2 md:gap-5 lg:grid-cols-1"
+      >
         <div className="flex flex-col gap-2">
           <span className="typo-16-b lg:typo-18-b text-[#1B1B1B]">예약 시간</span>
           <TimeDropdown
@@ -46,26 +57,21 @@ const ReservationStatusContent = ({
             onChange={setSelectedScheduleId}
           />
         </div>
-      </div>
-      <div className="custom-scrollbar flex flex-col">
-        <div className="flex flex-col px-6 pb-5">
-          <div className="">
+        <div className="custom-scrollbar flex flex-col">
+          <div>
             <span className="typo-16-b lg:typo-18-b text-[#1B1B1B]">예약 내역</span>
+            <StatusTab counts={currentCounts} currentTab={currentTab} onChangeTab={setCurrentTab} />
           </div>
-          <StatusTab counts={currentCounts} currentTab={currentTab} onChangeTab={setCurrentTab} />
-          <div className="mt-5 flex w-full flex-col gap-3">
-            {activityId ? (
-              <>
-                <div
-                  className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm
-                    text-gray-500 shadow-sm"
-                >
-                  예약 내역 리스트 (ScheduleList)
-                </div>
-              </>
+          <div className="">
+            {activityId && activeScheduleId ? (
+              <ScheduleSwiperList
+                activityId={activityId}
+                scheduleId={activeScheduleId}
+                status={currentTab}
+              />
             ) : (
               <div
-                className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm
+                className="mt-4 rounded-lg border border-gray-200 bg-white p-6 text-center text-sm
                   text-gray-500 shadow-sm"
               >
                 예약 가능한 시간이 없습니다.

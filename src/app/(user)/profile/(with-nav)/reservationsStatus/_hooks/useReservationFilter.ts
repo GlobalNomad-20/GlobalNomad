@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import { ReservedSchedule } from "@/types/activity";
-import { ReservationStatus } from "@/types/reservations";
+import { ActivityStatus } from "@/types/myActivities";
 
 export const useReservationFilter = (scheduleData?: ReservedSchedule[]) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(null);
-  const [currentTab, setCurrentTab] = useState<ReservationStatus>("pending");
+  const [currentTab, setCurrentTab] = useState<ActivityStatus>("pending");
 
   const isValidSelection = scheduleData?.some((s) => {
     return s.scheduleId === selectedScheduleId;

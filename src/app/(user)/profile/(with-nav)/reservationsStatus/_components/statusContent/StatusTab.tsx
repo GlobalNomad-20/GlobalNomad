@@ -1,17 +1,17 @@
 "use client";
 
 import { ReservedScheduleCount } from "@/types/activity";
-import { ReservationStatus } from "@/types/reservations";
+import { ActivityStatus } from "@/types/myActivities";
 import { cn } from "@/utils/cn";
 
 interface StatusTabProps {
   counts: ReservedScheduleCount;
-  currentTab: ReservationStatus;
-  onChangeTab: (tab: ReservationStatus) => void;
+  currentTab: ActivityStatus;
+  onChangeTab: (tab: ActivityStatus) => void;
 }
 
 const StatusTab = ({ counts, currentTab, onChangeTab }: StatusTabProps) => {
-  const TABS: { id: ReservationStatus; label: string; count: number }[] = [
+  const TABS: { id: ActivityStatus; label: string; count: number }[] = [
     { id: "pending", label: "신청", count: counts.pending },
     { id: "confirmed", label: "승인", count: counts.confirmed },
     { id: "declined", label: "거절", count: counts.declined },

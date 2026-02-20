@@ -11,6 +11,8 @@ interface ActivityHeaderSectionProps {
 }
 
 const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSectionProps) => {
+  const activityId = data?.id;
+
   return (
     <div
       className={cn(
@@ -38,7 +40,7 @@ const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSec
           <div className="typo-14-m text-gray-700">{data?.address}</div>
         </div>
       </div>
-      <KebabDropdown />
+      <KebabDropdown activityId={activityId} />
     </div>
   );
 };

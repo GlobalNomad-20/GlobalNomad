@@ -1,4 +1,5 @@
 "use client";
+
 import CalendarCell from "./CalendarCell";
 import { CalendarEvent } from "./CalendarEventItem"; // 타입 import
 import CalendarGrid from "./CalendarGrid";
@@ -12,12 +13,16 @@ import { useCalendar } from "@/hooks/calender/useCalendar";
 import { cn } from "@/utils/cn";
 
 interface CalendarViewProps {
-  events?: Record<string, CalendarEvent[]>;
-  onDateClick?: (date: string) => void;
   className?: string;
+  date?: Date;
+  events?: Record<string, CalendarEvent[]>;
+  onMonthChange?: (year: string, month: string) => void;
+  onDateClick?: (date: string, element: HTMLElement) => void;
 }
 
 const CalendarView = ({
+  date,
+  onMonthChange,
   events = {},
   onDateClick: handleDateClick,
   className,
@@ -27,7 +32,17 @@ const CalendarView = ({
     days,
     prevMonth: handlePrevMonth,
     nextMonth: handleNextMonth,
-  } = useCalendar();
+  } = useCalendar({
+    value: date,
+    onChange: (newDate) => {
+      if (onMonthChange) {
+        onMonthChange(
+          String(newDate.getFullYear()),
+          String(newDate.getMonth() + 1).padStart(2, "0"),
+        );
+      }
+    },
+  });
 
   return (
     <CalendarRoot

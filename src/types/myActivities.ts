@@ -128,6 +128,8 @@ export interface ActivityResponse {
   schedules: ActivityResponseSchedule[];
 }
 
+export type ActivityStatus = Extract<ReservationStatus, "pending" | "confirmed" | "declined">;
+
 export interface ActivityReservation {
   id: number;
   nickname: string;
@@ -135,7 +137,7 @@ export interface ActivityReservation {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  status: ReservationStatus;
+  status: ActivityStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

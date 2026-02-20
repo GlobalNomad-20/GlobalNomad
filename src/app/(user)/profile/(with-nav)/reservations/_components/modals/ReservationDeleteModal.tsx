@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import ReservationDeleteCompleteModal from "./ReservationDeleteCompleteModal";
 
@@ -7,6 +11,7 @@ import Button from "@/components/common/Button";
 import { cn } from "@/utils/cn";
 import { useDeleteReservation } from "@/hooks/queries/useReservations";
 import Modal from "@/components/common/Modal";
+import { myReservationsKeys } from "@/lib/query/queryKeys";
 
 interface ReservationDeleteModalProps {
   reservationId: number;
@@ -23,15 +28,31 @@ const ReservationDeleteModal = ({
 }: ReservationDeleteModalProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
+  const queryClient = useQueryClient();
+
+  const handleConfirmClose = () => {
+    queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
+
+    setIsSuccess(false);
+    handleClose();
+  };
 
   const handleSafeClose = () => {
     if (isPending) return;
+    if (isSuccess) {
+      handleConfirmClose();
+      return;
+    }
     setIsSuccess(false);
     handleClose();
   };
 
   const handleSafeBackgroundClick = () => {
     if (isPending) return;
+    if (isSuccess) {
+      handleConfirmClose();
+      return;
+    }
     if (handleBackgroundClick) handleBackgroundClick();
     else handleSafeClose();
   };
@@ -43,8 +64,16 @@ const ReservationDeleteModal = ({
         onSuccess: () => {
           setIsSuccess(true);
         },
-        onError: () => {
-          alert("예약 취소 중 오류가 발생했습니다.");
+        onError: (error: Error) => {
+          let errorMessage = "예약 취소 중 오류가 발생했습니다.";
+
+          if (error instanceof AxiosError) {
+            errorMessage = error.response?.data?.message || error.message || errorMessage;
+          } else {
+            errorMessage = error.message || errorMessage;
+          }
+
+          alert(errorMessage);
         },
       },
     );
@@ -58,7 +87,7 @@ const ReservationDeleteModal = ({
       containerClassName="h-46 w-80 md:h-60.5 md:w-100 m-5"
     >
       {isSuccess ? (
-        <ReservationDeleteCompleteModal onClose={handleClose} />
+        <ReservationDeleteCompleteModal onClose={handleConfirmClose} />
       ) : (
         <div className="flex h-full flex-col items-center justify-center gap-5 md:gap-6">
           <div className="flex flex-col items-center justify-center">

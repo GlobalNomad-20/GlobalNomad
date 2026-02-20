@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import StarRating from "./StarRating";
 import ReviewTextarea from "./ReviewTextarea";
@@ -13,6 +15,7 @@ import Modal from "@/components/common/Modal";
 import { Reservation } from "@/types/reservations";
 import { cn } from "@/utils/cn";
 import { useCreateReservationReview } from "@/hooks/queries/useReservations";
+import { myReservationsKeys } from "@/lib/query/queryKeys";
 
 interface ReservationReviewModalProps {
   reservationDetail: Reservation;
@@ -28,6 +31,7 @@ const ReservationReviewModal = ({
   onBackgroundClick: handleBackgroundClick,
 }: ReservationReviewModalProps) => {
   const { mutate: createReservationReview, isPending } = useCreateReservationReview();
+  const queryClient = useQueryClient();
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -40,14 +44,29 @@ const ReservationReviewModal = ({
     setContent(newContent);
   };
 
+  const handleConfirmClose = () => {
+    queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
+
+    setIsSuccess(false);
+    handleClose();
+  };
+
   const handleSafeClose = () => {
     if (isPending) return;
+    if (isSuccess) {
+      handleConfirmClose();
+      return;
+    }
     setIsSuccess(false);
     handleClose();
   };
 
   const handleSafeBackgroundClick = () => {
     if (isPending) return;
+    if (isSuccess) {
+      handleConfirmClose();
+      return;
+    }
     if (handleBackgroundClick) handleBackgroundClick();
     else handleSafeClose();
   };
@@ -73,8 +92,16 @@ const ReservationReviewModal = ({
         onSuccess: () => {
           setIsSuccess(true);
         },
-        onError: () => {
-          alert("리뷰 작성 중 오류가 발생했습니다.");
+        onError: (error: Error) => {
+          let errorMessage = "리뷰 작성 중 오류가 발생했습니다.";
+
+          if (error instanceof AxiosError) {
+            errorMessage = error.response?.data?.message || error.message || errorMessage;
+          } else {
+            errorMessage = error.message || errorMessage;
+          }
+
+          alert(errorMessage);
         },
       },
     );
@@ -92,7 +119,7 @@ const ReservationReviewModal = ({
       containerClassName={cn("h-120 w-82 md:h-136 md:w-96 m-5", { "h-70 md:h-80": isSuccess })}
     >
       {isSuccess ? (
-        <ReservationReviewCompleteModal onClose={handleClose} />
+        <ReservationReviewCompleteModal onClose={handleConfirmClose} />
       ) : (
         <div
           className="relative flex h-full flex-col items-center justify-between px-6 py-5 md:px-7.5

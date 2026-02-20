@@ -51,7 +51,9 @@ const ReservationBar = ({ data }: ReservationBarProps) => {
       >
         <div className="flex justify-between">
           <div className="flex items-center gap-1.5">
-            <div className="typo-18-b text-gray-950">₩ {data?.price}</div>
+            <div className="typo-18-b text-gray-950">
+              ₩ {data ? new Intl.NumberFormat("ko-KR").format(data?.price) : "-"}
+            </div>
             <div className="typo-16-m text-[#79747E]">/ 1명</div>
           </div>
           <div

@@ -32,7 +32,9 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
           shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]"
       >
         <div className="flex items-center justify-start gap-1.25">
-          <span className="typo-24-b text-gray-950">￦ {data?.price}원</span>
+          <span className="typo-24-b text-gray-950">
+            ￦ {data ? new Intl.NumberFormat("ko-KR").format(data?.price) : "-"}원
+          </span>
           <span className="typo-20-m text-[#79747E]">/ 인</span>
         </div>
 
@@ -48,7 +50,12 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
         <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">
           <div className="flex items-center justify-start gap-1.5">
             <span className="typo-20-m text-[#79747E]">총 합계</span>
-            <span className="typo-20-b text-gray-950">￦ {reservationController.totalPrice}</span>
+            <span className="typo-20-b text-gray-950">
+              ￦{" "}
+              {reservationController
+                ? new Intl.NumberFormat("ko-KR").format(reservationController.totalPrice)
+                : "-"}
+            </span>
           </div>
 
           <Button

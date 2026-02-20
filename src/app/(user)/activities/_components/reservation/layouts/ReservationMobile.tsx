@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { useReservationController } from "../../../_hooks/useReservationController";
 import DateSelector from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
 import TimeSelector from "../components/TimeSelector";
@@ -9,11 +10,17 @@ import TimeSelector from "../components/TimeSelector";
 import SwiperPrevSvg from "@/assets/svg/SwiperPrevSvg";
 import Button from "@/components/common/Button";
 
+type ReservationController = ReturnType<typeof useReservationController>;
+
 interface ReservationMobileProps {
-  onComplete: () => void;
+  onClose: () => void;
+  reservationController: ReservationController;
 }
 
-const ReservationMobile = ({ onComplete }: ReservationMobileProps) => {
+const ReservationMobile = ({
+  onClose: handleClose,
+  reservationController,
+}: ReservationMobileProps) => {
   const [nextStep, setNextStep] = useState(true);
 
   const handlePrevStep = () => {
@@ -24,7 +31,7 @@ const ReservationMobile = ({ onComplete }: ReservationMobileProps) => {
     if (nextStep) {
       setNextStep(false);
     } else {
-      onComplete();
+      handleClose();
     }
   };
 
@@ -35,9 +42,14 @@ const ReservationMobile = ({ onComplete }: ReservationMobileProps) => {
           <div className="flex flex-col gap-6">
             <div>
               <p className="typo-18-b md:typo-20-b mb-2 text-gray-950">날짜</p>
-              <DateSelector />
+              <DateSelector setSelectedDate={reservationController.setSelectedDate} />
             </div>
-            <TimeSelector />
+            <TimeSelector
+              schedules={reservationController.schedules}
+              selectedDate={reservationController.selectedDate}
+              reservationTime={reservationController.reservationTime}
+              setReservationTime={reservationController.setReservationTime}
+            />
           </div>
         </div>
       ) : (
@@ -49,10 +61,15 @@ const ReservationMobile = ({ onComplete }: ReservationMobileProps) => {
             <div className="typo-18-b text-gray-950">인원</div>
           </div>
           <div className="typo-16-m mb-5 text-[#4B4B4B]">예약할 인원을 선택해주세요</div>
-          <GuestSelector />
+          <GuestSelector setReservationGuest={reservationController.setReservationGuest} />
         </div>
       )}
-      <Button className="typo-16-b bottom sticky z-20 mt-6 w-full" onClick={handleNextStep}>
+      <Button
+        variant={reservationController.buttonActive ? "primary" : "disabled"}
+        disabled={!reservationController.buttonActive}
+        className="typo-16-b bottom sticky z-20 mt-6 w-full"
+        onClick={handleNextStep}
+      >
         확인
       </Button>
     </div>

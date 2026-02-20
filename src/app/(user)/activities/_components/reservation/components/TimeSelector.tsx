@@ -25,7 +25,7 @@ const TimeSelector = ({
       <div className="flex w-81.75 flex-col gap-3.5 md:w-63.25 lg:w-full">
         <div className="typo-16-b text-gray-950">예약 가능한 시간</div>
         <div
-          className="max-h-auto typo-14-m flex w-full items-center justify-center text-gray-300
+          className="typo-14-m flex h-20 w-full items-center justify-center text-gray-300
             md:max-h-60 lg:h-32.5"
         >
           해당 날짜에 예약 가능한 시간이 없습니다.

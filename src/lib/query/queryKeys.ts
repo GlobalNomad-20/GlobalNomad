@@ -22,6 +22,7 @@ export const myReservationsKeys = {
 // 내 체험과 관련된 모든 키를 여기서 관리합니다.
 export const myActivitiesKeys = {
   all: ["myActivities"] as const,
+  schedule: ["reservedSchedule"] as const,
   list: () => {
     return [...myActivitiesKeys.all, "list"]; // 등록한 내 체험 리스트
   },
@@ -29,7 +30,7 @@ export const myActivitiesKeys = {
     return [...myActivitiesKeys.all, "dashboard", activityId, year, month] as const;
   },
   reservedSchedule: (activityId: number, date?: string) => {
-    return ["myActivities", "reservedSchedule", activityId, date] as const;
+    return [...myActivitiesKeys.all, "reservedSchedule", activityId, date] as const;
   },
   reservations: (
     activityId: number,
@@ -39,7 +40,7 @@ export const myActivitiesKeys = {
     cursorId?: number,
   ) => {
     return [
-      "myActivities",
+      ...myActivitiesKeys.all,
       "reservedSchedule",
       activityId,
       scheduleId,

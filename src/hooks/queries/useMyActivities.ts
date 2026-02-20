@@ -77,12 +77,9 @@ export const useUpdateReservationStatus = () => {
     mutationFn: ({ activityId, reservationId, status }: UpdateReservationStatusParams) => {
       return patchReservationStatus({ activityId, reservationId, status });
     },
-    onSuccess: (data, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: myActivitiesKeys.reservations(variables.activityId),
-      });
-      queryClient.invalidateQueries({
-        queryKey: myActivitiesKeys.reservedSchedule(variables.activityId),
+        queryKey: [...myActivitiesKeys.all],
       });
     },
     onError: (error) => {

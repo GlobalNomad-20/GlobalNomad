@@ -1,6 +1,6 @@
+import DateSelector from "../components/DateSelector";
 import GuestSelector from "../components/GuestSelector";
-import ReservationCalendar from "../components/ReservationCalendar";
-import TimeSlotSelector from "../components/TimeSlotSelector";
+import TimeSlotSelector from "../components/TimeSelector";
 
 import Button from "@/components/common/Button";
 
@@ -14,7 +14,7 @@ const ReservationDesktop = () => {
         <span className="typo-24-b text-gray-950">￦ 1,000원</span>
         <span className="typo-20-m text-[#79747E]">/ 인</span>
       </div>
-      <ReservationCalendar />
+      <DateSelector />
       <GuestSelector />
       <TimeSlotSelector />
       <div className="flex items-center justify-between border-t border-[#DDDDDD] pt-5">

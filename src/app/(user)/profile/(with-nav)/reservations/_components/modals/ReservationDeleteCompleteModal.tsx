@@ -8,8 +8,8 @@ const ReservationDeleteCompleteModal = ({
   onClose: handleClose,
 }: ReservationDeleteCompleteModalProps) => {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-5 md:gap-6">
-      <div className="typo-16-b md:typo-18-b">예약 취소가 완료되었습니다.</div>
+    <div className="flex h-full flex-col items-center justify-between py-8 md:py-10">
+      <div className="typo-16-b md:typo-18-b mt-8 md:mt-12">예약 취소가 완료되었습니다.</div>
       <Button
         onClick={handleClose}
         variant="outline"

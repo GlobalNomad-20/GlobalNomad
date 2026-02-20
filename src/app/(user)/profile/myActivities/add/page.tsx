@@ -1,5 +1,12 @@
+import InputGroup from "../_components/InputGroup";
+
 const MyActivityAddPage = async () => {
-  return <div className="w-full px-6 pt-8.75 pb-8.75 md:p-0">내 체험 등록</div>;
+  return (
+    <div>
+      <h1 className="typo-18-b mb-6">내 체험 등록</h1>
+      <InputGroup mode="add" />
+    </div>
+  );
 };
 
 export default MyActivityAddPage;

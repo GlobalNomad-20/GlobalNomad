@@ -1,20 +1,27 @@
 "use client";
+
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getMyActivitiesQueryOptions } from "./options/myActivitiesOptions";
 
 import {
+  createActivity,
+  deleteActivity,
   fetchActivityReservations,
   fetchReservationDashboard,
   fetchReservedSchedule,
   patchReservationStatus,
+  updateActivity,
+  uploadActivityImage,
 } from "@/api/myActivities";
-import { myActivitiesKeys } from "@/lib/query/queryKeys";
+import { activityIdKeys, myActivitiesKeys } from "@/lib/query/queryKeys";
 import { ReservationDashboardResponse, ReservedScheduleResponse } from "@/types/activity";
 import {
   ActivityReservationsResponse,
+  CreateActivityRequest,
   FetchReservationsParams,
   GetMyActivitiesParams,
+  UpdateActivityRequest,
 } from "@/types/myActivities";
 import { UpdateReservationStatusParams } from "@/types/reservations";
 
@@ -84,6 +91,62 @@ export const useUpdateReservationStatus = () => {
     },
     onError: (error) => {
       console.error("예약 상태 변경 실패:", error);
+    },
+  });
+};
+
+export const useUploadProfileImage = () => {
+  return useMutation({
+    mutationFn: (imageFile: File) => {
+      return uploadActivityImage(imageFile);
+    },
+    onError: (error) => {
+      console.error("이미지 업로드 실패:", error);
+    },
+  });
+};
+
+export const useCreateActivity = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateActivityRequest) => {
+      return createActivity(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: myActivitiesKeys.list() });
+      queryClient.invalidateQueries({ queryKey: activityIdKeys.all });
+    },
+    onError: (error) => {
+      console.error("체험 등록 실패:", error);
+    },
+  });
+};
+
+export const useUpdateActivity = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ activityId, data }: { activityId: number; data: UpdateActivityRequest }) => {
+      return updateActivity(activityId, data);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: myActivitiesKeys.list() });
+      queryClient.invalidateQueries({ queryKey: activityIdKeys.detail(variables.activityId) });
+    },
+    onError: (error) => {
+      console.error("체험 수정 실패:", error);
+    },
+  });
+};
+
+export const useDeleteActivity = () => {
+  return useMutation({
+    mutationFn: (activityId: number) => {
+      return deleteActivity(activityId);
+    },
+    onError: (error) => {
+      console.error("체험 삭제 실패:", error);
     },
   });
 };

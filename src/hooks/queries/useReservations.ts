@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 
 import { createReservationReview, deleteReservation, getReservations } from "@/api/reservations";
 import {
@@ -34,8 +34,6 @@ export const useGetReservations = (params: GetReservationsParams) => {
 };
 
 export const useDeleteReservation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({
       reservationId,
@@ -46,9 +44,6 @@ export const useDeleteReservation = () => {
     }) => {
       return deleteReservation(reservationId, status);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
-    },
     onError: (error) => {
       console.error("예약 취소 실패:", error);
     },
@@ -56,8 +51,6 @@ export const useDeleteReservation = () => {
 };
 
 export const useCreateReservationReview = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({
       reservationId,
@@ -67,9 +60,6 @@ export const useCreateReservationReview = () => {
       reviewData: ReservationReviewRequest;
     }) => {
       return createReservationReview(reservationId, reviewData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: myReservationsKeys.all });
     },
     onError: (error) => {
       console.error("리뷰 등록 실패:", error);

@@ -84,15 +84,9 @@ export const useUpdateActivity = () => {
 };
 
 export const useDeleteActivity = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (activityId: number) => {
       return deleteActivity(activityId);
-    },
-    onSuccess: (_, activityId) => {
-      queryClient.invalidateQueries({ queryKey: myActivitiesKeys.list() });
-      queryClient.invalidateQueries({ queryKey: activityIdKeys.detail(activityId) });
     },
     onError: (error) => {
       console.error("체험 삭제 실패:", error);

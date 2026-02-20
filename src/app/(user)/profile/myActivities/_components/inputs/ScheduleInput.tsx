@@ -61,6 +61,7 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
     const newSchedule = { date, startTime, endTime };
     setValue(name, [...schedules, newSchedule] as MyActivityFormValues[typeof name], {
       shouldValidate: true,
+      shouldDirty: true,
     });
 
     setDate("");
@@ -76,6 +77,7 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
       });
       setValue(name, newSchedules as MyActivityFormValues[typeof name], {
         shouldValidate: true,
+        shouldDirty: true,
       });
     };
   };

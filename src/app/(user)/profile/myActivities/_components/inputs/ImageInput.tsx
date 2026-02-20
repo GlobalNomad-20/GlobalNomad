@@ -49,6 +49,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
         const newImages = [...images, uploadedUrl];
         setValue(name, newImages as MyActivityFormValues[ArrayFieldKeys], {
           shouldValidate: true,
+          shouldDirty: true,
         });
       },
       onError: (err) => {
@@ -67,6 +68,7 @@ const ImageInput = ({ name, label, required, className, maxCount = 4 }: ImageInp
     });
     setValue(name, newImages as MyActivityFormValues[ArrayFieldKeys], {
       shouldValidate: true,
+      shouldDirty: true,
     });
   };
 

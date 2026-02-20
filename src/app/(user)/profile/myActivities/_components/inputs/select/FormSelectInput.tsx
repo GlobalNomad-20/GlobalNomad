@@ -23,6 +23,7 @@ export const FormSelectInput = ({ name, ...props }: FormSelectInputProps) => {
   const handleSelect = (value: string) => {
     setValue(name, value as PathValue<MyActivityFormValues, Path<MyActivityFormValues>>, {
       shouldValidate: true,
+      shouldDirty: true,
     });
   };
 

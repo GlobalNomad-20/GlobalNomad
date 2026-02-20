@@ -25,12 +25,12 @@ export const AddressInput = ({ name, label, placeholder, required, className }: 
 
   const handleAddressSearchClick = () => {
     openAddressSearch((address) => {
-      setValue(name, address, { shouldValidate: true });
+      setValue(name, address, { shouldValidate: true, shouldDirty: true });
     });
   };
 
   const handleClearClick = () => {
-    setValue(name, "", { shouldValidate: true });
+    setValue(name, "", { shouldValidate: true, shouldDirty: true });
   };
 
   const handleInputClick = () => {

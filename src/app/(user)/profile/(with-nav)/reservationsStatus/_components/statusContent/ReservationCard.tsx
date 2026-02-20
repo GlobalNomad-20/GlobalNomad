@@ -1,23 +1,44 @@
-import { ActivityReservation } from "@/types/myActivities";
-import { ReservationStatus } from "@/types/reservations";
+import { ActivityReservation, ActivityStatus } from "@/types/myActivities";
 
 interface ReservationCardProps {
   reservation: ActivityReservation;
-  status: ReservationStatus;
+  status: ActivityStatus;
 }
 
 const ReservationCard = ({ reservation, status }: ReservationCardProps) => {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <div
+      className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white px-4
+        py-3.5 shadow-sm"
+    >
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-gray-800">닉네임: {reservation.nickname}</p>
-        <p className="text-sm text-gray-600">인원: {reservation.headCount}명</p>
+        <div className="typo-16-b lg:typo-16-b grid grid-cols-2 gap-2 text-gray-500">
+          닉네임:{" "}
+          <span className="typo-14-m lg:typo-16-m text-[#1B1B1B]">{reservation.nickname}</span>
+        </div>
+        <div className="typo-16-b lg:typo-16-b grid grid-cols-2 gap-2 text-gray-500">
+          인원:{" "}
+          <span className="typo-14-m lg:typo-16-m text-[#1B1B1B]">{reservation.headCount}명</span>
+        </div>
       </div>
       {status === "pending" && (
-        <div className="mt-3 flex gap-2">
-          <button className="">승인하기</button>
-          <button className="">거절하기</button>
+        <div className="typo-14-m flex flex-col gap-2 text-gray-600">
+          <button className="rounded-lg border border-gray-50 px-2.5 py-1.5 hover:cursor-pointer">
+            승인하기
+          </button>
+          <button
+            className="hover:cursor-pointerpx-2.5 rounded-lg border border-gray-50 bg-gray-50
+              py-1.5"
+          >
+            거절하기
+          </button>
         </div>
+      )}
+      {status === "confirmed" && (
+        <div className="typo-13-b rounded-full bg-[#DDF9F9] text-[#1790A0]">예약 승인</div>
+      )}
+      {status === "declined" && (
+        <div className="typo-13-b rounded-full bg-[#FCECEA] text-[#F96767]">예약 거절</div>
       )}
     </div>
   );

@@ -7,22 +7,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ReservationCard from "./ReservationCard";
 
 import { useInfiniteActivityReservations } from "@/hooks/queries/useMyActivities";
-import { ReservationStatus } from "@/types/reservations";
+import { ActivityStatus } from "@/types/myActivities";
 
 interface ScheduleListProps {
   activityId: number;
   scheduleId: number;
-  status: TabStatus;
+  status: ActivityStatus;
 }
 
-type TabStatus = Extract<ReservationStatus, "pending" | "confirmed" | "declined">;
-
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const STATUS_LABEL_MAP: Record<TabStatus, string> = {
+const STATUS_LABEL_MAP: Record<ActivityStatus, string> = {
   pending: "예약",
   confirmed: "승인",
   declined: "거절",
 };
+
 const ScheduleSwiperList = ({ activityId, scheduleId, status }: ScheduleListProps) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteActivityReservations({
     activityId,
@@ -63,7 +62,7 @@ const ScheduleSwiperList = ({ activityId, scheduleId, status }: ScheduleListProp
       observer={true}
       observeParents={true}
       modules={[FreeMode, Mousewheel]}
-      className="max-h-46 w-full md:max-h-64 lg:max-h-50.5"
+      className="max-h-46 w-full md:max-h-64 lg:max-h-56"
     >
       <SwiperSlide>
         <div />

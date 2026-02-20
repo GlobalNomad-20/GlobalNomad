@@ -6,7 +6,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import ReservationCard from "./ReservationCard";
 
-import { useInfiniteActivityReservations } from "@/hooks/queries/useMyActivities";
+import {
+  useInfiniteActivityReservations,
+  useUpdateReservationStatus,
+} from "@/hooks/queries/useMyActivities";
 import { ActivityStatus } from "@/types/myActivities";
 
 interface ScheduleListProps {
@@ -29,6 +32,13 @@ const ScheduleSwiperList = ({ activityId, scheduleId, status }: ScheduleListProp
     status,
     size: 10,
   });
+
+  const { mutate, isPending } = useUpdateReservationStatus();
+
+  const handleStatusChange = (reservationId: number, newStatus: "confirmed" | "declined") => {
+    if (isPending) return;
+    mutate({ activityId, reservationId, status: newStatus });
+  };
 
   const reservations =
     data?.pages.flatMap((page) => {
@@ -70,7 +80,15 @@ const ScheduleSwiperList = ({ activityId, scheduleId, status }: ScheduleListProp
       {reservations.map((reservation) => {
         return (
           <SwiperSlide key={reservation.id}>
-            <ReservationCard reservation={reservation} status={status} />
+            <ReservationCard
+              reservation={reservation}
+              status={status}
+              isPending={isPending}
+              // eslint-disable-next-line react/jsx-handler-names
+              onStatusChange={(newStatus) => {
+                return handleStatusChange(reservation.id, newStatus);
+              }}
+            />
           </SwiperSlide>
         );
       })}

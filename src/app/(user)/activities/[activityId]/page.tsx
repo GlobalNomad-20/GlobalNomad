@@ -24,6 +24,7 @@ const ActivityDetail = () => {
     userId != null && activityIdData?.userId != null && userId === activityIdData.userId;
 
   const canShowReservation = !isMyActivity;
+  console.log(isMyActivity);
 
   if (!activityIdData) return null;
 
@@ -37,7 +38,11 @@ const ActivityDetail = () => {
           >
             <div>
               <ActivityImageSection data={activityIdData} />
-              <ActivityHeaderSection data={activityIdData} isNotDesktop />
+              <ActivityHeaderSection
+                data={activityIdData}
+                isNotDesktop
+                isMyActivity={isMyActivity}
+              />
               <div className="section-block">
                 <ActivityDescriptionSection data={activityIdData} />
               </div>
@@ -49,7 +54,7 @@ const ActivityDetail = () => {
               </div>
             </div>
             <div className="hidden lg:block">
-              <ActivityHeaderSection data={activityIdData} />
+              <ActivityHeaderSection data={activityIdData} isMyActivity={isMyActivity} />
               {canShowReservation && (
                 <div className="sticky top-3">
                   <ReservationDesktop data={activityIdData} />

@@ -209,7 +209,7 @@ export default defineConfig([
       "src/app/**/route.{js,jsx,ts,tsx}",
       "src/app/**/sitemap.{js,jsx,ts,tsx}",
       "src/app/**/robots.{js,jsx,ts,tsx}",
-      "src/middleware.{js,ts}",
+      "src/proxy.{js,ts}",
     ],
     rules: {
       "check-file/filename-naming-convention": "off",

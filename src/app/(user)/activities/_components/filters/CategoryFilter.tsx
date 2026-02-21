@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import CategoryBadge from "../common/CategoryBadge";
+import CategoryBadge from "../common/main/CategoryBadge";
 
 import { CATEGORY_BADGES } from "@/constants/categortBadgeItem";
 import { CategoryValue } from "@/types/activityCategory";
@@ -15,6 +15,9 @@ const CategoryFilter = ({ setCategory }: CategoryFilterProps) => {
   const handleClick = (value: CategoryValue) => {
     if (value === activeCategory) {
       setActiveCategory(undefined);
+      setCategory(undefined);
+    } else if (value === "전체") {
+      setActiveCategory(value);
       setCategory(undefined);
     } else {
       setActiveCategory(value);

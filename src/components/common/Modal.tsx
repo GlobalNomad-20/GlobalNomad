@@ -3,14 +3,37 @@
 import ModalPortal from "./ModalPortal";
 
 import { cn } from "@/utils/cn";
-import { useModal } from "@/hooks/useModal";
 
-const Modal = () => {
-  const { options, modalRef } = useModal();
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  position?: "center" | "bottom";
+  children?: React.ReactNode;
+  onBackgroundClick?: () => void;
+  containerClassName?: string;
+}
 
-  if (!options) return null;
+const Modal = ({
+  isOpen = false,
+  onClose,
+  position = "center",
+  children,
+  onBackgroundClick,
+  containerClassName,
+}: ModalProps) => {
+  if (!isOpen) return null;
 
-  const { position = "center", children, containerClassName } = options;
+  const handleBackgroundClick = () => {
+    if (onBackgroundClick) {
+      onBackgroundClick();
+      return;
+    }
+    onClose();
+  };
+
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
   return (
     <ModalPortal>
@@ -19,17 +42,18 @@ const Modal = () => {
           "items-center justify-center": position === "center",
           "items-end justify-center": position === "bottom",
         })}
+        onClick={handleBackgroundClick}
       >
         <div
-          ref={modalRef}
           className={cn(
             "relative z-10 bg-white shadow-xl",
             {
-              "h-50 w-100 rounded-3xl md:rounded-[30px]": position === "center",
-              "h-100 w-full rounded-t-4xl": position === "bottom",
+              "h-50 w-100 rounded-3xl md:rounded-4xl": position === "center",
+              "h-100 w-full rounded-t-3xl": position === "bottom",
             },
             containerClassName,
           )}
+          onClick={handleContentClick}
         >
           {children}
         </div>

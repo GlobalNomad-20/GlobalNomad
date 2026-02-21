@@ -5,7 +5,7 @@ export const ROUTES = {
     LOGIN: "/login",
     SIGNUP: "/signup",
     KAKAO: (state: "signin" | "signup") => {
-      return `/auth/kakao?state=${state}`;
+      return `/api/auth/kakao?state=${state}`;
     },
   },
 
@@ -23,9 +23,7 @@ export const ROUTES = {
 
     MY_ACTIVITIES: {
       ROOT: "/profile/myActivities",
-      ADD: (id: string | number) => {
-        return `/profile/myActivities/add/${id}`;
-      },
+      ADD: "/profile/myActivities/add",
       EDIT: (id: string | number) => {
         return `/profile/myActivities/edit/${id}`;
       },

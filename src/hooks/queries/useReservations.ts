@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 
 import { createReservationReview, deleteReservation, getReservations } from "@/api/reservations";
 import {
@@ -9,11 +9,13 @@ import {
   ReservationReviewRequest,
   ReservationStatus,
 } from "@/types/reservations";
+import { myReservationsKeys } from "@/lib/query/queryKeys";
 
 export const useGetReservations = (params: GetReservationsParams) => {
   const { size, status } = params;
+
   return useInfiniteQuery<ReservationsResponse>({
-    queryKey: ["reservations", size, status],
+    queryKey: myReservationsKeys.list(status),
     initialPageParam: null,
     queryFn: ({ pageParam }) => {
       return getReservations({
@@ -32,8 +34,6 @@ export const useGetReservations = (params: GetReservationsParams) => {
 };
 
 export const useDeleteReservation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({
       reservationId,
@@ -44,19 +44,13 @@ export const useDeleteReservation = () => {
     }) => {
       return deleteReservation(reservationId, status);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reservations"] });
-      console.log("예약이 취소되었습니다.");
-    },
     onError: (error) => {
-      console.error("상태 업데이트 실패:", error);
+      console.error("예약 취소 실패:", error);
     },
   });
 };
 
 export const useCreateReservationReview = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({
       reservationId,
@@ -66,10 +60,6 @@ export const useCreateReservationReview = () => {
       reviewData: ReservationReviewRequest;
     }) => {
       return createReservationReview(reservationId, reviewData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reservations"] });
-      console.log("리뷰가 등록되었습니다.");
     },
     onError: (error) => {
       console.error("리뷰 등록 실패:", error);

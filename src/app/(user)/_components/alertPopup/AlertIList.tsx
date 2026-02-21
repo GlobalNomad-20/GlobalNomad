@@ -2,10 +2,12 @@ import { InfiniteData } from "@tanstack/react-query";
 import { FreeMode, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { extractStatus } from "../../_utils/string";
+
 import AlertItem from "./AlertItem";
 
 import { NotificationResponse } from "@/types/notification";
-import { formatScheduleRange, getRelativeTime } from "@/utils/date";
+import { getRelativeTime } from "@/utils/date";
 
 interface NotificationListProps {
   isEmpty: boolean;
@@ -40,7 +42,7 @@ const NotificationList = ({
       observer={true}
       observeParents={true}
       modules={[FreeMode, Mousewheel]}
-      className="h-64 w-full"
+      className="max-h-64 w-full"
     >
       {data?.pages.map((page) => {
         return page.notifications.map((noti) => {
@@ -48,10 +50,9 @@ const NotificationList = ({
             <SwiperSlide key={noti.id} className="h-auto!">
               <AlertItem
                 id={noti.id}
-                title={noti.content}
-                status={noti.content}
+                content={noti.content}
+                status={extractStatus(noti.content)}
                 createdAt={getRelativeTime(noti.createdAt)}
-                scheduleDate={formatScheduleRange(noti.updatedAt)}
                 onDelete={handleDeleteNoti}
               />
             </SwiperSlide>

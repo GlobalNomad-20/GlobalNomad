@@ -1,35 +1,57 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
 import { client } from "@/lib/client/client";
-import useAuthStore from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import Button from "@/components/common/Button";
-import { useModalStore } from "@/store/useModalStore";
 import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
+import { useModal } from "@/hooks/useModal";
 
-// 회원가입 폼 데이터 정의
-interface ISignUpForm {
+interface SignUpRequest {
   email: string;
   nickname: string;
   password: string;
+}
+// 회원가입 폼 데이터 정의
+interface ISignUpForm extends SignUpRequest {
   passwordConfirm: string;
 }
 
 // 회원가입 페이지
 const Register = () => {
   const navigation = useRouter();
-  const { user } = useAuthStore();
-  const { openModal, closeModal } = useModalStore((store) => {
-    return store.actions;
+  const user = useAuthStore((s) => {
+    return s.user;
+  });
+  const registerCompleteModal = useModal();
+  const errorModal = useModal();
+  const [errorMessage, setErrorMessage] = useState("알 수 없는 에러");
+
+  const { mutate: requestRegister, isPending } = useMutation({
+    mutationFn: async (formData: SignUpRequest) => {
+      return await client.post(API_ENDPOINTS.USERS.SIGNUP, formData);
+    },
+    onSuccess: () => {
+      handleOpenRegisterCompleteModal();
+    },
+    onError: (e) => {
+      if (axios.isAxiosError(e)) {
+        const code = e.response?.status;
+        if (code == 409) setErrorMessage("이미 사용 중인 이메일입니다.");
+        else setErrorMessage(e.message);
+      }
+      handleOpenErrorModal();
+    },
   });
 
   const {
@@ -41,6 +63,18 @@ const Register = () => {
     mode: "onBlur",
   });
 
+  const handleOpenRegisterCompleteModal = () => {
+    registerCompleteModal.onOpen();
+  };
+
+  const handleOpenErrorModal = () => {
+    errorModal.onOpen();
+  };
+
+  const handleCloseErrorModal = () => {
+    errorModal.onClose();
+  };
+
   // 패스워드(패스워드 확인용)
   const password = useWatch({
     control,
@@ -48,35 +82,18 @@ const Register = () => {
   });
 
   // 가입 완료 모달 확인 버튼 클릭 시
-  const onRegisterOK = () => {
-    closeModal();
+  const handleRegisterOK = () => {
+    registerCompleteModal.onClose();
     navigation.replace(ROUTES.AUTH.LOGIN);
   };
 
   // 회원가입 처리
   const onRegisterSubmit: SubmitHandler<ISignUpForm> = async (data) => {
-    try {
-      const { email, password, nickname } = data;
-      await client.post(API_ENDPOINTS.USERS.SIGNUP, { email, password, nickname });
-      openModal({
-        position: "center",
-        containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message="가입이 완료되었습니다." closeModal={onRegisterOK} />,
-        onBackgroundClose: onRegisterOK,
-      });
-    } catch (e: unknown) {
-      let message = "알 수 없는 에러";
-      if (axios.isAxiosError(e)) {
-        const code = e.response?.status;
-        if (code == 409) message = "이미 사용 중인 이메일입니다.";
-        else message = e.message;
-      }
-      openModal({
-        position: "center",
-        containerClassName: "max-h-35 md:max-h-42.5 max-w-80 md:max-w-100",
-        children: <OKModal message={message} closeModal={closeModal} />,
-      });
-    }
+    requestRegister({
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    });
   };
 
   const handleKakaoClick = () => {
@@ -179,10 +196,9 @@ const Register = () => {
           )}
 
           <Button
-            variant={isValid ? "primary" : "disabled"}
+            variant={isValid && !isPending ? "primary" : "disabled"}
             className="mt-7.5 h-13.5 w-full text-white"
             type="submit"
-            disabled={!isValid}
           >
             <div>회원가입하기</div>
           </Button>
@@ -211,6 +227,23 @@ const Register = () => {
           </Link>
         </div>
       </div>
+
+      {registerCompleteModal.isOpen && (
+        <OKModal
+          isOpen={!!registerCompleteModal.isOpen}
+          onClose={handleRegisterOK}
+          onBackgroundClose={handleRegisterOK}
+          message="가입이 완료되었습니다."
+        />
+      )}
+
+      {errorModal.isOpen && (
+        <OKModal
+          isOpen={!!errorModal.isOpen}
+          onClose={handleCloseErrorModal}
+          message={errorMessage}
+        />
+      )}
     </div>
   );
 };

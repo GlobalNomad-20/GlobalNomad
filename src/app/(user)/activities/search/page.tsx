@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Suspense } from "react";
 
-import BannerSection from "../_components/sections/BannerSection";
-import SearchResultsSection from "../_components/sections/SearchResultsSection";
-import SearchSection from "../_components/sections/SearchSection";
+import BannerSection from "../_components/sections/main/BannerSection";
+import SearchResultsSection from "../_components/sections/main/SearchResultsSection";
+import SearchSection from "../_components/sections/main/SearchSection";
 
 const SearchPage = () => {
   return (

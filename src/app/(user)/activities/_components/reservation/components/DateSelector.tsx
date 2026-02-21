@@ -4,13 +4,32 @@ import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 
 import DropdownArrowSvg from "@/assets/svg/DropdownArrowSvg";
+
 import "react-day-picker/dist/style.css";
 
-const DateSelector = () => {
+interface DateSelectorProps {
+  setSelectedDate: (date: string) => void;
+}
+
+const DateSelector = ({ setSelectedDate }: DateSelectorProps) => {
   const [date, setDate] = useState<Date | undefined>();
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    if (!selectedDate) return;
+
+    setDate(selectedDate);
+
+    const year = selectedDate.getFullYear();
+    const month = (selectedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = selectedDate.getDate().toString().padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    setSelectedDate(formattedDate);
+  };
 
   return (
     <div className="w-81.75 md:w-89.75 lg:w-87.5">
@@ -40,8 +59,7 @@ const DateSelector = () => {
         }}
         mode="single"
         selected={date}
-        // eslint-disable-next-line react/jsx-handler-names
-        onSelect={setDate}
+        onSelect={handleDateSelect}
         disabled={{ before: today }}
       />
     </div>

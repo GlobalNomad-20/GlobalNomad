@@ -100,3 +100,21 @@ export const activitiesKeys = {
     ] as const;
   },
 };
+
+// 체험 상세/스케줄 관련 키 관리
+export const activityScheduleKeys = {
+  all: ["availableSchedule"] as const,
+
+  list: (activityId?: number, year?: string, month?: string) => {
+    return [...activityScheduleKeys.all, { activityId, year, month }] as const;
+  },
+};
+
+// 내 정보(userId) 관련 키 관리
+export const myUserIdKeys = {
+  all: ["myUserId"] as const,
+
+  get: () => {
+    return [...myUserIdKeys.all] as const;
+  },
+};

@@ -10,12 +10,20 @@ import ActivityImageSection from "../_components/sections/detail/ActivityImageSe
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
 import useActivityId from "../_hooks/useActivityId";
+import { useMyUserId } from "../_hooks/useMyUserId";
 
 const ActivityDetail = () => {
   const param = useParams();
   const activityId = Number(param.activityId);
 
   const { data: activityIdData } = useActivityId(activityId);
+
+  const { data: userId } = useMyUserId();
+
+  const isMyActivity =
+    userId != null && activityIdData?.userId != null && userId === activityIdData.userId;
+
+  const canShowReservation = !isMyActivity;
 
   if (!activityIdData) return null;
 
@@ -42,15 +50,17 @@ const ActivityDetail = () => {
             </div>
             <div className="hidden lg:block">
               <ActivityHeaderSection data={activityIdData} />
-              <div className="sticky top-3">
-                <ReservationDesktop />
-              </div>
+              {canShowReservation && (
+                <div className="sticky top-3">
+                  <ReservationDesktop data={activityIdData} />
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
       <div className="sticky bottom-0 z-20 lg:hidden">
-        <ReservationBar data={activityIdData} />
+        {canShowReservation && <ReservationBar data={activityIdData} />}
       </div>
     </>
   );

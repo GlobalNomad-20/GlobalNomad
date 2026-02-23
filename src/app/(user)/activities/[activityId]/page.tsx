@@ -10,7 +10,8 @@ import ActivityImageSection from "../_components/sections/detail/ActivityImageSe
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
 import useActivityId from "../_hooks/useActivityId";
-import { useMyUserId } from "../_hooks/useMyUserId";
+
+import { useAuthStore } from "@/store/useAuthStore";
 
 const ActivityDetail = () => {
   const param = useParams();
@@ -18,7 +19,9 @@ const ActivityDetail = () => {
 
   const { data: activityIdData } = useActivityId(activityId);
 
-  const { data: userId } = useMyUserId();
+  const userId = useAuthStore((s) => {
+    return s.user?.id;
+  });
 
   const isMyActivity =
     userId != null && activityIdData?.userId != null && userId === activityIdData.userId;

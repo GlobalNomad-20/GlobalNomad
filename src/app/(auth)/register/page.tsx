@@ -60,7 +60,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<ISignUpForm>({
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const handleOpenRegisterCompleteModal = () => {

@@ -2,6 +2,7 @@
 @import "../styles/typography.css";
 @import "../styles/colors.css";
 @import "../styles/section.css";
+@import "../styles/cloud.css";
 
 body {
   background: var(--color-white);

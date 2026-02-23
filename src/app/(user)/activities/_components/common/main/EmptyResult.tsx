@@ -24,7 +24,7 @@ const EmptyResult = ({ message }: EmptyResultProps) => {
       <div className="h-36 w-36 md:h-44 md:w-44">
         <Lottie animationData={animationData} loop autoplay />
       </div>
-      <div className="typo-18-m mt-2 text-gray-300">{message}</div>
+      <div className="typo-16-m mt-2 text-gray-300">{message}</div>
     </div>
   );
 };

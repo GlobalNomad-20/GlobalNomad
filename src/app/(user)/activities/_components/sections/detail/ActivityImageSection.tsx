@@ -6,7 +6,7 @@ interface ActivityImageSectionProps {
 }
 
 const ActivityImageSection = ({ data }: ActivityImageSectionProps) => {
-  const ActivityImage = data?.subImages[0].imageUrl;
+  const ActivityImage = data?.subImages?.[0]?.imageUrl ?? data?.bannerImageUrl ?? "";
 
   return (
     <div className="relative h-61.25 w-81.75 rounded-3xl bg-gray-500 md:h-100 md:w-171 lg:w-167.5">

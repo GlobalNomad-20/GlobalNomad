@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { MyActivityFormValues } from "../../_schema/myActivityFormSchema";
+import { MyActivityFormValues, scheduleSchema } from "../../_schema/myActivityFormSchema";
 import { InputProps } from "../../types/input";
 
 import InputWrapper from "./InputWrapper";
@@ -29,36 +29,38 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [inputError, setInputError] = useState(false);
+  const [inputErrorMessage, setInputErrorMessage] = useState("");
 
   const timeOptions = generateTimeOptions();
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
     setInputError(false);
+    setInputErrorMessage("");
   };
 
   const handleStartTimeChange = (value: string) => {
     setStartTime(value);
     setInputError(false);
+    setInputErrorMessage("");
   };
 
   const handleEndTimeChange = (value: string) => {
     setEndTime(value);
     setInputError(false);
+    setInputErrorMessage("");
   };
 
   const handleAddSchedule = () => {
-    if (!date || !startTime || !endTime) {
+    const result = scheduleSchema.safeParse({ date, startTime, endTime });
+
+    if (!result.success) {
       setInputError(true);
+      setInputErrorMessage(result.error.issues[0].message);
       return;
     }
 
-    if (startTime >= endTime) {
-      setInputError(true);
-      return;
-    }
-
-    const newSchedule = { date, startTime, endTime };
+    const newSchedule = result.data;
     setValue(name, [...schedules, newSchedule] as MyActivityFormValues[typeof name], {
       shouldValidate: true,
       shouldDirty: true,
@@ -68,6 +70,7 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
     setStartTime("");
     setEndTime("");
     setInputError(false);
+    setInputErrorMessage("");
   };
 
   const handleRemoveSchedule = (index: number) => {
@@ -82,56 +85,60 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
     };
   };
 
+  const displayError = error || inputErrorMessage;
+
   return (
-    <InputWrapper label={label} error={error} required={required}>
-      <div className="mt-2 flex flex-col items-end gap-3 md:flex-row">
-        <div className="w-full">
-          <h2 className="typo-14-m md:typo-16-m mb-2.5">날짜</h2>
-          <input
-            type="date"
-            value={date}
-            onChange={handleDateChange}
-            className={cn(
-              "typo-16-m w-full rounded-2xl border border-gray-100 px-5 py-4 transition-colors",
-              "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
-              "focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none",
-              inputError && "border-red-500 focus:border-red-500 focus:ring-red-500",
-            )}
-          />
-        </div>
-        <div className="flex w-full items-center gap-3">
-          <div className="w-full md:w-33.5">
-            <h2 className="typo-16-m mb-2.5 hidden md:block">시작 시간</h2>
-            <SelectInput
-              value={startTime}
-              onChange={handleStartTimeChange}
-              placeholder="시작 시간"
-              options={timeOptions}
-              error={inputError ? " " : undefined}
+    <div>
+      <InputWrapper label={label} error={displayError} required={required}>
+        <div className="mt-2 flex flex-col items-end gap-3 md:flex-row">
+          <div className="w-full">
+            <h2 className="typo-14-m md:typo-16-m mb-2.5">날짜</h2>
+            <input
+              type="date"
+              value={date}
+              onChange={handleDateChange}
+              className={cn(
+                "typo-16-m w-full rounded-2xl border border-gray-100 px-5 py-4 transition-colors",
+                "shadow-[0px_2px_6px_0px_rgba(0,0,0,0.02)]",
+                "focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none",
+                inputError && "border-red-500 focus:border-red-500 focus:ring-red-500",
+              )}
             />
           </div>
-          <p className="typo-20-b mt-0 md:mt-5">-</p>
-          <div className="w-full md:w-33.5">
-            <h2 className="typo-16-m mb-2.5 hidden md:block">종료 시간</h2>
-            <SelectInput
-              value={endTime}
-              onChange={handleEndTimeChange}
-              placeholder="종료 시간"
-              options={timeOptions}
-              error={inputError ? " " : undefined}
-            />
-          </div>
-          <div className="mt-0 flex h-10 w-10 items-center justify-center md:mt-7 md:h-13 md:w-13">
-            <Button
-              type="button"
-              onClick={handleAddSchedule}
-              className="h-7 w-7 rounded-full p-0 md:h-10.5 md:w-10.5"
-            >
-              <PlusSvg className="h-2 w-2 md:h-3 md:w-3" />
-            </Button>
+          <div className="flex w-full items-center gap-3">
+            <div className="w-full md:w-33.5">
+              <h2 className="typo-16-m mb-2.5 hidden md:block">시작 시간</h2>
+              <SelectInput
+                value={startTime}
+                onChange={handleStartTimeChange}
+                placeholder="시작 시간"
+                options={timeOptions}
+                className={inputError ? "border-red-500 ring-red-500 focus:border-red-500" : ""}
+              />
+            </div>
+            <p className="typo-20-b mt-0 md:mt-5">-</p>
+            <div className="w-full md:w-33.5">
+              <h2 className="typo-16-m mb-2.5 hidden md:block">종료 시간</h2>
+              <SelectInput
+                value={endTime}
+                onChange={handleEndTimeChange}
+                placeholder="종료 시간"
+                options={timeOptions}
+                className={inputError ? "border-red-500 ring-red-500 focus:border-red-500" : ""}
+              />
+            </div>
+            <div className="mt-0 flex h-10 w-10 items-center justify-center md:mt-7 md:h-13 md:w-13">
+              <Button
+                type="button"
+                onClick={handleAddSchedule}
+                className="h-7 w-7 rounded-full p-0 md:h-10.5 md:w-10.5"
+              >
+                <PlusSvg className="h-2 w-2 md:h-3 md:w-3" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </InputWrapper>
 
       {schedules.length > 0 && (
         <div className="mt-5 space-y-5 border-t border-t-gray-100 pt-5">
@@ -189,7 +196,7 @@ export const ScheduleInput = ({ name, label, required }: InputProps) => {
           })}
         </div>
       )}
-    </InputWrapper>
+    </div>
   );
 };
 

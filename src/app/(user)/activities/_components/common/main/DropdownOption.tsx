@@ -1,5 +1,6 @@
 "use client";
 import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 import DropdownArrowSvg from "@/assets/svg/DropdownArrowSvg";
@@ -49,35 +50,46 @@ const DropdownOption = ({ setSort }: DropdownOptionProps) => {
 
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
-      <button
-        className="flex items-center gap-1.5 hover:cursor-pointer"
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.9 }}
+        className="group flex items-center gap-1.5 hover:cursor-pointer"
         onClick={handleToggleDropdown}
       >
-        <span>가격</span>
+        <span className="group-hover:lg:typo-16-b lg:typo-16-m group-hover:text-sky-600">가격</span>
         <DropdownArrowSvg
-          className={clsx("transition-transform duration-200", showDropdown && "rotate-180")}
+          className={clsx(
+            "transition-transform duration-200 group-hover:text-sky-600",
+            showDropdown && "rotate-180",
+          )}
         />
-      </button>
+      </motion.div>
 
-      {showDropdown && (
-        <ul
-          className="absolute -right-2 z-20 w-30 overflow-hidden rounded-[18px] border
-            border-gray-200 bg-white text-center shadow-md md:w-40"
-        >
-          <li
-            className="cursor-pointer px-4 py-2 hover:bg-gray-50 md:py-4"
-            onClick={handlePriceAscClick}
+      <AnimatePresence>
+        {showDropdown && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0, y: -6 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute -right-2 z-20 w-30 overflow-hidden rounded-[18px] border
+              border-gray-200 bg-white text-center shadow-md md:w-40"
           >
-            가격 낮은 순
-          </li>
-          <li
-            className="cursor-pointer border-t border-gray-100 px-4 py-2 hover:bg-gray-50 md:py-4"
-            onClick={handlePriceDescClick}
-          >
-            가격 높은 순
-          </li>
-        </ul>
-      )}
+            <li
+              className="cursor-pointer px-4 py-2 hover:bg-gray-50 md:py-4"
+              onClick={handlePriceAscClick}
+            >
+              가격 낮은 순
+            </li>
+            <li
+              className="cursor-pointer border-t border-gray-100 px-4 py-2 hover:bg-gray-50 md:py-4"
+              onClick={handlePriceDescClick}
+            >
+              가격 높은 순
+            </li>
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

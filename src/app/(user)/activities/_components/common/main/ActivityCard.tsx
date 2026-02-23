@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import StarSvg from "@/assets/svg/StarSvg";
 import CustomImage from "@/components/common/CustomImage";
 import { Activity } from "@/types/activityCardList";
@@ -10,7 +12,8 @@ interface ActivityCardProps {
 
 const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
   return (
-    <div
+    <motion.div
+      whileTap={{ scale: 0.9 }}
       className={cn(
         "group relative h-60.5 shrink-0 cursor-pointer overflow-hidden rounded-[18px]",
         "shadow-[0px_2.25px_13.5px_0px_rgba(156,180,202,0.2)]",
@@ -62,7 +65,7 @@ const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
           className="object-cover"
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

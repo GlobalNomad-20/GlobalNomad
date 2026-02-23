@@ -22,7 +22,7 @@ const Activities = () => {
         </div>
       </div>
       <div
-        className="ju relative z-20 -mt-200 flex flex-col items-center pt-18.5 pb-34 md:-mt-350
+        className="relative z-20 -mt-200 flex flex-col items-center pt-18.5 pb-34 md:-mt-350
           md:pt-25.75 md:pb-51 lg:pb-54.5"
       >
         <BannerSection />

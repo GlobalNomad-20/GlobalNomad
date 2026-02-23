@@ -14,7 +14,7 @@ const Activities = () => {
               will-change-transform"
           >
             <div
-              className="h-full w-full animate-[cloud-scroll_100s_linear_infinite]
+              className="h-full w-full animate-[cloud-scroll_120s_linear_infinite]
                 [background-image:url('/image/cloud.svg')] bg-size-[var(--cloud-tile-w-scaled)_100%]
                 bg-position-[0_100%] bg-repeat-x opacity-90 will-change-[background-position]"
             />

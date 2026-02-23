@@ -5,6 +5,7 @@ import { ActivityDetailResponse } from "@/types/activityIdParams";
 interface ActivityMapSectionProps {
   data?: ActivityDetailResponse;
 }
+
 const ActivityMapSection = ({ data }: ActivityMapSectionProps) => {
   return (
     <div className="flex w-81.75 flex-col gap-2 md:w-171 md:gap-3.5 lg:w-167.5 lg:gap-2">

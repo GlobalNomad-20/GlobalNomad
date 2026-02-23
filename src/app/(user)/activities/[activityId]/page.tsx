@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 
 import ReservationBar from "../_components/common/detail/ReservationBar";
+import DetailPageSkeleton from "../_components/common/SkeletonUI/DetailPageSkeleton";
 import ReservationDesktop from "../_components/reservation/layouts/ReservationDesktop";
 import ActivityDescriptionSection from "../_components/sections/detail/ActivityDescriptionSection";
 import ActivityHeaderSection from "../_components/sections/detail/ActivityHeaderSection";
@@ -17,11 +18,15 @@ const ActivityDetail = () => {
   const param = useParams();
   const activityId = Number(param.activityId);
 
-  const { data: activityIdData } = useActivityId(activityId);
+  const { data: activityIdData, isPending } = useActivityId(activityId);
 
   const userId = useAuthStore((s) => {
     return s.user?.id;
   });
+
+  if (isPending) {
+    return <DetailPageSkeleton />;
+  }
 
   const isMyActivity =
     userId != null && activityIdData?.userId != null && userId === activityIdData.userId;

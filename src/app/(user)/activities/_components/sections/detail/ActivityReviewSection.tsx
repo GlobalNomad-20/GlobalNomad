@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import useActivityIdReviews from "../../../_hooks/useActivityIdReviews";
 import ReviewCard from "../../common/detail/ReviewCard";
+import { ReviewListSkeleton } from "../../common/SkeletonUI/ReviewCardSkeleton";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import StarSvg from "@/assets/svg/StarSvg";
@@ -21,7 +22,11 @@ const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
 
   const activityId = data.id;
 
-  const { data: reviewsData, isPlaceholderData } = useActivityIdReviews({
+  const {
+    data: reviewsData,
+    isPlaceholderData,
+    isPending,
+  } = useActivityIdReviews({
     activityId: activityId,
     page,
     size: PAGE_LIMIT,
@@ -43,6 +48,14 @@ const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
     5: "매우 만족",
   };
   const averageRatingComment = ratingComments[averageRating];
+
+  if (isPending) {
+    return (
+      <div className="w-81.75 md:w-171 lg:w-167.5">
+        <ReviewListSkeleton count={3} />
+      </div>
+    );
+  }
 
   return (
     <div className="w-81.75 md:w-171 lg:w-167.5">

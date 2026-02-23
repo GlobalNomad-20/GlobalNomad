@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 
 import ReservationBar from "../_components/common/detail/ReservationBar";
+import DetailPageSkeleton from "../_components/common/SkeletonUI/DetailPageSkeleton";
 import ReservationDesktop from "../_components/reservation/layouts/ReservationDesktop";
 import ActivityDescriptionSection from "../_components/sections/detail/ActivityDescriptionSection";
 import ActivityHeaderSection from "../_components/sections/detail/ActivityHeaderSection";
@@ -10,20 +11,28 @@ import ActivityImageSection from "../_components/sections/detail/ActivityImageSe
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
 import useActivityId from "../_hooks/useActivityId";
-import { useMyUserId } from "../_hooks/useMyUserId";
+
+import { useAuthStore } from "@/store/useAuthStore";
 
 const ActivityDetail = () => {
   const param = useParams();
   const activityId = Number(param.activityId);
 
-  const { data: activityIdData } = useActivityId(activityId);
+  const { data: activityIdData, isPending } = useActivityId(activityId);
 
-  const { data: userId } = useMyUserId();
+  const userId = useAuthStore((s) => {
+    return s.user?.id;
+  });
+
+  if (isPending) {
+    return <DetailPageSkeleton />;
+  }
 
   const isMyActivity =
     userId != null && activityIdData?.userId != null && userId === activityIdData.userId;
 
   const canShowReservation = !isMyActivity;
+  console.log(isMyActivity);
 
   if (!activityIdData) return null;
 
@@ -37,7 +46,11 @@ const ActivityDetail = () => {
           >
             <div>
               <ActivityImageSection data={activityIdData} />
-              <ActivityHeaderSection data={activityIdData} isNotDesktop />
+              <ActivityHeaderSection
+                data={activityIdData}
+                isNotDesktop
+                isMyActivity={isMyActivity}
+              />
               <div className="section-block">
                 <ActivityDescriptionSection data={activityIdData} />
               </div>
@@ -49,7 +62,7 @@ const ActivityDetail = () => {
               </div>
             </div>
             <div className="hidden lg:block">
-              <ActivityHeaderSection data={activityIdData} />
+              <ActivityHeaderSection data={activityIdData} isMyActivity={isMyActivity} />
               {canShowReservation && (
                 <div className="sticky top-3">
                   <ReservationDesktop data={activityIdData} />

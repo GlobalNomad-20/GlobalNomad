@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const scheduleSchema = z
+export const scheduleSchema = z
   .object({
     id: z.number().optional(),
     date: z
@@ -26,6 +26,17 @@ const scheduleSchema = z
     {
       message: "종료 시간은 시작 시간보다 나중이어야 합니다.",
       path: ["endTime"],
+    },
+  )
+  .refine(
+    (data) => {
+      const scheduleDateTime = new Date(`${data.date}T${data.startTime}`);
+      const now = new Date();
+      return scheduleDateTime > now;
+    },
+    {
+      message: "예약 시간은 현재 시간 이후여야 합니다.",
+      path: ["date"],
     },
   );
 

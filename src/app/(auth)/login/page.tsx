@@ -49,7 +49,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<ILoginForm>({
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const handleOpenPasswordFailModal = () => {

@@ -6,9 +6,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import SearchSvg from "@/assets/svg/SearchSvg";
 import Button from "@/components/common/Button";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  initialValue?: string;
+}
+
+const SearchBar = ({ initialValue }: SearchBarProps) => {
   const router = useRouter();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(initialValue ?? "");
   const [focused, setFocused] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +52,7 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder="내가 원하는 체험은"
-        className="typo-14-m md:typo-18-m mx-2 flex-1 px-2 text-gray-500 outline-none"
+        className="typo-14-m md:typo-18-m mx-2 min-w-0 flex-1 px-2 text-gray-500 outline-none"
         value={value}
         onChange={handleChange}
         onFocus={handleFocus}
@@ -57,7 +61,8 @@ const SearchBar = () => {
       <Button
         type="submit"
         variant="primary"
-        className="md:typo-16-b h-10.25 w-21.25 active:bg-sky-600 md:h-12.5 md:w-30"
+        className="md:typo-16-b h-10.25 w-21.25 shrink-0 whitespace-nowrap active:bg-sky-600
+          md:h-12.5 md:w-30"
       >
         검색하기
       </Button>

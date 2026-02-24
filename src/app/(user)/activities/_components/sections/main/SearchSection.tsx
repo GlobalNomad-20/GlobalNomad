@@ -1,6 +1,10 @@
 import SearchBar from "../../common/search/SearchBar";
 
-const SearchSection = () => {
+interface SearchSectionProps {
+  initialValue?: string;
+}
+
+const SearchSection = ({ initialValue }: SearchSectionProps) => {
   return (
     <div
       className="justify-center·gap-3 mb-10 flex h-29 w-81.75 flex-col items-center md:mt-7.5
@@ -9,7 +13,7 @@ const SearchSection = () => {
       <div className="typo-16-b md:typo-32-b mt-8.25 mb-3 text-gray-950">
         무엇을 체험하고 싶으신가요?
       </div>
-      <SearchBar />
+      <SearchBar initialValue={initialValue} />
     </div>
   );
 };

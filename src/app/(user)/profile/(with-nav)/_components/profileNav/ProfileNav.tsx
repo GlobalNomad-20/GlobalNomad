@@ -38,7 +38,7 @@ const ProfileNav = () => {
   if (shouldHideNav) return null;
 
   return (
-    <div className={cn("mx-6 hidden pt-7.5 md:m-0 md:block md:pt-0")}>
+    <div className={cn("mx-6 hidden pt-7.5 md:m-0 md:block md:pt-0", isMobile && "block")}>
       <nav
         className="shrink-0 rounded-xl border border-gray-50 px-3.5 py-6
           shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] md:w-44.5 lg:w-72.5"

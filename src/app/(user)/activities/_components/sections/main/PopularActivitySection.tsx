@@ -8,12 +8,12 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import useInfiniteActivities from "../../../_hooks/useInfiniteActivities";
 import ActivityCard from "../../common/main/ActivityCard";
 import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import SwiperNextSvg from "@/assets/svg/SwiperNextSvg";
 import SwiperPrevSvg from "@/assets/svg/SwiperPrevSvg";
+import { useInfiniteActivities } from "@/hooks/queries/useActivities";
 
 const PopularActivitySection = () => {
   const [isBeginning, setIsBeginning] = useState(true);

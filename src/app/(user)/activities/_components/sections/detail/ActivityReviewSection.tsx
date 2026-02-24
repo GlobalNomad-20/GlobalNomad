@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import useActivityIdReviews from "../../../_hooks/useActivityIdReviews";
 import ReviewCard from "../../common/detail/ReviewCard";
 import EmptyResult from "../../common/main/EmptyResult";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import StarSvg from "@/assets/svg/StarSvg";
+import { useActivityIdReviews } from "@/hooks/queries/useActivities";
 import { ActivityDetailResponse } from "@/types/activityIdParams";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

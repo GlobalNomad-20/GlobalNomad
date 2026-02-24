@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import useActivities from "../../../_hooks/useActivities";
 import ActivityCard from "../../common/main/ActivityCard";
 import DropdownOption from "../../common/main/DropdownOption";
 import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
@@ -11,6 +10,7 @@ import CategoryFilter from "../../filters/CategoryFilter";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import DropdownArrowSvg from "@/assets/svg/DropdownArrowSvg";
+import { useActivities } from "@/hooks/queries/useActivities";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const PAGE_LIMIT = 8;

@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import QueryProviders from "./_providers/QueryProviders";
 import { pretendard } from "./fonts";
 
-import "./globals.css";
+import { AuthProvider } from "@/app/_providers/AuthProvider";
+import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
 import { fetchWithAuth } from "@/lib/auth/auth";
 import { User } from "@/types/user";
-import { API_ENDPOINTS, BASE_URL } from "@/constants/apiEndPoint";
-import { AuthProvider } from "@/app/_providers/AuthProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GlobalNoamd",
+  title: "GlobalNomad",
   description: "GlobalNomad는 판매자와 체험자가 공존하는 체험 예약 플랫폼입니다.",
 };
 

@@ -1,0 +1,37 @@
+:root {
+  --cloud-scale: 1.5;
+
+  --cloud-tile-w: 572px;
+  --cloud-tile-w-scaled: calc(var(--cloud-tile-w) * var(--cloud-scale));
+}
+
+@media (min-width: 768px) {
+  :root {
+    --cloud-tile-w: 1143px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --cloud-tile-w: 1717px;
+  }
+}
+
+@keyframes cloud-scroll {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: calc(-1 * var(--cloud-tile-w-scaled));
+  }
+}
+
+@keyframes cloud-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}

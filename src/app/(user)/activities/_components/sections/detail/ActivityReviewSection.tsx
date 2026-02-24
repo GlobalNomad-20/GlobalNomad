@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import useActivityIdReviews from "../../../_hooks/useActivityIdReviews";
 import ReviewCard from "../../common/detail/ReviewCard";
+import EmptyResult from "../../common/main/EmptyResult";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 import StarSvg from "@/assets/svg/StarSvg";
@@ -43,6 +44,30 @@ const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
     5: "매우 만족",
   };
   const averageRatingComment = ratingComments[averageRating];
+
+  if (!totalCount) {
+    return (
+      <div className="w-81.75 md:w-171 lg:w-167.5">
+        <div className="mb-2 flex items-center justify-start gap-2">
+          <div className="typo-16-b md:typo-18-b text-gray-950">체험 후기</div>
+          <div className="font-semibol md:typo-16-b text-sm text-[#79747E]">
+            {data.reviewCount}개
+          </div>
+        </div>
+        <div className="mb-7.5 flex flex-col items-center">
+          <div className="typo-24-b md:typo-32-b mb-0.5 text-gray-950">{data.rating}</div>
+          <div className="typo-14-b md:typo-16-b mb-1.5 text-gray-950">{averageRatingComment}</div>
+          <div className="flex items-center gap-0.5">
+            <StarSvg className="h-4 w-4" />
+            <div className="typo-14-m text-[#79747E]">0개 후기</div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-10 md:gap-5">
+          <EmptyResult message="등록된 리뷰가 없습니다." />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-81.75 md:w-171 lg:w-167.5">

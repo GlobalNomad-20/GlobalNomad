@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import useActivities from "../../../_hooks/useActivities";
@@ -11,12 +10,14 @@ import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkelet
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 
+interface SearchResultsSectionProps {
+  keyword?: string;
+}
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const PAGE_LIMIT = 8;
 
-const SearchResultsSection = () => {
-  const searchParams = useSearchParams();
-  const keyword = searchParams.get("q") ?? "";
+const SearchResultsSection = ({ keyword }: SearchResultsSectionProps) => {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isPlaceholderData } = useActivities({

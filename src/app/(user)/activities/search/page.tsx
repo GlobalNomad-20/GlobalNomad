@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 import BannerSection from "../_components/sections/main/BannerSection";
@@ -6,6 +9,9 @@ import SearchResultsSection from "../_components/sections/main/SearchResultsSect
 import SearchSection from "../_components/sections/main/SearchSection";
 
 const SearchPage = () => {
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get("q") ?? "";
+
   return (
     <div className="bg-white">
       <div className="relative h-200 md:h-350">
@@ -24,9 +30,9 @@ const SearchPage = () => {
           md:-mt-350 md:pt-25.75 md:pb-51 lg:pb-54.5"
       >
         <BannerSection />
-        <SearchSection />
+        <SearchSection initialValue={keyword} />
         <Suspense fallback={<div>검색 결과 로딩 중...</div>}>
-          <SearchResultsSection />
+          <SearchResultsSection keyword={keyword} />
         </Suspense>
       </div>
     </div>

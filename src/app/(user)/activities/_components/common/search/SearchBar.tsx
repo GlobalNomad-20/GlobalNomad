@@ -6,9 +6,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import SearchSvg from "@/assets/svg/SearchSvg";
 import Button from "@/components/common/Button";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  initialValue?: string;
+}
+
+const SearchBar = ({ initialValue }: SearchBarProps) => {
   const router = useRouter();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(initialValue ?? "");
   const [focused, setFocused] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

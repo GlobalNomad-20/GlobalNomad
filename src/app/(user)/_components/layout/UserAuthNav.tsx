@@ -48,7 +48,8 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
             <Image
               src={profileImage || "/image/profile.png"}
               fill
-              className="object-cover object-left"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="absolute object-cover object-left"
               alt="사용자 프로필 이미지"
             />
           </div>

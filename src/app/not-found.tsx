@@ -16,10 +16,12 @@ const NotFound = () => {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center">
-      <h1 className="typo-32-b">404 ERROR</h1>
-      <p className="typo-20-body-b mb-4">
-        입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.
+    <div className="mx-2 flex h-screen flex-col items-center justify-center">
+      <h1 className="typo-32-b mb-3">404 ERROR</h1>
+      <p className="typo-16-m md:typo-18-m mb-4 text-center">
+        지금 입력하신 주소의 페이지는 <br />
+        사라졌거나 다른 페이지로 변경되었습니다. <br />
+        주소를 다시 확인해주세요.
       </p>
       <Button onClick={handleBack} className="w-36">
         이전으로

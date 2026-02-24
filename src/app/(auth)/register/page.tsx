@@ -1,21 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm, SubmitHandler, useWatch } from "react-hook-form";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 
+import OKModal from "@/app/(auth)/login/_components/OKModal";
+import Button from "@/components/common/Button";
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
-import { client } from "@/lib/client/client";
-import { useAuthStore } from "@/store/useAuthStore";
-import Button from "@/components/common/Button";
-import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
 import { useModal } from "@/hooks/useModal";
+import { client } from "@/lib/client/client";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface SignUpRequest {
   email: string;
@@ -222,7 +222,7 @@ const Register = () => {
 
         <div className="typo-16-m mt-6 text-gray-400 md:mt-7.5">
           회원신가요?{" "}
-          <Link href="/login" className="underline">
+          <Link href={ROUTES.AUTH.LOGIN} className="underline">
             로그인하기
           </Link>
         </div>

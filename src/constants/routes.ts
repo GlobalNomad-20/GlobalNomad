@@ -3,7 +3,7 @@ export const ROUTES = {
 
   AUTH: {
     LOGIN: "/login",
-    SIGNUP: "/signup",
+    SIGNUP: "/register",
     KAKAO: (state: "signin" | "signup") => {
       return `/api/auth/kakao?state=${state}`;
     },

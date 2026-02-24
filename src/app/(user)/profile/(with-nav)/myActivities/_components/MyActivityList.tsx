@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 import useMyActivityList from "../_hook/useMyActivityList";
 
 import MyActivityCard from "./card/MyActivityCard";
@@ -44,16 +46,22 @@ const MyActivityList = () => {
   }
 
   return (
-    <section className={cn("flex flex-col gap-6", { "mb-55": isFetchingNextPage })}>
-      {pages?.map((page) => {
-        return page.activities.map((myActivity) => {
-          return <MyActivityCard key={myActivity.id} myActivity={myActivity} />;
-        });
-      })}
+    <section className={cn("flex flex-col", { "mb-55": isFetchingNextPage })}>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        {pages?.map((page) => {
+          return page.activities.map((myActivity) => {
+            return <MyActivityCard key={myActivity.id} myActivity={myActivity} />;
+          });
+        })}
 
-      <div ref={targetRef} className="h-10 w-full">
-        {isFetchingNextPage && <MyActivitySkeleton />}
-      </div>
+        <div ref={targetRef} className="h-10 w-full">
+          {isFetchingNextPage && <MyActivitySkeleton />}
+        </div>
+      </motion.div>
     </section>
   );
 };

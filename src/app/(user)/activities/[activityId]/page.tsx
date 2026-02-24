@@ -10,8 +10,8 @@ import ActivityHeaderSection from "../_components/sections/detail/ActivityHeader
 import ActivityImageSection from "../_components/sections/detail/ActivityImageSection";
 import ActivityMapSection from "../_components/sections/detail/ActivityMapSection";
 import ActivityReviewSection from "../_components/sections/detail/ActivityReviewSection";
-import useActivityId from "../_hooks/useActivityId";
 
+import { useActivityId } from "@/hooks/queries/useActivities";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const ActivityDetail = () => {

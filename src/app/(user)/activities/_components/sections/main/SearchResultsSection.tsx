@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import useActivities from "../../../_hooks/useActivities";
 import ActivityCard from "../../common/main/ActivityCard";
 import EmptyResult from "../../common/main/EmptyResult";
 import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
+import { useActivities } from "@/hooks/queries/useActivities";
 
 interface SearchResultsSectionProps {
   keyword?: string;

@@ -51,7 +51,7 @@ const ReservationDesktop = ({ data }: ReservationDesktopProps) => {
           <div className="flex items-center justify-start gap-1.5">
             <span className="typo-20-m text-[#79747E]">총 합계</span>
             <span className="typo-20-b text-gray-950">
-              ￦{" "}
+              ￦
               {reservationController
                 ? new Intl.NumberFormat("ko-KR").format(reservationController.totalPrice)
                 : "-"}

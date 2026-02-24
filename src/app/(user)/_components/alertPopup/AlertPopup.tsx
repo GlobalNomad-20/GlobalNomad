@@ -29,7 +29,11 @@ const AlertPopup = () => {
 
   return (
     <div className="static md:relative">
-      <button ref={triggerRef} onClick={handleToggle} className="relative p-1 text-gray-600">
+      <button
+        ref={triggerRef}
+        onClick={handleToggle}
+        className="relative p-1 text-gray-600 hover:cursor-pointer"
+      >
         <AlertBellSvg
           className={cn("transition-colors", open && "text-primary-500")}
           activeColor={unreadCount === 0 ? "currentColor" : "#FF2727"}
@@ -50,7 +54,7 @@ const AlertPopup = () => {
               알림 <span className="text-primary-500">{unreadCount}</span>
             </h4>
             <button
-              className="text-gray-400 transition-colors hover:text-gray-600"
+              className="text-gray-400 transition-colors hover:cursor-pointer hover:text-gray-600"
               onClick={handleClose}
             >
               <DeleteSvg />

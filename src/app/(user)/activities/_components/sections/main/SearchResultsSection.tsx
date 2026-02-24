@@ -1,21 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import useActivities from "../../../_hooks/useActivities";
 import ActivityCard from "../../common/main/ActivityCard";
+import EmptyResult from "../../common/main/EmptyResult";
 import ActivityCardSkeletonList from "../../common/SkeletonUI/ActivityCardSkeletonList";
 
 import Pagination from "@/app/(user)/_components/pagination/Pagination";
 
+interface SearchResultsSectionProps {
+  keyword?: string;
+}
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const PAGE_LIMIT = 8;
 
-const SearchResultsSection = () => {
-  const searchParams = useSearchParams();
-  const keyword = searchParams.get("q") ?? "";
+const SearchResultsSection = ({ keyword }: SearchResultsSectionProps) => {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isPlaceholderData } = useActivities({
@@ -40,6 +42,20 @@ const SearchResultsSection = () => {
           lg:gap-6"
       >
         <ActivityCardSkeletonList count={8} />
+      </div>
+    );
+  }
+
+  if (!totalCount) {
+    return (
+      <div className="flex w-82 flex-col gap-6 md:w-171 md:gap-7.5 lg:w-280">
+        <div className="flex w-full flex-col gap-2.5">
+          <div className="typo-18-m md:typo-24-m leading-none text-gray-950">
+            <span className="typo-18-b md:typo-24-b">{keyword}</span>으로 검색한 결과입니다.
+          </div>
+          <div className="typo-14-m md:typo-18-m text-gray-700">총 0개의 결과</div>
+        </div>
+        <EmptyResult message="검색 결과가 없습니다" />
       </div>
     );
   }

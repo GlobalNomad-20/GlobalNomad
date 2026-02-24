@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import ActivityDeleteModal from "./ActivityDeleteModal";
+import ActivityDeleteModal from "./Modal/ActivityDeleteModal";
 
 import KebabMenuSvg from "@/assets/svg/KebabMenuSvg";
 import Modal from "@/components/common/Modal";

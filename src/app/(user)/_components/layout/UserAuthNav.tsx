@@ -39,12 +39,17 @@ const UserAuthNav = ({ isLogin, userName, profileImage }: Props) => {
       <div className="flex h-full items-center gap-5 px-4 py-2">
         <AlertPopup />
         <div className="h-3.5 w-px bg-gray-100" />
-        <button type="button" onClick={handleClickProfile} className="flex items-center gap-2.5">
+        <button
+          type="button"
+          onClick={handleClickProfile}
+          className="flex items-center gap-2.5 hover:cursor-pointer"
+        >
           <div className="relative size-7.5 overflow-hidden">
             <Image
               src={profileImage || "/image/profile.png"}
               fill
-              className="object-cover object-left"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="absolute object-cover object-left"
               alt="사용자 프로필 이미지"
             />
           </div>

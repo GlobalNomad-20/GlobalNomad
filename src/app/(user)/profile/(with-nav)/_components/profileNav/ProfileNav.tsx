@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,6 +17,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { cn } from "@/utils/cn";
 
 const ProfileNav = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { pathname, isMobile, shouldHideNav, isActive } = useProfileNavState(MEDIA_QUERY.MOBILE);
   const logout = useAuthStore((state) => {
@@ -29,14 +31,14 @@ const ProfileNav = () => {
   }, [isMobile, pathname, router]);
 
   const handleLogout = () => {
-    logout();
+    logout(queryClient);
     router.push(ROUTES.HOME);
   };
 
   if (shouldHideNav) return null;
 
   return (
-    <div className={cn("mx-6 hidden pt-7.5 md:m-0 md:block md:pt-0")}>
+    <div className={cn("mx-6 hidden pt-7.5 md:m-0 md:block md:pt-0", isMobile && "block")}>
       <nav
         className="shrink-0 rounded-xl border border-gray-50 px-3.5 py-6
           shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] md:w-44.5 lg:w-72.5"

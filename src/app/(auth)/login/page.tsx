@@ -1,19 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
 
+import OKModal from "@/app/(auth)/login/_components/OKModal";
+import Button from "@/components/common/Button";
 import PasswordInput from "@/components/common/PasswordInput";
 import { API_ENDPOINTS } from "@/constants/apiEndPoint";
-import { client } from "@/lib/client/client";
-import Button from "@/components/common/Button";
-import OKModal from "@/app/(auth)/login/_components/OKModal";
 import { ROUTES } from "@/constants/routes";
 import { useModal } from "@/hooks/useModal";
+import { client } from "@/lib/client/client";
 import { useAuthStore } from "@/store/useAuthStore";
 
 interface ILoginForm {
@@ -49,7 +49,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<ILoginForm>({
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const handleOpenPasswordFailModal = () => {
@@ -152,7 +152,7 @@ const Login = () => {
 
         <div className="typo-16-m mt-6 text-gray-400 md:mt-7.5">
           회원이 아니신가요?{" "}
-          <Link href="/register" className="underline">
+          <Link href={ROUTES.AUTH.SIGNUP} className="underline">
             회원가입하기
           </Link>
         </div>

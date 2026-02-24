@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import WarningSvg from "@/assets/svg/WarningSvg";
 import Button from "@/components/common/Button";
 import { useDeleteActivity } from "@/hooks/queries/useMyActivities";
 
@@ -39,7 +40,12 @@ const ActivityDeleteModal = ({
   };
   return (
     <div className="flex h-full flex-col items-center justify-center p-6">
-      <p className="typo-18-b mb-6">체험을 삭제하시겠습니까?</p>
+      <div>
+        <WarningSvg className="h-12.25 w-12.25 md:h-22 md:w-22" />
+      </div>
+      <p className="typo-16-b md:typo-18-b mb-4 text-center leading-normal md:mb-6">
+        체험을 삭제하시겠습니까?
+      </p>
       <div className="flex gap-3">
         <Button onClick={handleClose} variant="outline">
           아니오

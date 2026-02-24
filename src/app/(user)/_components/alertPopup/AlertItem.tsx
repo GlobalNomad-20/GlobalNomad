@@ -20,7 +20,7 @@ const AlertItem = ({ id, status, content, createdAt, onDelete }: AlertItemProps)
       onClick={() => {
         return onDelete(id);
       }}
-      className="group w-full text-left"
+      className="group w-full text-left hover:cursor-pointer"
     >
       <div
         className={cn("px-5 py-4 transition-colors", isApproved ? "bg-primary-100" : "bg-white")}

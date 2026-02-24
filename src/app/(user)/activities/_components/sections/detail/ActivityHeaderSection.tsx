@@ -8,9 +8,14 @@ import { cn } from "@/utils/cn";
 interface ActivityHeaderSectionProps {
   isNotDesktop?: boolean;
   data?: ActivityDetailResponse;
+  isMyActivity: boolean;
 }
 
-const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSectionProps) => {
+const ActivityHeaderSection = ({
+  data,
+  isNotDesktop = false,
+  isMyActivity,
+}: ActivityHeaderSectionProps) => {
   const activityId = data?.id;
 
   return (
@@ -40,7 +45,7 @@ const ActivityHeaderSection = ({ data, isNotDesktop = false }: ActivityHeaderSec
           <div className="typo-14-m text-gray-700">{data?.address}</div>
         </div>
       </div>
-      <KebabDropdown activityId={activityId} />
+      {isMyActivity && <KebabDropdown activityId={activityId} />}
     </div>
   );
 };

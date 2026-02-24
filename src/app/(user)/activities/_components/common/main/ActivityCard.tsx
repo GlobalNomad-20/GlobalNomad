@@ -42,7 +42,9 @@ const ActivityCard = ({ activity, isSmall = false }: ActivityCardProps) => {
             md:leading-6"
         >
           <StarSvg className="h-3 w-3 pr-1 md:h-4.25 md:w-4.25 md:pr-1.25" />
-          <span className="text-gray-950 group-hover:text-white">{activity.rating}</span>
+          <span className="text-gray-950 group-hover:text-white">
+            {Math.floor(activity.rating)}
+          </span>
           <span className="ml-0.5 text-gray-400">({activity.reviewCount})</span>
         </div>
         <div

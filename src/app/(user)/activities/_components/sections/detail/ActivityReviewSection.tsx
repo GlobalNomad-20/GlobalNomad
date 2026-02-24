@@ -76,7 +76,7 @@ const ActivityReviewSection = ({ data }: ActivityReviewSectionProps) => {
         <div className="font-semibol md:typo-16-b text-sm text-[#79747E]">{data.reviewCount}개</div>
       </div>
       <div className="mb-7.5 flex flex-col items-center">
-        <div className="typo-24-b md:typo-32-b mb-0.5 text-gray-950">{data.rating}</div>
+        <div className="typo-24-b md:typo-32-b mb-0.5 text-gray-950">{Math.floor(data.rating)}</div>
         <div className="typo-14-b md:typo-16-b mb-1.5 text-gray-950">{averageRatingComment}</div>
         <div className="flex items-center gap-0.5">
           <StarSvg className="h-4 w-4" />

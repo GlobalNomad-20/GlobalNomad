@@ -30,6 +30,9 @@ export const scheduleSchema = z
   )
   .refine(
     (data) => {
+      if (data.id) {
+        return true;
+      }
       const scheduleDateTime = new Date(`${data.date}T${data.startTime}`);
       const now = new Date();
       return scheduleDateTime > now;

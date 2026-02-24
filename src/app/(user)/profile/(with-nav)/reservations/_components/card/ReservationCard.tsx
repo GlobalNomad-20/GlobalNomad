@@ -81,7 +81,7 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
     return null;
   };
   return (
-    <div className={cn("w-full max-w-160", { "border-t border-t-gray-50 pt-5": !isPC })}>
+    <div className={cn("w-full", { "border-t border-t-gray-50 pt-5": !isPC })}>
       {!isPC && (
         <h1 className="typo-16-b mb-3 px-2 text-gray-800">
           {new Date(reservation.date).toLocaleDateString("ko-KR")}
@@ -89,7 +89,7 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
       )}
       <div
         className={cn(
-          "relative mb-4 h-34 max-w-160 p-6",
+          "relative mb-4 h-34",
           "rounded-3xl shadow-[0_4px_20px_0_rgba(156,180,202,0.2)]",
           "lg:mb-0 lg:h-45 lg:rounded-4xl",
         )}

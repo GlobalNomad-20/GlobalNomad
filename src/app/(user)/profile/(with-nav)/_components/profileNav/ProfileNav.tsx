@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,6 +17,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { cn } from "@/utils/cn";
 
 const ProfileNav = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { pathname, isMobile, shouldHideNav, isActive } = useProfileNavState(MEDIA_QUERY.MOBILE);
   const logout = useAuthStore((state) => {
@@ -29,7 +31,7 @@ const ProfileNav = () => {
   }, [isMobile, pathname, router]);
 
   const handleLogout = () => {
-    logout();
+    logout(queryClient);
     router.push(ROUTES.HOME);
   };
 

@@ -32,7 +32,6 @@ const ActivityDetail = () => {
     userId != null && activityIdData?.userId != null && userId === activityIdData.userId;
 
   const canShowReservation = !isMyActivity;
-  console.log(isMyActivity);
 
   if (!activityIdData) return null;
 

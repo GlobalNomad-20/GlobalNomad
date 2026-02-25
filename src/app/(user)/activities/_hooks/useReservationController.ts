@@ -4,9 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
-import useAvailableSchedule from "../_hooks/useAvailableSchedule";
-import useCreateActivityReservation from "../_hooks/useCreateActivityReservation";
-
+import { useAvailableSchedule, useCreateActivityReservation } from "@/hooks/queries/useActivities";
 import { useModal } from "@/hooks/useModal";
 
 export const useReservationController = (activityId?: number, price?: number) => {

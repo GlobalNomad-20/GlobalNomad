@@ -12,17 +12,16 @@ export interface AuthState {
   user: User | null;
   login: (user: User) => void;
   logout: (queryClient: QueryClient) => Promise<void>;
+  updateUser: (partialUser: Partial<User>) => void;
 }
 
 export const createAuthStore = (init?: Partial<AuthState>) => {
   return createStore<AuthState>((set) => {
     return {
       user: null,
-
       login: (user) => {
         set({ user: user });
       },
-
       logout: async (queryClient) => {
         try {
           await client.post(API_ENDPOINTS.AUTH.LOGOUT);
@@ -34,7 +33,13 @@ export const createAuthStore = (init?: Partial<AuthState>) => {
           queryClient.clear();
         }
       },
-
+      updateUser: (partialUser) => {
+        set((state) => {
+          return {
+            user: state.user ? { ...state.user, ...partialUser } : null,
+          };
+        });
+      },
       ...init,
     };
   });

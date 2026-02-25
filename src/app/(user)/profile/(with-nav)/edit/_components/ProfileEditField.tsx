@@ -11,10 +11,14 @@ import VisibilityPasswordInput from "@/components/common/VisibilityPasswordInput
 import { ROUTES } from "@/constants/routes";
 import { useMyInfo, useUpdateMyInfo } from "@/hooks/queries/useUser";
 import withAuth from "@/lib/auth/withAuth";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const ProfileEditField = () => {
   const { data: userData } = useMyInfo();
   const { mutate: updateUserInfo } = useUpdateMyInfo();
+  const updateUser = useAuthStore((state) => {
+    return state.updateUser;
+  });
   const { register, handleSubmit, errors, validationRules } = useProfileEditForm(userData);
 
   const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
@@ -24,6 +28,7 @@ const ProfileEditField = () => {
     };
     updateUserInfo(requestBody, {
       onSuccess: () => {
+        updateUser({ nickname: data.nickname });
         alert("내 정보가 수정되었습니다.");
       },
       onError: (error) => {
@@ -39,11 +44,15 @@ const ProfileEditField = () => {
         <h3 className="typo-18-b mb-2.5">내 정보</h3>
         <p className="typo-14-m text-gray-500">닉네임, 이메일, 비밀번호를 수정하실 수 있습니다.</p>
       </div>
-      <form className="flex flex-col gap-4.5 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4.5 md:gap-6"
+        onSubmit={handleSubmit(onSubmit, (errors) => {
+          return console.log("폼 에러:", errors);
+        })}
+      >
         <TextField
           label="닉네임"
           type="text"
-          defaultValue={userData?.nickname}
           placeholder={userData?.nickname}
           error={errors.nickname?.message}
           registration={register("nickname", validationRules.nickname)}
@@ -53,7 +62,6 @@ const ProfileEditField = () => {
           label="이메일"
           type="email"
           disabled
-          defaultValue={userData?.email}
           placeholder={userData?.email}
           registration={register("email", validationRules.email)}
           autoComplete="email"

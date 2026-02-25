@@ -56,12 +56,14 @@ const ReservationBar = ({ data }: ReservationBarProps) => {
             </div>
             <div className="typo-16-m text-[#79747E]">/ 1명</div>
           </div>
-          <div
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
             className="typo-16-b text-primary-500 underline active:text-sky-600"
             onClick={handleOpen}
           >
             {displayText}
-          </div>
+          </motion.div>
           {isOpen && (
             <Modal
               isOpen={isOpen}

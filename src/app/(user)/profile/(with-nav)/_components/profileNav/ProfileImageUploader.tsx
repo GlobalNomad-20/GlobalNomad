@@ -7,6 +7,7 @@ import useProfileImageUploader from "../../_hooks/useProfileImageUploader"; // �
 
 import EditSvg from "@/assets/svg/EditSvg";
 import { useMyInfo, useUpdateMyInfo, useUploadProfileImage } from "@/hooks/queries/useUser";
+import { useAuthStore } from "@/store/useAuthStore";
 import { cn } from "@/utils/cn";
 
 const ProfileImageUploader = () => {
@@ -15,6 +16,10 @@ const ProfileImageUploader = () => {
   const { mutate: updateProfile } = useUpdateMyInfo();
 
   const { fileInputRef, handleEditClick, resetInput } = useProfileImageUploader();
+
+  const updateUser = useAuthStore((state) => {
+    return state.updateUser;
+  });
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,6 +31,7 @@ const ProfileImageUploader = () => {
         { profileImageUrl },
         {
           onSuccess: () => {
+            updateUser({ profileImageUrl });
             alert("프로필 이미지가 변경되었습니다.");
           },
           onError: () => {

@@ -2,13 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { fetchMyInfo, updateMyInfo, uploadProfileImage } from "@/api/user";
 import { userKeys } from "@/lib/query/queryKeys";
-import { UpdateUserParams, User } from "@/types/user";
+import { UpdateUserParams } from "@/types/user";
 
-export const useMyInfo = (initialData?: User | null) => {
+export const useMyInfo = () => {
   return useQuery({
     queryKey: userKeys.me(),
-    queryFn: fetchMyInfo,
-    initialData,
+    queryFn: async () => {
+      const data = await fetchMyInfo();
+      return data;
+    },
   });
 };
 

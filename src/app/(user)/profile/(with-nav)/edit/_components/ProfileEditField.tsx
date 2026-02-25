@@ -10,17 +10,11 @@ import TextField from "@/components/common/TextField";
 import VisibilityPasswordInput from "@/components/common/VisibilityPasswordInput";
 import { ROUTES } from "@/constants/routes";
 import { useMyInfo, useUpdateMyInfo } from "@/hooks/queries/useUser";
-import { User } from "@/types/user";
 import withAuth from "@/lib/auth/withAuth";
 
-interface ProfileEditFieldProps {
-  initialData: User | null;
-}
-
-const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
-  const { data: userData } = useMyInfo(initialData);
+const ProfileEditField = () => {
+  const { data: userData } = useMyInfo();
   const { mutate: updateUserInfo } = useUpdateMyInfo();
-
   const { register, handleSubmit, errors, validationRules } = useProfileEditForm(userData);
 
   const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
@@ -49,8 +43,8 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
         <TextField
           label="닉네임"
           type="text"
-          defaultValue={initialData?.nickname}
-          placeholder="닉네임을 입력하세요"
+          defaultValue={userData?.nickname}
+          placeholder={userData?.nickname}
           error={errors.nickname?.message}
           registration={register("nickname", validationRules.nickname)}
           autoComplete="username"
@@ -59,8 +53,8 @@ const ProfileEditField = ({ initialData }: ProfileEditFieldProps) => {
           label="이메일"
           type="email"
           disabled
-          defaultValue={initialData?.email}
-          placeholder="example@email.com"
+          defaultValue={userData?.email}
+          placeholder={userData?.email}
           registration={register("email", validationRules.email)}
           autoComplete="email"
         />
